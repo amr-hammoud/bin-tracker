@@ -34,7 +34,7 @@ const sendRequest = (params) => __awaiter(void 0, void 0, void 0, function* () {
             data: params.body,
             headers,
         });
-        return response.data;
+        return response;
     }
     catch (err) {
         throw err;

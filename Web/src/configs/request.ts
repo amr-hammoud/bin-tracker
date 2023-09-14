@@ -35,7 +35,7 @@ export const sendRequest = async (params: requestParams) => {
             headers,
         });
 
-        return response.data;
+        return response;
 
     } catch (err) {
         throw err;
