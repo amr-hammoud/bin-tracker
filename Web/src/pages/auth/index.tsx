@@ -1,18 +1,53 @@
-import React from "react";
+import React, { useState } from "react";
 import Input from "../../components/base/Input";
 import { MdAlternateEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 import logo from "../../assets/logo/Logo-full.svg";
 import authImage from "../../assets/images/auth-image.jpg";
 import Button from "../../components/base/Button";
+import { sendRequest } from "../../configs/request";
 
 export default function AuthPage() {
+	const [authInfo, setAuthInfo] = useState({
+		email: "",
+		username: "",
+		password: "",
+	});
 
-	const Login = (): void => {
-		console.log("aa");
+	const Login = async (): Promise<void> => {
+		const response = await sendRequest({
+			method: "POST",
+			route: "auth/login",
+			body: JSON.stringify(authInfo),
+		});
+
+		console.log(response);
+	};
+
+	const handleIdentifierChange = (e: string): void => {
 		
-	}
+		if (e.search("@") !== -1) {
+			setAuthInfo({
+				...authInfo,
+				email: e,
+				username: "",
+			});
+		} else {
+			setAuthInfo({
+				...authInfo,
+				username: e,
+				email: "",
+			});
+		}
+		
+	};
 
+	const handlePasswordChange = (e: string): void => {
+		setAuthInfo({
+			...authInfo,
+			password: e,
+		});
+	};
 
 	return (
 		<div className="flex flex-wrap flex-col justify-center content-center h-screen bg-neutral-50 font-poppins text-gunmetal">
@@ -22,17 +57,19 @@ export default function AuthPage() {
 					<h1 className=" text-center text-4xl font-bold">Login</h1>
 					<div>
 						<Input
-							type="email"
+							type="text"
 							label="Email"
 							name="email"
 							icon={<MdAlternateEmail />}
 							error="Input a valid email address"
+							onChange={(e) => handleIdentifierChange(e.target.value)}
 						/>
 						<Input
 							type="password"
 							label="Password"
 							name="password"
 							icon={<RiLockPasswordFill />}
+							onChange={(e) => handlePasswordChange(e.target.value)}
 						/>
 						<Button type="submit" label="Login" onClick={Login} />
 					</div>
