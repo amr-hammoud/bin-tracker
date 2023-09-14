@@ -7,7 +7,7 @@ interface InputProps {
 	icon?: React.ReactNode;
 	placeholder?: string;
 	error?: string;
-	onChange?: () => void;
+	onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function Input(props: InputProps) {
@@ -25,7 +25,7 @@ export default function Input(props: InputProps) {
                         focus:ring-primary-500 focus:border-primary-500
                         focus:invalid:border-red-500 focus:invalid:ring-red-500`}
 				placeholder={props.placeholder}
-				onChange={props.onChange}
+				onChange={(e) => props.onChange && props.onChange(e)}
 			/>
 			<div className={`mt-2 invisible peer-invalid/${props.name}:visible text-red-600 text-sm`}>
 				{props.error}
