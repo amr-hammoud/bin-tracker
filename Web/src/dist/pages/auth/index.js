@@ -43,19 +43,29 @@ const Logo_full_svg_1 = __importDefault(require("../../assets/logo/Logo-full.svg
 const auth_image_jpg_1 = __importDefault(require("../../assets/images/auth-image.jpg"));
 const Button_1 = __importDefault(require("../../components/base/Button"));
 const request_1 = require("../../configs/request");
+const react_redux_1 = require("react-redux");
+const authSlice_1 = require("../../store/authSlice");
+// import { RootState } from "../../store/store";
 function AuthPage() {
     const [authInfo, setAuthInfo] = (0, react_1.useState)({
         email: "",
         username: "",
         password: "",
     });
+    const dispatch = (0, react_redux_1.useDispatch)();
+    // const token = useSelector((state: RootState) => state.auth.token)
     const Login = () => __awaiter(this, void 0, void 0, function* () {
+        var _a, _b;
         const response = yield (0, request_1.sendRequest)({
             method: "POST",
             route: "auth/login",
             body: JSON.stringify(authInfo),
         });
         console.log(response);
+        if (response.status === 200) {
+            dispatch((0, authSlice_1.setToken)((_a = response === null || response === void 0 ? void 0 : response.data) === null || _a === void 0 ? void 0 : _a.token));
+            dispatch((0, authSlice_1.setUser)((_b = response === null || response === void 0 ? void 0 : response.data) === null || _b === void 0 ? void 0 : _b.user));
+        }
     });
     const handleIdentifierChange = (e) => {
         if (e.search("@") !== -1) {

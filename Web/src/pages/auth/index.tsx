@@ -6,6 +6,9 @@ import logo from "../../assets/logo/Logo-full.svg";
 import authImage from "../../assets/images/auth-image.jpg";
 import Button from "../../components/base/Button";
 import { sendRequest } from "../../configs/request";
+import { useDispatch, useSelector } from "react-redux";
+import { setToken, setUser } from "../../store/authSlice";
+// import { RootState } from "../../store/store";
 
 export default function AuthPage() {
 	const [authInfo, setAuthInfo] = useState({
@@ -13,6 +16,9 @@ export default function AuthPage() {
 		username: "",
 		password: "",
 	});
+
+	const dispatch = useDispatch()
+	// const token = useSelector((state: RootState) => state.auth.token)
 
 	const Login = async (): Promise<void> => {
 		const response = await sendRequest({
@@ -22,6 +28,10 @@ export default function AuthPage() {
 		});
 
 		console.log(response);
+		if(response.status === 200){
+			dispatch(setToken(response?.data?.token))
+			dispatch(setUser(response?.data?.user))
+		}
 	};
 
 	const handleIdentifierChange = (e: string): void => {
