@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../../components/base/input";
 import { MdAlternateEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
@@ -9,6 +9,9 @@ import { sendRequest } from "../../configs/request";
 import { useDispatch } from "react-redux";
 import { setToken, setUser } from "../../store/authSlice";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { User } from "../../store/interfaces";
+import { RootState } from "../../store/store";
 
 export default function AuthPage() {
 	const [authInfo, setAuthInfo] = useState({
@@ -17,6 +20,18 @@ export default function AuthPage() {
 		password: "",
 		login_error: "",
 	});
+
+	const user: User | null = useSelector(
+		(state: RootState) => state.auth.user
+	);
+
+	useEffect(() => {
+		if (user?.user_type === "1") {
+			navigate("/admin/dashboard");
+		} else if (user?.user_type) {
+			navigate("/dashboard");
+		}
+	}, [user]);
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -32,18 +47,18 @@ export default function AuthPage() {
 			if (response.status === 200) {
 				dispatch(setToken(response?.data?.token));
 				dispatch(setUser(response?.data?.user));
-				if(response.data.user.user_type === "1"){
+				if (response.data.user.user_type === "1") {
 					navigate("/admin/dashboard");
-				} else if (response.data.user.user_type === "2"){
+				} else if (response.data.user.user_type === "2") {
 					navigate("/dashboard");
 				}
 			}
 		} catch (err: any) {
 			console.error(err);
 			setAuthInfo({
-				...authInfo, login_error: err.response.data.message,
-			})
-			
+				...authInfo,
+				login_error: err.response.data.message,
+			});
 		}
 	};
 

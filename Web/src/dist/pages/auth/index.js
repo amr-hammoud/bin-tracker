@@ -46,6 +46,7 @@ const request_1 = require("../../configs/request");
 const react_redux_1 = require("react-redux");
 const authSlice_1 = require("../../store/authSlice");
 const react_router_dom_1 = require("react-router-dom");
+const react_redux_2 = require("react-redux");
 function AuthPage() {
     const [authInfo, setAuthInfo] = (0, react_1.useState)({
         email: "",
@@ -53,6 +54,15 @@ function AuthPage() {
         password: "",
         login_error: "",
     });
+    const user = (0, react_redux_2.useSelector)((state) => state.auth.user);
+    (0, react_1.useEffect)(() => {
+        if ((user === null || user === void 0 ? void 0 : user.user_type) === "1") {
+            navigate("/admin/dashboard");
+        }
+        else if (user === null || user === void 0 ? void 0 : user.user_type) {
+            navigate("/dashboard");
+        }
+    }, [user]);
     const dispatch = (0, react_redux_1.useDispatch)();
     const navigate = (0, react_router_dom_1.useNavigate)();
     const Login = () => __awaiter(this, void 0, void 0, function* () {
