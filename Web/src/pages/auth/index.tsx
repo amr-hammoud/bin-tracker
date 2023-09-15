@@ -6,36 +6,48 @@ import logo from "../../assets/logo/Logo-full.svg";
 import authImage from "../../assets/images/auth-image.jpg";
 import Button from "../../components/base/Button";
 import { sendRequest } from "../../configs/request";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setToken, setUser } from "../../store/authSlice";
-// import { RootState } from "../../store/store";
+import { useNavigate } from "react-router-dom";
 
 export default function AuthPage() {
 	const [authInfo, setAuthInfo] = useState({
 		email: "",
 		username: "",
 		password: "",
+		login_error: "",
 	});
 
-	const dispatch = useDispatch()
-	// const token = useSelector((state: RootState) => state.auth.token)
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const Login = async (): Promise<void> => {
-		const response = await sendRequest({
-			method: "POST",
-			route: "auth/login",
-			body: JSON.stringify(authInfo),
-		});
-
-		console.log(response);
-		if(response.status === 200){
-			dispatch(setToken(response?.data?.token))
-			dispatch(setUser(response?.data?.user))
+		try {
+			const response = await sendRequest({
+				method: "POST",
+				route: "auth/login",
+				body: JSON.stringify(authInfo),
+			});
+			console.log(response);
+			if (response.status === 200) {
+				dispatch(setToken(response?.data?.token));
+				dispatch(setUser(response?.data?.user));
+				if(response.data.user.user_type === "1"){
+					navigate("/admin/dashboard");
+				} else if (response.data.user.user_type === "2"){
+					navigate("/dashboard");
+				}
+			}
+		} catch (err: any) {
+			console.error(err);
+			setAuthInfo({
+				...authInfo, login_error: err.response.data.message,
+			})
+			
 		}
 	};
 
 	const handleIdentifierChange = (e: string): void => {
-		
 		if (e.search("@") !== -1) {
 			setAuthInfo({
 				...authInfo,
@@ -49,7 +61,6 @@ export default function AuthPage() {
 				email: "",
 			});
 		}
-		
 	};
 
 	const handlePasswordChange = (e: string): void => {
@@ -68,18 +79,22 @@ export default function AuthPage() {
 					<div>
 						<Input
 							type="text"
-							label="Email"
-							name="email"
+							label="Email / Username"
+							name="identifier"
 							icon={<MdAlternateEmail />}
-							error="Input a valid email address"
-							onChange={(e) => handleIdentifierChange(e.target.value)}
+							onChange={(e) =>
+								handleIdentifierChange(e.target.value)
+							}
 						/>
 						<Input
 							type="password"
 							label="Password"
 							name="password"
+							error={authInfo.login_error}
 							icon={<RiLockPasswordFill />}
-							onChange={(e) => handlePasswordChange(e.target.value)}
+							onChange={(e) =>
+								handlePasswordChange(e.target.value)
+							}
 						/>
 						<Button type="submit" label="Login" onClick={Login} />
 					</div>

@@ -45,26 +45,39 @@ const Button_1 = __importDefault(require("../../components/base/Button"));
 const request_1 = require("../../configs/request");
 const react_redux_1 = require("react-redux");
 const authSlice_1 = require("../../store/authSlice");
-// import { RootState } from "../../store/store";
+const react_router_dom_1 = require("react-router-dom");
 function AuthPage() {
     const [authInfo, setAuthInfo] = (0, react_1.useState)({
         email: "",
         username: "",
         password: "",
+        login_error: "",
     });
     const dispatch = (0, react_redux_1.useDispatch)();
-    // const token = useSelector((state: RootState) => state.auth.token)
+    const navigate = (0, react_router_dom_1.useNavigate)();
     const Login = () => __awaiter(this, void 0, void 0, function* () {
         var _a, _b;
-        const response = yield (0, request_1.sendRequest)({
-            method: "POST",
-            route: "auth/login",
-            body: JSON.stringify(authInfo),
-        });
-        console.log(response);
-        if (response.status === 200) {
-            dispatch((0, authSlice_1.setToken)((_a = response === null || response === void 0 ? void 0 : response.data) === null || _a === void 0 ? void 0 : _a.token));
-            dispatch((0, authSlice_1.setUser)((_b = response === null || response === void 0 ? void 0 : response.data) === null || _b === void 0 ? void 0 : _b.user));
+        try {
+            const response = yield (0, request_1.sendRequest)({
+                method: "POST",
+                route: "auth/login",
+                body: JSON.stringify(authInfo),
+            });
+            console.log(response);
+            if (response.status === 200) {
+                dispatch((0, authSlice_1.setToken)((_a = response === null || response === void 0 ? void 0 : response.data) === null || _a === void 0 ? void 0 : _a.token));
+                dispatch((0, authSlice_1.setUser)((_b = response === null || response === void 0 ? void 0 : response.data) === null || _b === void 0 ? void 0 : _b.user));
+                if (response.data.user.user_type === "1") {
+                    navigate("/admin/dashboard");
+                }
+                else if (response.data.user.user_type === "2") {
+                    navigate("/dashboard");
+                }
+            }
+        }
+        catch (err) {
+            console.error(err);
+            setAuthInfo(Object.assign(Object.assign({}, authInfo), { login_error: err.response.data.message }));
         }
     });
     const handleIdentifierChange = (e) => {
@@ -84,8 +97,8 @@ function AuthPage() {
                 react_1.default.createElement("img", { src: Logo_full_svg_1.default, alt: "" }),
                 react_1.default.createElement("h1", { className: " text-center text-4xl font-bold" }, "Login"),
                 react_1.default.createElement("div", null,
-                    react_1.default.createElement(Input_1.default, { type: "text", label: "Email", name: "email", icon: react_1.default.createElement(md_1.MdAlternateEmail, null), error: "Input a valid email address", onChange: (e) => handleIdentifierChange(e.target.value) }),
-                    react_1.default.createElement(Input_1.default, { type: "password", label: "Password", name: "password", icon: react_1.default.createElement(ri_1.RiLockPasswordFill, null), onChange: (e) => handlePasswordChange(e.target.value) }),
+                    react_1.default.createElement(Input_1.default, { type: "text", label: "Email / Username", name: "identifier", icon: react_1.default.createElement(md_1.MdAlternateEmail, null), onChange: (e) => handleIdentifierChange(e.target.value) }),
+                    react_1.default.createElement(Input_1.default, { type: "password", label: "Password", name: "password", error: authInfo.login_error, icon: react_1.default.createElement(ri_1.RiLockPasswordFill, null), onChange: (e) => handlePasswordChange(e.target.value) }),
                     react_1.default.createElement(Button_1.default, { type: "submit", label: "Login", onClick: Login }))),
             react_1.default.createElement("div", { className: "flex flex-wrap content-center w-0 lg:w-full" },
                 react_1.default.createElement("img", { src: auth_image_jpg_1.default, alt: "" })))));
