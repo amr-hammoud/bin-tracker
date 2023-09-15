@@ -36,12 +36,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importStar(require("react"));
-const Input_1 = __importDefault(require("../../components/base/Input"));
+const input_1 = __importDefault(require("../../components/base/input"));
 const md_1 = require("react-icons/md");
 const ri_1 = require("react-icons/ri");
 const Logo_full_svg_1 = __importDefault(require("../../assets/logo/Logo-full.svg"));
 const auth_image_jpg_1 = __importDefault(require("../../assets/images/auth-image.jpg"));
-const Button_1 = __importDefault(require("../../components/base/Button"));
+const button_1 = __importDefault(require("../../components/base/button"));
 const request_1 = require("../../configs/request");
 const react_redux_1 = require("react-redux");
 const authSlice_1 = require("../../store/authSlice");
@@ -97,9 +97,9 @@ function AuthPage() {
                 react_1.default.createElement("img", { src: Logo_full_svg_1.default, alt: "" }),
                 react_1.default.createElement("h1", { className: " text-center text-4xl font-bold" }, "Login"),
                 react_1.default.createElement("div", null,
-                    react_1.default.createElement(Input_1.default, { type: "text", label: "Email / Username", name: "identifier", icon: react_1.default.createElement(md_1.MdAlternateEmail, null), onChange: (e) => handleIdentifierChange(e.target.value) }),
-                    react_1.default.createElement(Input_1.default, { type: "password", label: "Password", name: "password", error: authInfo.login_error, icon: react_1.default.createElement(ri_1.RiLockPasswordFill, null), onChange: (e) => handlePasswordChange(e.target.value) }),
-                    react_1.default.createElement(Button_1.default, { type: "submit", label: "Login", onClick: Login }))),
+                    react_1.default.createElement(input_1.default, { type: "text", label: "Email / Username", name: "identifier", icon: react_1.default.createElement(md_1.MdAlternateEmail, null), onChange: (e) => handleIdentifierChange(e.target.value) }),
+                    react_1.default.createElement(input_1.default, { type: "password", label: "Password", name: "password", error: authInfo.login_error, icon: react_1.default.createElement(ri_1.RiLockPasswordFill, null), onChange: (e) => handlePasswordChange(e.target.value) }),
+                    react_1.default.createElement(button_1.default, { type: "submit", label: "Login", onClick: Login }))),
             react_1.default.createElement("div", { className: "flex flex-wrap content-center w-0 lg:w-full" },
                 react_1.default.createElement("img", { src: auth_image_jpg_1.default, alt: "" })))));
 }

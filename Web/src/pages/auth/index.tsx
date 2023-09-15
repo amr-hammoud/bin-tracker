@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Input from "../../components/base/Input";
+import Input from "../../components/base/input";
 import { MdAlternateEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 import logo from "../../assets/logo/Logo-full.svg";
 import authImage from "../../assets/images/auth-image.jpg";
-import Button from "../../components/base/Button";
+import Button from "../../components/base/button";
 import { sendRequest } from "../../configs/request";
 import { useDispatch } from "react-redux";
 import { setToken, setUser } from "../../store/authSlice";
