@@ -14,6 +14,7 @@ const dashboard_1 = __importDefault(require("./pages/superadmin/dashboard"));
 const users_2 = __importDefault(require("./pages/superadmin/users"));
 const groups_1 = __importDefault(require("./pages/superadmin/groups"));
 const account_1 = __importDefault(require("./pages/superadmin/account"));
+const dashboard_2 = __importDefault(require("./pages/admin/dashboard"));
 function App() {
     return (react_1.default.createElement(react_redux_1.Provider, { store: store_1.default },
         react_1.default.createElement(react_router_dom_1.BrowserRouter, null,
@@ -23,6 +24,7 @@ function App() {
                 react_1.default.createElement(react_router_dom_1.Route, { path: "/admin/dashboard", element: react_1.default.createElement(dashboard_1.default, null) }),
                 react_1.default.createElement(react_router_dom_1.Route, { path: "/admin/users", element: react_1.default.createElement(users_2.default, null) }),
                 react_1.default.createElement(react_router_dom_1.Route, { path: "/admin/groups", element: react_1.default.createElement(groups_1.default, null) }),
-                react_1.default.createElement(react_router_dom_1.Route, { path: "/admin/account", element: react_1.default.createElement(account_1.default, null) })))));
+                react_1.default.createElement(react_router_dom_1.Route, { path: "/admin/account", element: react_1.default.createElement(account_1.default, null) }),
+                react_1.default.createElement(react_router_dom_1.Route, { path: "/dashboard", element: react_1.default.createElement(dashboard_2.default, null) })))));
 }
 exports.default = App;

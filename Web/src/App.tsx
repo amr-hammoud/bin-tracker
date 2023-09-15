@@ -9,6 +9,7 @@ import SuperAdminDashboard from "./pages/superadmin/dashboard";
 import SuperAdminUsers from "./pages/superadmin/users";
 import SuperAdminGroups from "./pages/superadmin/groups";
 import SuperAdminAccount from "./pages/superadmin/account";
+import AdminDashboard from "./pages/admin/dashboard";
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
 					<Route path="/admin/users" element={<SuperAdminUsers />} />
 					<Route path="/admin/groups" element={<SuperAdminGroups />} />
 					<Route path="/admin/account" element={<SuperAdminAccount />} />
+					<Route path="/dashboard" element={<AdminDashboard />} />
 				</Routes>
 			</BrowserRouter>
 		</Provider>
