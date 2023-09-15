@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import SidebarItem from "../../base/sidebarItem";
 import logo from "../../../assets/logo/Logo-full.svg";
 import { BiLogOut } from "react-icons/bi";
+import { useDispatch } from "react-redux";
+import { setToken, setUser } from "../../../store/authSlice";
+import { useNavigate } from "react-router-dom";
 
 interface SidebarProps {
 	items: Array<string>;
@@ -13,6 +16,15 @@ export default function Sidebar(props: SidebarProps) {
 
 	const selectHandler = (label: string) => {
 		setSelectedTab(label);
+	};
+
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+
+	const handleLogout = (): void => {
+		dispatch(setToken(null));
+		dispatch(setUser(null));
+		navigate("/", { replace: true });
 	};
 
 	return (
@@ -36,8 +48,7 @@ export default function Sidebar(props: SidebarProps) {
 				className="flex flex-wrap content-center font-poppins
 				mt-12 gap-3 w-full p-2 rounded-xl font-medium text-gunmetal
 				hover:bg-red-200 hover:cursor-pointer"
-				// onClick={() => handleLogout()}
-				// ref={logoutButton}
+				onClick={() => handleLogout()}
 			>
 				<div className=" flex content-center flex-wrap">
 					<BiLogOut />
