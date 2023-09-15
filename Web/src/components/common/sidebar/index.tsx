@@ -16,7 +16,7 @@ export default function Sidebar(props: SidebarProps) {
 	};
 
 	return (
-		<div className="flex flex-col flex-wrap shadow-md  h-screen w-56 p-4">
+		<div className="flex flex-col flex-wrap shadow-md bg-neutral-50 h-screen w-64 p-4">
 			<div className="w-full flex justify-center">
 				<img src={logo} className="w-32" alt="logo" />
 			</div>

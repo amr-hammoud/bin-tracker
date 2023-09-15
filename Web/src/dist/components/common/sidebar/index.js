@@ -36,7 +36,7 @@ function Sidebar(props) {
     const selectHandler = (label) => {
         setSelectedTab(label);
     };
-    return (react_1.default.createElement("div", { className: "flex flex-col flex-wrap shadow-md  h-screen w-56 p-4" },
+    return (react_1.default.createElement("div", { className: "flex flex-col flex-wrap shadow-md bg-neutral-50 h-screen w-64 p-4" },
         react_1.default.createElement("div", { className: "w-full flex justify-center" },
             react_1.default.createElement("img", { src: Logo_full_svg_1.default, className: "w-32", alt: "logo" })),
         react_1.default.createElement("div", { className: " mt-8" }, (_a = props.items) === null || _a === void 0 ? void 0 : _a.map((item, index) => {
