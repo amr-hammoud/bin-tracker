@@ -21,14 +21,15 @@ function App() {
     const persistor = (0, redux_persist_1.persistStore)(store_1.default);
     return (react_1.default.createElement(react_redux_1.Provider, { store: store_1.default },
         react_1.default.createElement(react_2.PersistGate, { loading: null, persistor: persistor },
-            react_1.default.createElement(react_router_dom_1.BrowserRouter, null,
-                react_1.default.createElement(react_router_dom_1.Routes, null,
-                    react_1.default.createElement(react_router_dom_1.Route, { path: "/", element: react_1.default.createElement(auth_1.default, null) }),
-                    react_1.default.createElement(react_router_dom_1.Route, { path: "/users", element: react_1.default.createElement(users_1.default, null) }),
-                    react_1.default.createElement(react_router_dom_1.Route, { path: "/admin/dashboard", element: react_1.default.createElement(dashboard_1.default, null) }),
-                    react_1.default.createElement(react_router_dom_1.Route, { path: "/admin/users", element: react_1.default.createElement(users_2.default, null) }),
-                    react_1.default.createElement(react_router_dom_1.Route, { path: "/admin/groups", element: react_1.default.createElement(groups_1.default, null) }),
-                    react_1.default.createElement(react_router_dom_1.Route, { path: "/admin/account", element: react_1.default.createElement(account_1.default, null) }),
-                    react_1.default.createElement(react_router_dom_1.Route, { path: "/dashboard", element: react_1.default.createElement(dashboard_2.default, null) }))))));
+            react_1.default.createElement("div", { className: " font-poppins cursor-default" },
+                react_1.default.createElement(react_router_dom_1.BrowserRouter, null,
+                    react_1.default.createElement(react_router_dom_1.Routes, null,
+                        react_1.default.createElement(react_router_dom_1.Route, { path: "/", element: react_1.default.createElement(auth_1.default, null) }),
+                        react_1.default.createElement(react_router_dom_1.Route, { path: "/users", element: react_1.default.createElement(users_1.default, null) }),
+                        react_1.default.createElement(react_router_dom_1.Route, { path: "/admin/dashboard", element: react_1.default.createElement(dashboard_1.default, null) }),
+                        react_1.default.createElement(react_router_dom_1.Route, { path: "/admin/users", element: react_1.default.createElement(users_2.default, null) }),
+                        react_1.default.createElement(react_router_dom_1.Route, { path: "/admin/groups", element: react_1.default.createElement(groups_1.default, null) }),
+                        react_1.default.createElement(react_router_dom_1.Route, { path: "/admin/account", element: react_1.default.createElement(account_1.default, null) }),
+                        react_1.default.createElement(react_router_dom_1.Route, { path: "/dashboard", element: react_1.default.createElement(dashboard_2.default, null) })))))));
 }
 exports.default = App;
