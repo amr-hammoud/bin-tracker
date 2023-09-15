@@ -5,6 +5,10 @@ import AuthPage from "./pages/auth";
 import UsersPage from "./pages/users";
 import { Provider } from "react-redux";
 import store from "./store/store";
+import SuperAdminDashboard from "./pages/superadmin/dashboard";
+import SuperAdminUsers from "./pages/superadmin/users";
+import SuperAdminGroups from "./pages/superadmin/groups";
+import SuperAdminAccount from "./pages/superadmin/account";
 
 function App() {
 
@@ -14,6 +18,10 @@ function App() {
 				<Routes>
 					<Route path="/" element={<AuthPage />} />
 					<Route path="/users" element={<UsersPage />} />
+					<Route path="/admin/dashboard" element={<SuperAdminDashboard />} />
+					<Route path="/admin/users" element={<SuperAdminUsers />} />
+					<Route path="/admin/groups" element={<SuperAdminGroups />} />
+					<Route path="/admin/account" element={<SuperAdminAccount />} />
 				</Routes>
 			</BrowserRouter>
 		</Provider>
