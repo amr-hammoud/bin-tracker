@@ -5,7 +5,7 @@ import { User } from "../../../store/interfaces";
 import Sidebar from "../../../components/common/sidebar";
 import Navbar from "../../../components/common/navbar";
 
-export default function AdminDashboard() {
+export default function AdminAnnouncements() {
 	const user: User | null = useSelector(
 		(state: RootState) => state.auth.user
 	);
@@ -23,10 +23,10 @@ export default function AdminDashboard() {
 					"Chats",
 					"Account",
 				]}
-				selected="Dashboard"
+				selected="Announcements"
 			/>
 			<div className="flex flex-col w-full">
-				<Navbar label="Dashboard" />
+				<Navbar label="Announcements" />
 				<div className="p-5">
 					<h2>
 						Hello {user?.first_name} {user?.last_name}

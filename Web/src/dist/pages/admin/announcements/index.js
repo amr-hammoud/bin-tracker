@@ -7,7 +7,7 @@ const react_1 = __importDefault(require("react"));
 const react_redux_1 = require("react-redux");
 const sidebar_1 = __importDefault(require("../../../components/common/sidebar"));
 const navbar_1 = __importDefault(require("../../../components/common/navbar"));
-function AdminDashboard() {
+function AdminAnnouncements() {
     const user = (0, react_redux_1.useSelector)((state) => state.auth.user);
     return (react_1.default.createElement("div", { className: "flex" },
         react_1.default.createElement(sidebar_1.default, { items: [
@@ -19,9 +19,9 @@ function AdminDashboard() {
                 "Announcements",
                 "Chats",
                 "Account",
-            ], selected: "Dashboard" }),
+            ], selected: "Announcements" }),
         react_1.default.createElement("div", { className: "flex flex-col w-full" },
-            react_1.default.createElement(navbar_1.default, { label: "Dashboard" }),
+            react_1.default.createElement(navbar_1.default, { label: "Announcements" }),
             react_1.default.createElement("div", { className: "p-5" },
                 react_1.default.createElement("h2", null,
                     "Hello ", user === null || user === void 0 ? void 0 :
@@ -29,4 +29,4 @@ function AdminDashboard() {
                     " ", user === null || user === void 0 ? void 0 :
                     user.last_name)))));
 }
-exports.default = AdminDashboard;
+exports.default = AdminAnnouncements;
