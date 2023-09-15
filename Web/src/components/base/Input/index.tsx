@@ -27,7 +27,7 @@ export default function Input(props: InputProps) {
 				placeholder={props.placeholder}
 				onChange={(e) => props.onChange && props.onChange(e)}
 			/>
-			<div className={`mt-2 invisible peer-invalid/${props.name}:visible text-red-600 text-sm`}>
+			<div className={`mt-2 text-red-600 text-sm`}>
 				{props.error}
 			</div>
 		</div>
