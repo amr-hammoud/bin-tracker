@@ -15,6 +15,8 @@ app.use("/groups", groupRouter)
 const userTypeRouter = require("./routes/user-type.routes")
 app.use("/user-types", userTypeRouter)
 
+const binRouter = require("./routes/bin.routes")
+app.use("/bins", binRouter)
 
 app.listen(8000, (err) => {
 	if (err) {

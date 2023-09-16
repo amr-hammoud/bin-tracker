@@ -1,0 +1,12 @@
+const express = require("express");
+const router = express.Router();
+const binController = require("../controllers/bin.controllers");
+const authMiddleware = require("../middlewares/auth.middleware");
+
+router.get("/:id?", authMiddleware, binController.getBin)
+router.post("/:id?", authMiddleware, binController.createOrUpdateBin)
+router.delete("/", authMiddleware, binController.deleteBin)
+router.post("/:id/records/", binController.addBinRecord)
+router.delete("/:bin_id/records/:record_id", binController.deleteBinRecord)
+
+module.exports = router;
