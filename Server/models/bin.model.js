@@ -1,8 +1,17 @@
 const mongoose = require("mongoose");
 
+const dataSchema = new mongoose.Schema(
+	{
+		record: String,
+	},
+	{
+		timestamps: true,
+	}
+);
+
 const userSchema = new mongoose.Schema(
 	{
-		_id: {
+		custom_id: {
 			type: String,
 			trim: true,
 			index: true,
@@ -20,25 +29,23 @@ const userSchema = new mongoose.Schema(
 		group_id: {
 			type: String,
 			trim: true,
-            required: true,
+			required: true,
 		},
-        last_pickup_time: {
-            type: String,
-            trim: true,
-        },
+		last_pickup_time: {
+			type: String,
+			trim: true,
+		},
 		waste_type: {
 			type: String,
 			trim: true,
 		},
-        data: {
-            type: Array,
-        }
+		data: [dataSchema],
 	},
 	{
 		timestamps: true,
 	}
 );
 
-const User = mongoose.model("User", userSchema);
+const Bin = mongoose.model("bins", userSchema);
 
-module.exports = User;
+module.exports = Bin;
