@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema(
 	{
-		_id: {
+		custom_id: {
 			type: String,
 			trim: true,
 			index: true,
