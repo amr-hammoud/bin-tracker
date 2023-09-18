@@ -1,8 +1,6 @@
 const Bin = require("../models/bin.model");
 
 const getBin = async (req, res) => {
-	console.log(req.params);
-
 	if (req.params.id) {
 		const bin = await Bin.findById(req.params.id);
 		res.status(200).send(bin);
@@ -44,8 +42,7 @@ const createOrUpdateBin = async (req, res) => {
 };
 
 const deleteBin = async (req, res) => {
-	const id = req.body.id;
-	console.log(id);
+	const id = req.params.id;
 	await Bin.deleteOne({ _id: id });
 	res.status(200).send("Bin deleted successfully");
 };
@@ -103,4 +100,10 @@ const deleteBinRecord = async (req, res) => {
 	}
 };
 
-module.exports = { getBin, createOrUpdateBin, deleteBin, addBinRecord, deleteBinRecord };
+module.exports = {
+	getBin,
+	createOrUpdateBin,
+	deleteBin,
+	addBinRecord,
+	deleteBinRecord,
+};
