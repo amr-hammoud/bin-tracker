@@ -9,6 +9,9 @@ app.use(express.json());
 const authRouter = require("./routes/auth.routes")
 app.use("/auth", authRouter)
 
+const userRouter = require("./routes/user.routes")
+app.use("/users", userRouter)
+
 const groupRouter = require("./routes/group.routes")
 app.use("/groups", groupRouter)
 
