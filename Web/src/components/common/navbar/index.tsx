@@ -6,7 +6,7 @@ interface NavbarProps {
 
 export default function Navbar (props: NavbarProps) {
     return (
-        <div className='px-5 py-3 font-semibold text-2xl text-neutral-0 bg-primary-500 w-full'>
+        <div className='px-5 py-3 font-semibold text-2xl text-neutral-0 bg-primary-500 w-full select-none'>
             {props.label}
         </div>
     );
