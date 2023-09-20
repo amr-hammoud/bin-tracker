@@ -30,4 +30,10 @@ interface Bin {
 	data: Array<BinRecord>;
 }
 
-export { User, Token, Bin, BinRecord };
+interface Group {
+	name: string;
+	admins: Array<string>;
+	members: Array<string>;
+}
+
+export { User, Token, Bin, BinRecord, Group };
