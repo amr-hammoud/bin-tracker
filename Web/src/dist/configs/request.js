@@ -23,7 +23,7 @@ const sendRequest = (params) => __awaiter(void 0, void 0, void 0, function* () {
         throw Error("route required");
     const headers = params.includeheaders
         ? {
-            Authorization: `Bearer $token`,
+            Authorization: `Bearer ${params.token}`,
             "Content-Type": "application/json",
         }
         : {};

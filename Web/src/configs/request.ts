@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Token } from "../store/interfaces";
 
 axios.defaults.baseURL = "http://localhost:8000/";
 
@@ -6,6 +7,7 @@ interface requestParams {
 	method?: "GET" | "POST" | "PUT" | "DELETE";
 	route: string;
 	body?: Object;
+    token?: Token | null;
 	includeheaders?: boolean;
 }
 
@@ -21,7 +23,7 @@ export const sendRequest = async (params: requestParams) => {
 
 	const headers: Record<string, string> = params.includeheaders
                             ? {
-                                Authorization: `Bearer $token`,
+                                Authorization: `Bearer ${params.token}`,
                                 "Content-Type": "application/json",
                             }
                             : {};
