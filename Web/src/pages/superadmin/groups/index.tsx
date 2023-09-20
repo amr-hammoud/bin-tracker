@@ -1,14 +1,38 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
-import { User } from "../../../store/interfaces";
+import { Group, Token } from "../../../store/interfaces";
 import Sidebar from "../../../components/common/sidebar";
 import Navbar from "../../../components/common/navbar";
+import { sendRequest } from "../../../configs/request";
+import ListItem from "../../../components/base/listItem";
 
 export default function SuperAdminGroups() {
-	const user: User | null = useSelector(
-		(state: RootState) => state.auth.user
+	const token: Token | null = useSelector(
+		(state: RootState) => state.auth.token
 	);
+
+	const [groupList,setGroupList] = useState([])
+
+	const getGroups = async () => {
+		try {
+			const response = await sendRequest({
+				route: "groups/",
+				token,
+			});
+			console.log(response);
+			if (response.status === 200) {
+				setGroupList(response.data)
+				
+			}
+		} catch (err: any) {
+			console.error(err);
+		}
+	}
+
+	useEffect(() => {
+		getGroups()
+	}, [])
 
 	return (
 		<div className="flex">
@@ -18,9 +42,11 @@ export default function SuperAdminGroups() {
 			/>
 			<div className="flex flex-col w-full">
 				<Navbar label="Groups" />
-				<div className="p-5">
+				<div className="p-10">
 					<h2>
-						Hello {user?.first_name} {user?.last_name}
+						{groupList.map((group: Group, index) => {
+							return <ListItem key={index} items={[group.name, group.admins.length.toString(),group.members.length.toString()]}/>
+						})}
 					</h2>
 				</div>
 			</div>
