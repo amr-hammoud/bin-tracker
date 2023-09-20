@@ -11,7 +11,7 @@ import {
 	MdPersonOutline,
 } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface SidebarItemProps {
 	label: string;
