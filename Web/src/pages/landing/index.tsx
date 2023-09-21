@@ -1,25 +1,37 @@
-import React, { useState } from "react";
 import "./style.css";
+import { MdClose } from "react-icons/md";
+import { PiListBold } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
+import aboutImage from "../../assets/images/about-section.svg";
 import app from "../../assets/images/app.png";
 import bins from "../../assets/images/bins.png";
 import dashboard from "../../assets/images/dashboard.png";
+import Input from "../../components/base/input";
 import logo from "../../assets/logo/logo-landing.svg";
-import { MdClose } from "react-icons/md";
-import { PiListBold } from "react-icons/pi";
-import aboutImage from "../../assets/images/about-section.svg";
+import React, { useState } from "react";
 
 export default function LandingPage() {
 	const navigate = useNavigate();
 
 	const [mobileNavbar, setMobileNavbar] = useState(true);
 
+	const [contactForm, setContactForm] = useState({
+		first_name: "",
+		last_name: "",
+		phone_number: "",
+		email: "",
+		company: "",
+		location: "",
+		inquiry: "",
+	});
+
+
 	return (
-		<div className="scroll-smooth text-gunmetal">
+		<div className="text-gunmetal">
 			{/* Small Screens Navbar Toggler */}
 			<div
-				className={`flex justify-between sm:hidden fixed top-0 left-0 w-screen px-8 py-4 bg-neutral-0 bg-opacity-90 z-20 ${
-					mobileNavbar && "hidden"
+				className={`flex justify-between sm:hidden fixed top-0 left-0 w-screen shadow-md px-8 py-4 bg-neutral-0 bg-opacity-90 z-20 ${
+					mobileNavbar ? "hidden" : ""
 				}`}
 			>
 				<div className="flex flex-wrap justify-center content-center w-24">
@@ -37,7 +49,7 @@ export default function LandingPage() {
 			<div
 				className={`flex flex-col fixed top-0 left-0 sm:hidden w-screen h-screen gap-10
                         px-16 py-4 bg-neutral-0 bg-opacity-90 justify-center content-center z-20 ${
-							!mobileNavbar && "hidden"
+							!mobileNavbar ? "hidden" : ""
 						}`}
 			>
 				<div className="flex justify-end text-xl ">
@@ -59,19 +71,19 @@ export default function LandingPage() {
 						className="flex justify-center content-center flex-wrap font-medium
                                 hover:text-primary-500 hover:cursor-pointer"
 					>
-						Home
+						<a href="#home">Home</a>
 					</div>
 					<div
 						className="flex justify-center content-center flex-wrap font-medium
                                 hover:text-primary-500 hover:cursor-pointer"
 					>
-						Services
+						<a href="#services">Services</a>
 					</div>
 					<div
 						className="flex justify-center content-center flex-wrap font-medium
                                 hover:text-primary-500 hover:cursor-pointer"
 					>
-						About
+						<a href="#about">About</a>
 					</div>
 					<div
 						className="flex justify-center content-center flex-wrap font-medium
@@ -92,7 +104,7 @@ export default function LandingPage() {
 				</div>
 			</div>
 			{/* Default Navbar */}
-			<div className="hidden sm:flex fixed top-0 left-0 w-screen px-16 py-4 bg-neutral-0 bg-opacity-90 z-20">
+			<div className="hidden sm:flex fixed top-0 left-0 w-screen px-16 py-4 shadow-md bg-neutral-0 bg-opacity-90 z-20">
 				<div>
 					<img src={logo} alt="logo" />
 				</div>
@@ -104,25 +116,25 @@ export default function LandingPage() {
 						className="flex content-center flex-wrap font-medium
                                 hover:text-primary-500 hover:cursor-pointer"
 					>
-						Home
+						<a href="#home">Home</a>
 					</div>
 					<div
 						className="flex content-center flex-wrap font-medium
                                 hover:text-primary-500 hover:cursor-pointer"
 					>
-						Services
+						<a href="#services">Services</a>
 					</div>
 					<div
 						className="flex content-center flex-wrap font-medium
                                 hover:text-primary-500 hover:cursor-pointer"
 					>
-						About
+						<a href="#about">About</a>
 					</div>
 					<div
 						className="flex content-center flex-wrap font-medium
                                 hover:text-primary-500 hover:cursor-pointer"
 					>
-						Contact Us
+						<a href="#contact">Contact us</a>
 					</div>
 				</div>
 				<div className="flex justify-center content-center">
@@ -137,7 +149,10 @@ export default function LandingPage() {
 				</div>
 			</div>
 			{/* Hero Section */}
-			<div className="flex flex-wrap justify-center content-center hero-background h-screen w-screen text-center">
+			<div
+				className="flex flex-wrap justify-center content-center hero-background h-screen w-screen text-center"
+				id="home"
+			>
 				<div className="black-overlay absolute opacity-60 bg-neutral-900 w-screen h-screen"></div>
 				<div className="flex flex-col gap-6 z-10">
 					<div className="text-primary-500 text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold">
@@ -149,7 +164,7 @@ export default function LandingPage() {
 					</div>
 					<div className="flex justify-center content-center">
 						<div
-							className="flex content-center flex-wrap px-5 py-1 md:px-7 py-2 lg:py-3 lg:px-10 rounded-md font-semibold
+							className="flex content-center flex-wrap px-5 md:px-7 py-2 lg:py-3 lg:px-10 rounded-md font-semibold
                                 text-neutral-0 bg-primary-500 hover:bg-primary-700
                                   hover:cursor-pointer"
 						>
@@ -159,7 +174,10 @@ export default function LandingPage() {
 				</div>
 			</div>
 			{/* Services Section */}
-			<div className="flex flex-wrap justify-center content-center w-full bg-neutral-100">
+			<div
+				className="flex flex-wrap justify-center content-center w-full bg-neutral-100"
+				id="services"
+			>
 				<div className="flex flex-col w-4/5 my-28 gap-6">
 					<div className=" text-4xl font-bold text-primary-500">
 						Services
@@ -221,7 +239,10 @@ export default function LandingPage() {
 				</div>
 			</div>
 			{/* About Section */}
-			<div className="about-section relative flex flex-wrap justify-center w-full bg-neutral-0">
+			<div
+				className="about-section relative flex flex-wrap justify-center w-full bg-neutral-0"
+				id="about"
+			>
 				<div className="flex flex-col w-4/5 my-28 gap-10">
 					<div className=" text-4xl font-bold text-primary-500">
 						About
@@ -266,6 +287,131 @@ export default function LandingPage() {
 				</div>
 				<div className="about-section-image hidden md:block absolute bottom-0 right-0 h-fit w-full">
 					<img src={aboutImage} alt="garbage truck track" />
+				</div>
+			</div>
+			{/* Contact us Section */}
+			<div
+				className="z-10 relative flex flex-wrap justify-center content-center w-full bg-neutral-100"
+				id="contact"
+			>
+				<div className="flex flex-col w-4/5 my-28 gap-6">
+					<div className=" text-4xl font-bold text-primary-500">
+						Contact us
+					</div>
+					<div className="flex flex-wrap md:flex-nowrap gap-5 w-full">
+						<div className=" w-full md:w-1/3">
+							<Input
+								label="First Name"
+								placeholder="first name"
+								required={true}
+								onChange={(e) => {
+									setContactForm({
+										...contactForm,
+										first_name: e.target.value,
+									});
+								}}
+							/>
+						</div>
+						<div className=" w-full md:w-1/3">
+							<Input
+								label="Last Name"
+								placeholder="surname"
+								required={true}
+								onChange={(e) => {
+									setContactForm({
+										...contactForm,
+										last_name: e.target.value,
+									});
+								}}
+							/>
+						</div>
+						<div className=" w-full md:w-1/3">
+							<Input
+								label="Phone Number"
+								type="tel"
+								placeholder="number"
+								required={true}
+								onChange={(e) => {
+									setContactForm({
+										...contactForm,
+										phone_number: e.target.value,
+									});
+								}}
+							/>
+						</div>
+					</div>
+					<div className="flex flex-wrap md:flex-nowrap gap-5 w-full">
+						<div className=" w-full md:w-1/3">
+							<Input
+								label="Email"
+								placeholder="example@email.com"
+								required={true}
+								onChange={(e) => {
+									setContactForm({
+										...contactForm,
+										email: e.target.value,
+									});
+								}}
+							/>
+						</div>
+						<div className=" w-full md:w-1/3">
+							<Input
+								label="Company"
+								placeholder="company name"
+								required={true}
+								onChange={(e) => {
+									setContactForm({
+										...contactForm,
+										company: e.target.value,
+									});
+								}}
+							/>
+						</div>
+						<div className=" w-full md:w-1/3">
+							<Input
+								label="Location"
+								placeholder="City, Country"
+								required={true}
+								onChange={(e) => {
+									setContactForm({
+										...contactForm,
+										location: e.target.value,
+									});
+								}}
+							/>
+						</div>
+					</div>
+					{/* Text Area */}
+					<div className="flex flex-wrap flex-col justify-center content-center font-poppins h-fit my-1 text-gunmetal">
+						<div className=" text-sm flex content-center gap-1">
+							<div className=" flex content-center flex-wrap">
+								Inquiry<span className=" text-red-500">*</span>
+							</div>
+						</div>
+						<textarea
+							className={`rounded w-full text-base
+									bg-neutral-50 border-neutral-700
+									focus:ring-primary-500 focus:border-primary-500`}
+							cols={30}
+							rows={10}
+							placeholder="How can we help you?"
+							onChange={(e) => {
+								setContactForm({
+									...contactForm,
+									inquiry: e.target.value,
+								});
+							}}
+						/>
+					</div>
+					<div className="flex justify-end content-center mt-8">
+						<div
+							className="flex content-center flex-wrap px-5 md:px-7 py-2 lg:py-3 lg:px-10 rounded-md font-semibold
+                                text-neutral-0 bg-primary-500 hover:bg-primary-700
+                                  hover:cursor-pointer"
+						>
+							Submit
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
