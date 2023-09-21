@@ -29,6 +29,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importStar(require("react"));
 require("./style.css");
 const react_router_dom_1 = require("react-router-dom");
+const app_png_1 = __importDefault(require("../../assets/images/app.png"));
+const bins_png_1 = __importDefault(require("../../assets/images/bins.png"));
+const dashboard_png_1 = __importDefault(require("../../assets/images/dashboard.png"));
 const logo_landing_svg_1 = __importDefault(require("../../assets/logo/logo-landing.svg"));
 const md_1 = require("react-icons/md");
 const pi_1 = require("react-icons/pi");
@@ -65,6 +68,27 @@ function LandingPage() {
                     react_1.default.createElement("div", { className: "flex content-center flex-wrap font-medium\r\n                                hover:text-primary-500 hover:cursor-pointer" }, "About"),
                     react_1.default.createElement("div", { className: "flex content-center flex-wrap font-medium\r\n                                hover:text-primary-500 hover:cursor-pointer" }, "Contact Us")),
                 react_1.default.createElement("div", { className: "flex justify-center content-center" },
-                    react_1.default.createElement("div", { className: "flex content-center flex-wrap py-3 px-5 rounded-md font-semibold\r\n                                text-neutral-0 bg-primary-500 hover:bg-primary-700\r\n                                  hover:cursor-pointer", onClick: () => navigate("login") }, "Login"))))));
+                    react_1.default.createElement("div", { className: "flex content-center flex-wrap py-3 px-5 rounded-md font-semibold\r\n                                text-neutral-0 bg-primary-500 hover:bg-primary-700\r\n                                  hover:cursor-pointer", onClick: () => navigate("login") }, "Login")))),
+        react_1.default.createElement("div", { className: "flex flex-wrap justify-center content-center w-full bg-neutral-100" },
+            react_1.default.createElement("div", { className: "flex flex-col w-4/5 my-28 gap-6" },
+                react_1.default.createElement("div", { className: " text-4xl font-bold text-primary-500" }, "Services"),
+                react_1.default.createElement("div", { className: "text-2xl font-medium" }, "A leading smart waste management system"),
+                react_1.default.createElement("div", { className: " text-xl text-[#555555]" }, "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Labore, placeat nulla magnam iure autem earum iusto incidunt nihil veritatis pariatur perspiciatis porro commodi perferendis sit iste blanditiis, eius corporis fuga!"),
+                react_1.default.createElement("div", { className: "flex flex-wrap md:justify-center lg:justify-start xl:flex-nowrap gap-5 md:gap-2" },
+                    react_1.default.createElement("div", { className: "flex flex-col gap-2 bg-neutral-0 rounded-xl" },
+                        react_1.default.createElement("img", { src: bins_png_1.default, alt: "smart bins" }),
+                        react_1.default.createElement("div", { className: "flex flex-col w-full sm:w-4/5 md:w-96 gap-1 px-5 py-3 pb-7 rounded-xl" },
+                            react_1.default.createElement("div", { className: "font-semibold text-xl" }, "Smart Bins"),
+                            react_1.default.createElement("div", { className: "font-medium" }, "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod, iusto ex? Sequi placeat amet doloremque obcaecati facere eum tenetur distinctio!"))),
+                    react_1.default.createElement("div", { className: "flex flex-col gap-2 bg-neutral-0 rounded-xl" },
+                        react_1.default.createElement("img", { src: dashboard_png_1.default, alt: "dashboard" }),
+                        react_1.default.createElement("div", { className: "flex flex-col w-full sm:w-4/5 md:w-96 gap-1 px-5 py-3 pb-7 rounded-xl" },
+                            react_1.default.createElement("div", { className: "font-semibold text-xl" }, "Customized Dashboard"),
+                            react_1.default.createElement("div", { className: "font-medium" }, "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod, iusto ex? Sequi placeat amet doloremque obcaecati facere eum tenetur distinctio!"))),
+                    react_1.default.createElement("div", { className: "flex flex-col gap-2 bg-neutral-0 rounded-xl" },
+                        react_1.default.createElement("img", { src: app_png_1.default, alt: "app" }),
+                        react_1.default.createElement("div", { className: "flex flex-col w-full sm:w-4/5 md:w-96 gap-1 px-5 py-3 pb-7 rounded-xl" },
+                            react_1.default.createElement("div", { className: "font-semibold text-xl" }, "Mobile App"),
+                            react_1.default.createElement("div", { className: "font-medium" }, "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod, iusto ex? Sequi placeat amet doloremque obcaecati facere eum tenetur distinctio!"))))))));
 }
 exports.default = LandingPage;

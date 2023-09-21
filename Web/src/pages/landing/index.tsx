@@ -129,6 +129,61 @@ export default function LandingPage() {
 					</div>
 				</div>
 			</div>
+			<div className="flex flex-wrap justify-center content-center w-full bg-neutral-100">
+				<div className="flex flex-col w-4/5 my-28 gap-6">
+					<div className=" text-4xl font-bold text-primary-500">
+						Services
+					</div>
+					<div className="text-2xl font-medium">
+						A leading smart waste management system
+					</div>
+					<div className=" text-xl text-[#555555]">
+						Lorem ipsum, dolor sit amet consectetur adipisicing
+						elit. Labore, placeat nulla magnam iure autem earum
+						iusto incidunt nihil veritatis pariatur perspiciatis
+						porro commodi perferendis sit iste blanditiis, eius
+						corporis fuga!
+					</div>
+					<div className="flex flex-wrap md:justify-center lg:justify-start xl:flex-nowrap gap-5 md:gap-2">
+						<div className="flex flex-col gap-2 bg-neutral-0 rounded-xl">
+							<img src={bins} alt="smart bins" />
+							<div className="flex flex-col w-full sm:w-4/5 md:w-96 gap-1 px-5 py-3 pb-7 rounded-xl">
+								<div className="font-semibold text-xl">Smart Bins</div>
+								<div className="font-medium">
+									Lorem ipsum dolor sit amet consectetur
+									adipisicing elit. Quod, iusto ex? Sequi
+									placeat amet doloremque obcaecati facere eum
+									tenetur distinctio!
+								</div>
+							</div>
+						</div>
+						<div className="flex flex-col gap-2 bg-neutral-0 rounded-xl">
+							<img src={dashboard} alt="dashboard" />
+							<div className="flex flex-col w-full sm:w-4/5 md:w-96 gap-1 px-5 py-3 pb-7 rounded-xl">
+								<div className="font-semibold text-xl">Customized Dashboard</div>
+								<div className="font-medium">
+									Lorem ipsum dolor sit amet consectetur
+									adipisicing elit. Quod, iusto ex? Sequi
+									placeat amet doloremque obcaecati facere eum
+									tenetur distinctio!
+								</div>
+							</div>
+						</div>
+						<div className="flex flex-col gap-2 bg-neutral-0 rounded-xl">
+							<img src={app} alt="app" />
+							<div className="flex flex-col w-full sm:w-4/5 md:w-96 gap-1 px-5 py-3 pb-7 rounded-xl">
+								<div className="font-semibold text-xl">Mobile App</div>
+								<div className="font-medium">
+									Lorem ipsum dolor sit amet consectetur
+									adipisicing elit. Quod, iusto ex? Sequi
+									placeat amet doloremque obcaecati facere eum
+									tenetur distinctio!
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	);
 }
