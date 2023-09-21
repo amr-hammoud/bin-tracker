@@ -7,6 +7,7 @@ interface InputProps {
 	icon?: React.ReactNode;
 	placeholder?: string;
 	error?: string;
+	inputHeight?: string;
 	onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -20,10 +21,10 @@ export default function Input(props: InputProps) {
 			<input
 				type={props.type || "text"}
 				name={props.name}
-				className={`peer/${props.name} rounded h-10 w-full text-base
+				className={`peer/${props.name} rounded w-full text-base
                         bg-neutral-50 border-neutral-700
                         focus:ring-primary-500 focus:border-primary-500
-                        focus:invalid:border-red-500 focus:invalid:ring-red-500`}
+                        focus:invalid:border-red-500 focus:invalid:ring-red-500  ${props.inputHeight ? props.inputHeight : " h-11" }`}
 				placeholder={props.placeholder}
 				onChange={(e) => props.onChange && props.onChange(e)}
 			/>
