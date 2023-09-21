@@ -173,10 +173,10 @@ export default function LandingPage() {
 						porro commodi perferendis sit iste blanditiis, eius
 						corporis fuga!
 					</div>
-					<div className="flex flex-wrap md:justify-center lg:justify-start xl:flex-nowrap gap-5 md:gap-2">
-						<div className="flex flex-col gap-2 bg-neutral-0 rounded-xl">
+					<div className="flex flex-wrap justify-center md:justify-center lg:justify-between gap-10">
+						<div className="flex flex-col gap-2 bg-neutral-0 shadow-lg rounded-xl w-64 lg:w-72 2xl:w-96">
 							<img src={bins} alt="smart bins" />
-							<div className="flex flex-col w-full sm:w-4/5 md:w-96 gap-1 px-5 py-3 pb-7 rounded-xl">
+							<div className="flex flex-col w-full gap-1 px-5 py-3 pb-7 rounded-xl">
 								<div className="font-semibold text-xl">
 									Smart Bins
 								</div>
@@ -188,9 +188,9 @@ export default function LandingPage() {
 								</div>
 							</div>
 						</div>
-						<div className="flex flex-col gap-2 bg-neutral-0 rounded-xl">
+						<div className="flex flex-col gap-2 bg-neutral-0 shadow-lg rounded-xl w-64 lg:w-72 2xl:w-96">
 							<img src={dashboard} alt="dashboard" />
-							<div className="flex flex-col w-full sm:w-4/5 md:w-96 gap-1 px-5 py-3 pb-7 rounded-xl">
+							<div className="flex flex-col w-full gap-1 px-5 py-3 pb-7 rounded-xl">
 								<div className="font-semibold text-xl">
 									Customized Dashboard
 								</div>
@@ -202,9 +202,9 @@ export default function LandingPage() {
 								</div>
 							</div>
 						</div>
-						<div className="flex flex-col gap-2 bg-neutral-0 rounded-xl">
+						<div className="flex flex-col gap-2 bg-neutral-0 shadow-lg rounded-xl w-64 lg:w-72 2xl:w-96">
 							<img src={app} alt="app" />
-							<div className="flex flex-col w-full sm:w-4/5 md:w-96 gap-1 px-5 py-3 pb-7 rounded-xl">
+							<div className="flex flex-col w-full gap-1 px-5 py-3 pb-7 rounded-xl">
 								<div className="font-semibold text-xl">
 									Mobile App
 								</div>
