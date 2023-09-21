@@ -1,5 +1,4 @@
 import React from "react";
-import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AuthPage from "./pages/auth";
 import { Provider } from "react-redux";
@@ -18,6 +17,7 @@ import AdminTrucks from "./pages/admin/trucks";
 import AdminAnnouncements from "./pages/admin/announcements";
 import AdminChats from "./pages/admin/chats";
 import AdminAccount from "./pages/admin/account";
+import LandingPage from "./pages/landing";
 
 function App() {
 	const persistor = persistStore(store);
@@ -28,7 +28,8 @@ function App() {
 				<div className=" font-poppins cursor-default">
 					<BrowserRouter>
 						<Routes>
-							<Route path="/" element={<AuthPage />} />
+							<Route path="/" element={<LandingPage />} />
+							<Route path="/login" element={<AuthPage />} />
 							<Route
 								path="/admin/dashboard"
 								element={<SuperAdminDashboard />}
