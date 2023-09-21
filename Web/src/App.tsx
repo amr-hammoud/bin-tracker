@@ -78,6 +78,14 @@ function App() {
 								path="/account"
 								element={<AdminAccount />}
 							/>
+							<Route
+								path="/privacy-policy"
+								element={""}
+							/>
+							<Route
+								path="/terms"
+								element={""}
+							/>
 						</Routes>
 					</BrowserRouter>
 				</div>

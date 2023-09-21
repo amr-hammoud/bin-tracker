@@ -43,6 +43,8 @@ function App() {
                         react_1.default.createElement(react_router_dom_1.Route, { path: "/trucks", element: react_1.default.createElement(trucks_1.default, null) }),
                         react_1.default.createElement(react_router_dom_1.Route, { path: "/announcements", element: react_1.default.createElement(announcements_1.default, null) }),
                         react_1.default.createElement(react_router_dom_1.Route, { path: "/chats", element: react_1.default.createElement(chats_1.default, null) }),
-                        react_1.default.createElement(react_router_dom_1.Route, { path: "/account", element: react_1.default.createElement(account_2.default, null) })))))));
+                        react_1.default.createElement(react_router_dom_1.Route, { path: "/account", element: react_1.default.createElement(account_2.default, null) }),
+                        react_1.default.createElement(react_router_dom_1.Route, { path: "/privacy-policy", element: "" }),
+                        react_1.default.createElement(react_router_dom_1.Route, { path: "/terms", element: "" })))))));
 }
 exports.default = App;
