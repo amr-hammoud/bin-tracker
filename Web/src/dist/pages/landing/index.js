@@ -27,6 +27,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 require("./style.css");
+const fa_1 = require("react-icons/fa");
+const ri_1 = require("react-icons/ri");
 const md_1 = require("react-icons/md");
 const pi_1 = require("react-icons/pi");
 const react_router_dom_1 = require("react-router-dom");
@@ -49,6 +51,7 @@ function LandingPage() {
         location: "",
         inquiry: "",
     });
+    const [emailSubscribe, setEmailSubscribe] = (0, react_1.useState)("");
     return (react_1.default.createElement("div", { className: "text-gunmetal" },
         react_1.default.createElement("div", { className: `flex justify-between sm:hidden fixed top-0 left-0 w-screen shadow-md px-8 py-4 bg-neutral-0 bg-opacity-90 z-20 ${mobileNavbar ? "hidden" : ""}` },
             react_1.default.createElement("div", { className: "flex flex-wrap justify-center content-center w-24" },
@@ -172,6 +175,60 @@ function LandingPage() {
                             setContactForm(Object.assign(Object.assign({}, contactForm), { inquiry: e.target.value }));
                         } })),
                 react_1.default.createElement("div", { className: "flex justify-end content-center mt-8" },
-                    react_1.default.createElement("div", { className: "flex content-center flex-wrap px-5 md:px-7 py-2 lg:py-3 lg:px-10 rounded-md font-semibold\r\n                                text-neutral-0 bg-primary-500 hover:bg-primary-700\r\n                                  hover:cursor-pointer" }, "Submit"))))));
+                    react_1.default.createElement("div", { className: "flex content-center flex-wrap px-5 md:px-7 py-2 lg:py-3 lg:px-10 rounded-md font-semibold\r\n                                text-neutral-0 bg-primary-500 hover:bg-primary-700\r\n                                  hover:cursor-pointer" }, "Submit")))),
+        react_1.default.createElement("div", { className: "z-10 flex flex-wrap justify-center content-center w-full bg-gunmetal text-neutral-0" },
+            react_1.default.createElement("div", { className: "flex flex-wrap md:flex-nowrap w-4/5 my-28 gap-6" },
+                react_1.default.createElement("div", { className: "flex flex-col gap-3 w-full md:w-1/3" },
+                    react_1.default.createElement("div", null, "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet."),
+                    react_1.default.createElement("a", { href: "mailto:info@bintracker.com", className: "flex gap-3 flex-wrap content-center text-md hover:text-primary-500" },
+                        react_1.default.createElement("div", { className: "flex gap-3 flex-wrap content-center" },
+                            react_1.default.createElement(md_1.MdMail, null)),
+                        react_1.default.createElement("div", { className: "" }, "info@bintracker.com")),
+                    react_1.default.createElement("a", { href: "tel:+96176123123", className: "flex gap-3 flex-wrap content-center text-md hover:text-primary-500" },
+                        react_1.default.createElement("div", { className: "flex gap-3 flex-wrap content-center" },
+                            react_1.default.createElement(md_1.MdCall, null)),
+                        react_1.default.createElement("div", null, "+961 76 123 123"))),
+                react_1.default.createElement("div", { className: "flex flex-col gap-2 w-full md:w-1/3" },
+                    react_1.default.createElement("div", { className: "text-lg font-bold" }, "Pages"),
+                    react_1.default.createElement("div", null,
+                        react_1.default.createElement("a", { className: "hover:cursor-pointer hover:text-primary-500", href: "#home" }, "Home")),
+                    react_1.default.createElement("div", null,
+                        react_1.default.createElement("a", { className: "hover:cursor-pointer hover:text-primary-500", href: "#services" }, "Services")),
+                    react_1.default.createElement("div", null,
+                        react_1.default.createElement("a", { className: "hover:cursor-pointer hover:text-primary-500", href: "#about" }, "About")),
+                    react_1.default.createElement("div", null,
+                        react_1.default.createElement("a", { className: "hover:cursor-pointer hover:text-primary-500", href: "#contact" }, "Contact us")),
+                    react_1.default.createElement("div", null,
+                        react_1.default.createElement("div", { className: "w-fit hover:cursor-pointer hover:text-primary-500", onClick: () => navigate("/privacy-policy") }, "Privacy Policy")),
+                    react_1.default.createElement("div", null,
+                        react_1.default.createElement("div", { className: "w-fit hover:cursor-pointer hover:text-primary-500", onClick: () => navigate("/terms") }, "Terms & Conditions"))),
+                react_1.default.createElement("div", { className: "flex flex-col gap-8 w-full md:w-1/3" },
+                    react_1.default.createElement("div", { className: "flex flex-col gap-2" },
+                        react_1.default.createElement("div", { className: "text-lg font-bold" }, "Follow us"),
+                        react_1.default.createElement("div", { className: "flex gap-3 text-lg" },
+                            react_1.default.createElement("div", { className: "hover:cursor-pointer hover:text-primary-500" },
+                                react_1.default.createElement("a", { target: "_blank", rel: "noreferrer", href: "https://facebook.com/bintracker" },
+                                    react_1.default.createElement(fa_1.FaFacebook, null))),
+                            react_1.default.createElement("div", { className: "hover:cursor-pointer hover:text-primary-500" },
+                                react_1.default.createElement("a", { target: "_blank", rel: "noreferrer", href: "https://instagram.com/bintracker" },
+                                    react_1.default.createElement(fa_1.FaInstagram, null))),
+                            react_1.default.createElement("div", { className: "hover:cursor-pointer hover:text-primary-500" },
+                                react_1.default.createElement("a", { target: "_blank", rel: "noreferrer", href: "https://x.com/bintracker" },
+                                    react_1.default.createElement(ri_1.RiTwitterXFill, null))),
+                            react_1.default.createElement("div", { className: "hover:cursor-pointer hover:text-primary-500" },
+                                react_1.default.createElement("a", { target: "_blank", rel: "noreferrer", href: "https://linkedin.com/in/bintracker" },
+                                    react_1.default.createElement(fa_1.FaLinkedinIn, null))),
+                            react_1.default.createElement("div", { className: "hover:cursor-pointer hover:text-primary-500" },
+                                react_1.default.createElement("a", { target: "_blank", rel: "noreferrer", href: "https://youtube.com/bintracker" },
+                                    react_1.default.createElement(fa_1.FaYoutube, null))))),
+                    react_1.default.createElement("div", { className: "flex flex-col gap-1" },
+                        react_1.default.createElement("div", { className: "text-lg font-bold" }, "Subscribe"),
+                        react_1.default.createElement("div", null, "Stay updated with the latest news"),
+                        react_1.default.createElement("div", { className: "flex gap-5" },
+                            react_1.default.createElement(input_1.default, { placeholder: "Email", onChange: (e) => { setEmailSubscribe(e.target.value); } }),
+                            react_1.default.createElement("div", { className: "flex flex-wrap justify-center content-center" },
+                                react_1.default.createElement("div", { className: "bg-primary-500 w-fit p-3 rounded-full hover:cursor-pointer hover:bg-primary-700" },
+                                    react_1.default.createElement(md_1.MdSend, null)))))))),
+        react_1.default.createElement("div", { className: "text-center py-3 w-full bg-primary-500 text-neutral-0" }, "\u00A9 2023 Bin Tracker, All Rights Reserved.")));
 }
 exports.default = LandingPage;

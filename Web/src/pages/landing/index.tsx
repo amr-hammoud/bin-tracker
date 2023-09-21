@@ -1,5 +1,12 @@
 import "./style.css";
-import { MdClose } from "react-icons/md";
+import {
+	FaFacebook,
+	FaInstagram,
+	FaLinkedinIn,
+	FaYoutube,
+} from "react-icons/fa";
+import { RiTwitterXFill } from "react-icons/ri";
+import { MdClose, MdMail, MdCall, MdSend } from "react-icons/md";
 import { PiListBold } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 import aboutImage from "../../assets/images/about-section.svg";
@@ -25,6 +32,7 @@ export default function LandingPage() {
 		inquiry: "",
 	});
 
+	const [emailSubscribe, setEmailSubscribe] = useState("")
 
 	return (
 		<div className="text-gunmetal">
@@ -413,6 +421,154 @@ export default function LandingPage() {
 						</div>
 					</div>
 				</div>
+			</div>
+			{/* Footer Section */}
+			<div className="z-10 flex flex-wrap justify-center content-center w-full bg-gunmetal text-neutral-0">
+				<div className="flex flex-wrap md:flex-nowrap w-4/5 my-28 gap-6">
+					<div className="flex flex-col gap-3 w-full md:w-1/3">
+						<div>
+							Lorem ipsum dolor sit amet consectetur adipiscing
+							elit Ut et massa mi. Aliquam in hendrerit urna.
+							Pellentesque sit amet.
+						</div>
+						<a
+							href="mailto:info@bintracker.com"
+							className="flex gap-3 flex-wrap content-center text-md hover:text-primary-500"
+						>
+							<div className="flex gap-3 flex-wrap content-center">
+								<MdMail />
+							</div>
+							<div className="">info@bintracker.com</div>
+						</a>
+						<a
+							href="tel:+96176123123"
+							className="flex gap-3 flex-wrap content-center text-md hover:text-primary-500"
+						>
+							<div className="flex gap-3 flex-wrap content-center">
+								<MdCall />
+							</div>
+							<div>+961 76 123 123</div>
+						</a>
+					</div>
+					<div className="flex flex-col gap-2 w-full md:w-1/3">
+						<div className="text-lg font-bold">Pages</div>
+						<div>
+							<a
+								className="hover:cursor-pointer hover:text-primary-500"
+								href="#home"
+							>
+								Home
+							</a>
+						</div>
+						<div>
+							<a
+								className="hover:cursor-pointer hover:text-primary-500"
+								href="#services"
+							>
+								Services
+							</a>
+						</div>
+						<div>
+							<a
+								className="hover:cursor-pointer hover:text-primary-500"
+								href="#about"
+							>
+								About
+							</a>
+						</div>
+						<div>
+							<a
+								className="hover:cursor-pointer hover:text-primary-500"
+								href="#contact"
+							>
+								Contact us
+							</a>
+						</div>
+						<div>
+							<div
+								className="w-fit hover:cursor-pointer hover:text-primary-500"
+								onClick={() => navigate("/privacy-policy")}
+							>
+								Privacy Policy
+							</div>
+						</div>
+						<div>
+							<div
+								className="w-fit hover:cursor-pointer hover:text-primary-500"
+								onClick={() => navigate("/terms")}
+							>
+								Terms & Conditions
+							</div>
+						</div>
+					</div>
+					<div className="flex flex-col gap-8 w-full md:w-1/3">
+						<div className="flex flex-col gap-2">
+							<div className="text-lg font-bold">Follow us</div>
+							<div className="flex gap-3 text-lg">
+								<div className="hover:cursor-pointer hover:text-primary-500">
+									<a
+										target="_blank"
+										rel="noreferrer"
+										href="https://facebook.com/bintracker"
+									>
+										<FaFacebook />
+									</a>
+								</div>
+								<div className="hover:cursor-pointer hover:text-primary-500">
+									<a
+										target="_blank"
+										rel="noreferrer"
+										href="https://instagram.com/bintracker"
+									>
+										<FaInstagram />
+									</a>
+								</div>
+								<div className="hover:cursor-pointer hover:text-primary-500">
+									<a
+										target="_blank"
+										rel="noreferrer"
+										href="https://x.com/bintracker"
+									>
+										<RiTwitterXFill />
+									</a>
+								</div>
+								<div className="hover:cursor-pointer hover:text-primary-500">
+									<a
+										target="_blank"
+										rel="noreferrer"
+										href="https://linkedin.com/in/bintracker"
+									>
+										<FaLinkedinIn />
+									</a>
+								</div>
+								<div className="hover:cursor-pointer hover:text-primary-500">
+									<a
+										target="_blank"
+										rel="noreferrer"
+										href="https://youtube.com/bintracker"
+									>
+										<FaYoutube />
+									</a>
+								</div>
+							</div>
+						</div>
+						<div className="flex flex-col gap-1">
+							<div className="text-lg font-bold">Subscribe</div>
+							<div>Stay updated with the latest news</div>
+							<div className="flex gap-5">
+								<Input placeholder="Email" onChange={(e) => {setEmailSubscribe(e.target.value)}}/>
+								<div className="flex flex-wrap justify-center content-center">
+									<div className="bg-primary-500 w-fit p-3 rounded-full hover:cursor-pointer hover:bg-primary-700">
+										<MdSend />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div className="text-center py-3 w-full bg-primary-500 text-neutral-0">
+				&copy; 2023 Bin Tracker, All Rights Reserved.
 			</div>
 		</div>
 	);
