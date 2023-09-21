@@ -3,4 +3,9 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    z-index: 1;
+}
+
+.black-overlay {
+    z-index: 2;
 }
