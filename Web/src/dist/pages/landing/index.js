@@ -35,15 +35,16 @@ const dashboard_png_1 = __importDefault(require("../../assets/images/dashboard.p
 const logo_landing_svg_1 = __importDefault(require("../../assets/logo/logo-landing.svg"));
 const md_1 = require("react-icons/md");
 const pi_1 = require("react-icons/pi");
+const about_section_svg_1 = __importDefault(require("../../assets/images/about-section.svg"));
 function LandingPage() {
     const navigate = (0, react_router_dom_1.useNavigate)();
     const [mobileNavbar, setMobileNavbar] = (0, react_1.useState)(true);
     return (react_1.default.createElement("div", { className: "scroll-smooth text-gunmetal" },
         react_1.default.createElement("div", { className: `flex justify-between sm:hidden fixed top-0 left-0 w-screen px-8 py-4 bg-neutral-0 bg-opacity-90 z-20 ${mobileNavbar && "hidden"}` },
-            react_1.default.createElement("div", { className: "flex flex-wrap justify-center content-center text-2xl\r\n                          \t\t\thover:cursor-pointer hover:text-primary-500", onClick: () => setMobileNavbar(true) },
-                react_1.default.createElement(pi_1.PiListBold, null)),
             react_1.default.createElement("div", { className: "flex flex-wrap justify-center content-center w-24" },
-                react_1.default.createElement("img", { src: logo_landing_svg_1.default, alt: "logo" }))),
+                react_1.default.createElement("img", { src: logo_landing_svg_1.default, alt: "logo" })),
+            react_1.default.createElement("div", { className: "flex flex-wrap justify-center content-center text-2xl\r\n                          \t\t\thover:cursor-pointer hover:text-primary-500", onClick: () => setMobileNavbar(true) },
+                react_1.default.createElement(pi_1.PiListBold, null))),
         react_1.default.createElement("div", { className: `flex flex-col fixed top-0 left-0 sm:hidden w-screen h-screen gap-10
                         px-16 py-4 bg-neutral-0 bg-opacity-90 justify-center content-center z-20 ${!mobileNavbar && "hidden"}` },
             react_1.default.createElement("div", { className: "flex justify-end text-xl " },
@@ -83,21 +84,36 @@ function LandingPage() {
                 react_1.default.createElement("div", { className: " text-4xl font-bold text-primary-500" }, "Services"),
                 react_1.default.createElement("div", { className: "text-2xl font-medium" }, "A leading smart waste management system"),
                 react_1.default.createElement("div", { className: " text-xl text-[#555555]" }, "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Labore, placeat nulla magnam iure autem earum iusto incidunt nihil veritatis pariatur perspiciatis porro commodi perferendis sit iste blanditiis, eius corporis fuga!"),
-                react_1.default.createElement("div", { className: "flex flex-wrap justify-center md:justify-center lg:justify-between gap-10" },
-                    react_1.default.createElement("div", { className: "flex flex-col gap-2 bg-neutral-0 shadow-lg rounded-xl w-64 lg:w-72 2xl:w-96" },
+                react_1.default.createElement("div", { className: "flex flex-wrap lg:flex-nowrap justify-center md:justify-center lg:justify-between gap-10" },
+                    react_1.default.createElement("div", { className: "flex flex-col gap-2 bg-neutral-0 shadow-lg rounded-xl w-full lg:w-1/3" },
                         react_1.default.createElement("img", { src: bins_png_1.default, alt: "smart bins" }),
                         react_1.default.createElement("div", { className: "flex flex-col w-full gap-1 px-5 py-3 pb-7 rounded-xl" },
                             react_1.default.createElement("div", { className: "font-semibold text-xl" }, "Smart Bins"),
                             react_1.default.createElement("div", { className: "font-medium" }, "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod, iusto ex? Sequi placeat amet doloremque obcaecati facere eum tenetur distinctio!"))),
-                    react_1.default.createElement("div", { className: "flex flex-col gap-2 bg-neutral-0 shadow-lg rounded-xl w-64 lg:w-72 2xl:w-96" },
+                    react_1.default.createElement("div", { className: "flex flex-col gap-2 bg-neutral-0 shadow-lg rounded-xl w-full lg:w-1/3" },
                         react_1.default.createElement("img", { src: dashboard_png_1.default, alt: "dashboard" }),
                         react_1.default.createElement("div", { className: "flex flex-col w-full gap-1 px-5 py-3 pb-7 rounded-xl" },
                             react_1.default.createElement("div", { className: "font-semibold text-xl" }, "Customized Dashboard"),
                             react_1.default.createElement("div", { className: "font-medium" }, "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod, iusto ex? Sequi placeat amet doloremque obcaecati facere eum tenetur distinctio!"))),
-                    react_1.default.createElement("div", { className: "flex flex-col gap-2 bg-neutral-0 shadow-lg rounded-xl w-64 lg:w-72 2xl:w-96" },
+                    react_1.default.createElement("div", { className: "flex flex-col gap-2 bg-neutral-0 shadow-lg rounded-xl w-full lg:w-1/3" },
                         react_1.default.createElement("img", { src: app_png_1.default, alt: "app" }),
                         react_1.default.createElement("div", { className: "flex flex-col w-full gap-1 px-5 py-3 pb-7 rounded-xl" },
                             react_1.default.createElement("div", { className: "font-semibold text-xl" }, "Mobile App"),
-                            react_1.default.createElement("div", { className: "font-medium" }, "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod, iusto ex? Sequi placeat amet doloremque obcaecati facere eum tenetur distinctio!"))))))));
+                            react_1.default.createElement("div", { className: "font-medium" }, "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod, iusto ex? Sequi placeat amet doloremque obcaecati facere eum tenetur distinctio!")))))),
+        react_1.default.createElement("div", { className: "about-section relative flex flex-wrap justify-center w-full bg-neutral-0" },
+            react_1.default.createElement("div", { className: "flex flex-col w-4/5 my-28 gap-10" },
+                react_1.default.createElement("div", { className: " text-4xl font-bold text-primary-500" }, "About"),
+                react_1.default.createElement("div", { className: "text-2xl font-medium" }, "A leading smart waste management system"),
+                react_1.default.createElement("div", { className: " text-xl" }, "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Labore, placeat nulla magnam iure autem earum iusto incidunt nihil veritatis pariatur perspiciatis porro commodi perferendis sit iste blanditiis, eius corporis fuga!"),
+                react_1.default.createElement("div", { className: "flex gap-10" },
+                    react_1.default.createElement("div", { className: "flex flex-wrap content-center text-9xl w-44 font-bold text-primary-500" }, "01"),
+                    react_1.default.createElement("div", { className: " w-2/5 text-xl text-justify" }, "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris. Maecenas vitae mattis tellus.")),
+                react_1.default.createElement("div", { className: "flex gap-10" },
+                    react_1.default.createElement("div", { className: "flex flex-wrap content-center text-9xl w-44 font-bold text-primary-500" }, "02"),
+                    react_1.default.createElement("div", { className: " w-2/5 text-xl text-justify" }, "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris. Maecenas vitae mattis tellus."))),
+            react_1.default.createElement("div", { className: "about-section-image-mobile flex justify-end md:hidden h-fit w-full" },
+                react_1.default.createElement("img", { src: about_section_svg_1.default, alt: "garbage truck track" })),
+            react_1.default.createElement("div", { className: "about-section-image hidden md:block absolute bottom-0 right-0 h-fit w-full" },
+                react_1.default.createElement("img", { src: about_section_svg_1.default, alt: "garbage truck track" })))));
 }
 exports.default = LandingPage;

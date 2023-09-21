@@ -7,6 +7,7 @@ import dashboard from "../../assets/images/dashboard.png";
 import logo from "../../assets/logo/logo-landing.svg";
 import { MdClose } from "react-icons/md";
 import { PiListBold } from "react-icons/pi";
+import aboutImage from "../../assets/images/about-section.svg";
 
 export default function LandingPage() {
 	const navigate = useNavigate();
@@ -21,15 +22,15 @@ export default function LandingPage() {
 					mobileNavbar && "hidden"
 				}`}
 			>
+				<div className="flex flex-wrap justify-center content-center w-24">
+					<img src={logo} alt="logo" />
+				</div>
 				<div
 					className="flex flex-wrap justify-center content-center text-2xl
                           			hover:cursor-pointer hover:text-primary-500"
 					onClick={() => setMobileNavbar(true)}
 				>
 					<PiListBold />
-				</div>
-				<div className="flex flex-wrap justify-center content-center w-24">
-					<img src={logo} alt="logo" />
 				</div>
 			</div>
 			{/* Small Screens Navbar */}
@@ -173,8 +174,8 @@ export default function LandingPage() {
 						porro commodi perferendis sit iste blanditiis, eius
 						corporis fuga!
 					</div>
-					<div className="flex flex-wrap justify-center md:justify-center lg:justify-between gap-10">
-						<div className="flex flex-col gap-2 bg-neutral-0 shadow-lg rounded-xl w-64 lg:w-72 2xl:w-96">
+					<div className="flex flex-wrap lg:flex-nowrap justify-center md:justify-center lg:justify-between gap-10">
+						<div className="flex flex-col gap-2 bg-neutral-0 shadow-lg rounded-xl w-full lg:w-1/3">
 							<img src={bins} alt="smart bins" />
 							<div className="flex flex-col w-full gap-1 px-5 py-3 pb-7 rounded-xl">
 								<div className="font-semibold text-xl">
@@ -188,7 +189,7 @@ export default function LandingPage() {
 								</div>
 							</div>
 						</div>
-						<div className="flex flex-col gap-2 bg-neutral-0 shadow-lg rounded-xl w-64 lg:w-72 2xl:w-96">
+						<div className="flex flex-col gap-2 bg-neutral-0 shadow-lg rounded-xl w-full lg:w-1/3">
 							<img src={dashboard} alt="dashboard" />
 							<div className="flex flex-col w-full gap-1 px-5 py-3 pb-7 rounded-xl">
 								<div className="font-semibold text-xl">
@@ -202,7 +203,7 @@ export default function LandingPage() {
 								</div>
 							</div>
 						</div>
-						<div className="flex flex-col gap-2 bg-neutral-0 shadow-lg rounded-xl w-64 lg:w-72 2xl:w-96">
+						<div className="flex flex-col gap-2 bg-neutral-0 shadow-lg rounded-xl w-full lg:w-1/3">
 							<img src={app} alt="app" />
 							<div className="flex flex-col w-full gap-1 px-5 py-3 pb-7 rounded-xl">
 								<div className="font-semibold text-xl">
@@ -217,6 +218,54 @@ export default function LandingPage() {
 							</div>
 						</div>
 					</div>
+				</div>
+			</div>
+			{/* About Section */}
+			<div className="about-section relative flex flex-wrap justify-center w-full bg-neutral-0">
+				<div className="flex flex-col w-4/5 my-28 gap-10">
+					<div className=" text-4xl font-bold text-primary-500">
+						About
+					</div>
+					<div className="text-2xl font-medium">
+						A leading smart waste management system
+					</div>
+					<div className=" text-xl">
+						Lorem ipsum, dolor sit amet consectetur adipisicing
+						elit. Labore, placeat nulla magnam iure autem earum
+						iusto incidunt nihil veritatis pariatur perspiciatis
+						porro commodi perferendis sit iste blanditiis, eius
+						corporis fuga!
+					</div>
+					<div className="flex gap-10">
+						<div className="flex flex-wrap content-center text-9xl w-44 font-bold text-primary-500">
+							01
+						</div>
+						<div className=" w-2/5 text-xl text-justify">
+							Lorem ipsum dolor sit amet consectetur adipiscing
+							elit Ut et massa mi. Aliquam in hendrerit urna.
+							Pellentesque sit amet sapien fringilla, mattis
+							ligula consectetur, ultrices mauris. Maecenas vitae
+							mattis tellus.
+						</div>
+					</div>
+					<div className="flex gap-10">
+						<div className="flex flex-wrap content-center text-9xl w-44 font-bold text-primary-500">
+							02
+						</div>
+						<div className=" w-2/5 text-xl text-justify">
+							Lorem ipsum dolor sit amet consectetur adipiscing
+							elit Ut et massa mi. Aliquam in hendrerit urna.
+							Pellentesque sit amet sapien fringilla, mattis
+							ligula consectetur, ultrices mauris. Maecenas vitae
+							mattis tellus.
+						</div>
+					</div>
+				</div>
+				<div className="about-section-image-mobile flex justify-end md:hidden h-fit w-full">
+					<img src={aboutImage} alt="garbage truck track" />
+				</div>
+				<div className="about-section-image hidden md:block absolute bottom-0 right-0 h-fit w-full">
+					<img src={aboutImage} alt="garbage truck track" />
 				</div>
 			</div>
 		</div>
