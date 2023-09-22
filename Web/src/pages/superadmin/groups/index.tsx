@@ -6,13 +6,14 @@ import Sidebar from "../../../components/common/sidebar";
 import Navbar from "../../../components/common/navbar";
 import { sendRequest } from "../../../configs/request";
 import ListItem from "../../../components/base/listItem";
+import ListHeader from "../../../components/base/listheader";
 
 export default function SuperAdminGroups() {
 	const token: Token | null = useSelector(
 		(state: RootState) => state.auth.token
 	);
 
-	const [groupList,setGroupList] = useState([])
+	const [groupList, setGroupList] = useState([]);
 
 	const getGroups = async () => {
 		try {
@@ -22,17 +23,16 @@ export default function SuperAdminGroups() {
 			});
 			console.log(response);
 			if (response.status === 200) {
-				setGroupList(response.data)
-				
+				setGroupList(response.data);
 			}
 		} catch (err: any) {
 			console.error(err);
 		}
-	}
+	};
 
 	useEffect(() => {
-		getGroups()
-	}, [])
+		getGroups();
+	}, []);
 
 	return (
 		<div className="flex">
@@ -43,11 +43,21 @@ export default function SuperAdminGroups() {
 			<div className="flex flex-col w-full">
 				<Navbar label="Groups" />
 				<div className="p-10">
-					<h2>
-						{groupList.map((group: Group, index) => {
-							return <ListItem key={index} items={[group.name, group.admins.length.toString(),group.members.length.toString()]}/>
-						})}
-					</h2>
+					<ListHeader
+						items={["Name", "Admins Count", "Members Count", "Actions"]}
+					/>
+					{groupList.map((group: Group, index) => {
+						return (
+							<ListItem
+								key={index}
+								items={[
+									group.name,
+									group.admins.length.toString(),
+									group.members.length.toString(),
+								]}
+							/>
+						);
+					})}
 				</div>
 			</div>
 		</div>

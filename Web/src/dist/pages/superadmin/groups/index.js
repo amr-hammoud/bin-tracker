@@ -41,6 +41,7 @@ const sidebar_1 = __importDefault(require("../../../components/common/sidebar"))
 const navbar_1 = __importDefault(require("../../../components/common/navbar"));
 const request_1 = require("../../../configs/request");
 const listItem_1 = __importDefault(require("../../../components/base/listItem"));
+const listheader_1 = __importDefault(require("../../../components/base/listheader"));
 function SuperAdminGroups() {
     const token = (0, react_redux_1.useSelector)((state) => state.auth.token);
     const [groupList, setGroupList] = (0, react_1.useState)([]);
@@ -67,8 +68,13 @@ function SuperAdminGroups() {
         react_1.default.createElement("div", { className: "flex flex-col w-full" },
             react_1.default.createElement(navbar_1.default, { label: "Groups" }),
             react_1.default.createElement("div", { className: "p-10" },
-                react_1.default.createElement("h2", null, groupList.map((group, index) => {
-                    return react_1.default.createElement(listItem_1.default, { key: index, items: [group.name, group.admins.length.toString(), group.members.length.toString()] });
-                }))))));
+                react_1.default.createElement(listheader_1.default, { items: ["Name", "Admins Count", "Members Count", "Actions"] }),
+                groupList.map((group, index) => {
+                    return (react_1.default.createElement(listItem_1.default, { key: index, items: [
+                            group.name,
+                            group.admins.length.toString(),
+                            group.members.length.toString(),
+                        ] }));
+                })))));
 }
 exports.default = SuperAdminGroups;
