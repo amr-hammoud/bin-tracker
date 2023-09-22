@@ -2,12 +2,14 @@ const mongoose = require("mongoose");
 
 const messageSchema = new mongoose.Schema(
 	{
-		conversation_id: {
-			type: String,
+		receiver_id: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'User',
             required: true,
 		},
         sender_id: {
-			type: String,
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'User',
             required: true,
 		},
         content: {
