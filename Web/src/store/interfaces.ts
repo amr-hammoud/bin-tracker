@@ -31,6 +31,7 @@ interface Bin {
 }
 
 interface Group {
+	_id: string;
 	name: string;
 	admins: Array<string>;
 	members: Array<string>;
