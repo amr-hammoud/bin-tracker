@@ -24,6 +24,9 @@ app.use("/bins", binRouter)
 const truckRouter = require("./routes/truck.routes")
 app.use("/trucks", truckRouter)
 
+const messageRouter = require("./routes/message.routes")
+app.use("/messages", messageRouter)
+
 app.listen(8000, (err) => {
 	if (err) {
 		console.error("\u001b[1;34m⚡[server]: " + `\u001b[0m${err}`);
