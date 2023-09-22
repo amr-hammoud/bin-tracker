@@ -20,7 +20,8 @@ const truckSchema = new mongoose.Schema(
             required: true,
 		},
 		driver_id: {
-			type: String,
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'User',
 			trim: true,
             required: true,
 		},
