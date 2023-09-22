@@ -63,18 +63,37 @@ function SuperAdminGroups() {
     (0, react_1.useEffect)(() => {
         getGroups();
     }, []);
+    const deleteGroup = (id) => __awaiter(this, void 0, void 0, function* () {
+        try {
+            const response = yield (0, request_1.sendRequest)({
+                method: "DELETE",
+                route: `groups/${id}`,
+                token,
+            });
+            if (response.status === 200) {
+                const newArr = groupList.filter((group) => {
+                    return group._id !== id;
+                });
+                setGroupList(newArr);
+            }
+        }
+        catch (err) {
+            console.error(err);
+        }
+    });
     return (react_1.default.createElement("div", { className: "flex" },
         react_1.default.createElement(sidebar_1.default, { items: ["Dashboard", "Users", "Groups", "Account"], selected: "Groups" }),
         react_1.default.createElement("div", { className: "flex flex-col w-full" },
             react_1.default.createElement(navbar_1.default, { label: "Groups" }),
             react_1.default.createElement("div", { className: "p-10" },
-                react_1.default.createElement(listheader_1.default, { items: ["Name", "Admins Count", "Members Count", "Actions"] }),
+                react_1.default.createElement(listheader_1.default, { items: ["ID", "Name", "Admins Count", "Members Count", "Actions"] }),
                 groupList.map((group, index) => {
                     return (react_1.default.createElement(listItem_1.default, { key: index, items: [
+                            group._id,
                             group.name,
                             group.admins.length.toString(),
                             group.members.length.toString(),
-                        ] }));
+                        ], onDelete: deleteGroup }));
                 })))));
 }
 exports.default = SuperAdminGroups;

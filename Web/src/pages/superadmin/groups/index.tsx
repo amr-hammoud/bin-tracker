@@ -13,7 +13,7 @@ export default function SuperAdminGroups() {
 		(state: RootState) => state.auth.token
 	);
 
-	const [groupList, setGroupList] = useState([]);
+	const [groupList, setGroupList] = useState<Group[]>([]);
 
 	const getGroups = async () => {
 		try {
@@ -34,6 +34,24 @@ export default function SuperAdminGroups() {
 		getGroups();
 	}, []);
 
+	const deleteGroup = async (id: string) => {
+		try {
+			const response = await sendRequest({
+				method: "DELETE",
+				route: `groups/${id}`,
+				token,
+			});
+			if (response.status === 200) {
+				const newArr = groupList.filter((group) => {
+					return group._id !== id;
+				});
+				setGroupList(newArr);
+			}
+		} catch (err: any) {
+			console.error(err);
+		}
+	};
+
 	return (
 		<div className="flex">
 			<Sidebar
@@ -44,17 +62,19 @@ export default function SuperAdminGroups() {
 				<Navbar label="Groups" />
 				<div className="p-10">
 					<ListHeader
-						items={["Name", "Admins Count", "Members Count", "Actions"]}
+						items={["ID", "Name", "Admins Count", "Members Count", "Actions"]}
 					/>
 					{groupList.map((group: Group, index) => {
 						return (
 							<ListItem
 								key={index}
 								items={[
+									group._id,
 									group.name,
 									group.admins.length.toString(),
 									group.members.length.toString(),
 								]}
+								onDelete={deleteGroup}
 							/>
 						);
 					})}
