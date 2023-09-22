@@ -15,9 +15,11 @@ function ListItem(props) {
         })),
         react_1.default.createElement("div", { className: "flex gap-3" },
             react_1.default.createElement("div", { className: "flex flex-wrap justify-between content-center opacity-70\r\n                                hover:cursor-pointer hover:opacity-100", onClick: () => props.customIconAction ? props.customIconAction() : "" }, AdditionalIcon),
-            react_1.default.createElement("div", { className: "flex flex-wrap justify-between content-center opacity-70\r\n                                hover:cursor-pointer hover:opacity-100" },
-                react_1.default.createElement(md_1.MdOutlineEdit, null)),
-            react_1.default.createElement("div", { className: "flex flex-wrap justify-between content-center opacity-70\r\n                                hover:cursor-pointer hover:opacity-100" },
-                react_1.default.createElement(ri_1.RiDeleteBin6Line, null)))));
+            props.onEdit ? (react_1.default.createElement("div", { className: "flex flex-wrap justify-between content-center opacity-70\r\n                                hover:cursor-pointer hover:opacity-100" },
+                react_1.default.createElement(md_1.MdOutlineEdit, null))) : (""),
+            props.onDelete ? (react_1.default.createElement("div", { className: "flex flex-wrap justify-between content-center opacity-70\r\n                                hover:cursor-pointer hover:opacity-100", id: props.items ? props.items[0] : "", onClick: (e) => props.onDelete
+                    ? props.onDelete(e.currentTarget.id)
+                    : "" },
+                react_1.default.createElement(ri_1.RiDeleteBin6Line, null))) : (""))));
 }
 exports.default = ListItem;
