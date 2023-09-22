@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema(
+const truckSchema = new mongoose.Schema(
 	{
 		custom_id: {
 			type: String,
@@ -42,6 +42,6 @@ const userSchema = new mongoose.Schema(
 	}
 );
 
-const User = mongoose.model("User", userSchema);
+const Truck = mongoose.model("Truck", truckSchema);
 
-module.exports = User;
+module.exports = Truck;
