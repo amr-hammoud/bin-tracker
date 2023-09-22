@@ -62,6 +62,24 @@ function SuperAdminUsers() {
     (0, react_1.useEffect)(() => {
         getUsers();
     }, []);
+    const deleteUser = (id) => __awaiter(this, void 0, void 0, function* () {
+        try {
+            const response = yield (0, request_1.sendRequest)({
+                method: "DELETE",
+                route: `users/${id}`,
+                token,
+            });
+            if (response.status === 200) {
+                const newArr = userList.filter((user) => {
+                    return (user === null || user === void 0 ? void 0 : user._id) !== id;
+                });
+                setUserList(newArr);
+            }
+        }
+        catch (err) {
+            console.error(err);
+        }
+    });
     return (react_1.default.createElement("div", { className: "flex" },
         react_1.default.createElement(sidebar_1.default, { items: ["Dashboard", "Users", "Groups", "Account"], selected: "Users" }),
         react_1.default.createElement("div", { className: "flex flex-col w-full bg-neutral-0" },
@@ -81,7 +99,7 @@ function SuperAdminUsers() {
                             `${user.first_name} ${user.last_name}`,
                             user.username,
                             user_type,
-                        ] }));
+                        ], onDelete: deleteUser }));
                 })))));
 }
 exports.default = SuperAdminUsers;

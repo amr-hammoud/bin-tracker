@@ -13,7 +13,7 @@ export default function SuperAdminUsers() {
 		(state: RootState) => state.auth.token
 	);
 
-	const [userList, setUserList] = useState([]);
+	const [userList, setUserList] = useState<User[]>([]);
 
 	const getUsers = async () => {
 		try {
@@ -33,6 +33,24 @@ export default function SuperAdminUsers() {
 		getUsers();
 	}, []);
 
+	const deleteUser = async (id: string) => {
+		try {
+			const response = await sendRequest({
+				method: "DELETE",
+				route: `users/${id}`,
+				token,
+			});
+			if (response.status === 200) {
+				const newArr = userList.filter((user) => {
+					return user?._id !== id;
+				});
+				setUserList(newArr);
+			}
+		} catch (err: any) {
+			console.error(err);
+		}
+	};
+
 	return (
 		<div className="flex">
 			<Sidebar
@@ -42,7 +60,9 @@ export default function SuperAdminUsers() {
 			<div className="flex flex-col w-full bg-neutral-0">
 				<Navbar label="Users" />
 				<div className="p-10">
-					<ListHeader items={["ID", "Name", "Username", "Role", "Actions"]}/>
+					<ListHeader
+						items={["ID", "Name", "Username", "Role", "Actions"]}
+					/>
 					{userList.map((user: User, key) => {
 						let user_type: string = "";
 						if (user.user_type === "1") {
@@ -58,6 +78,7 @@ export default function SuperAdminUsers() {
 									user.username,
 									user_type,
 								]}
+								onDelete={deleteUser}
 							/>
 						);
 					})}
