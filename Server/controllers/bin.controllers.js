@@ -5,7 +5,7 @@ const getBin = async (req, res) => {
 		const bin = await Bin.findById(req.params.id);
 		res.status(200).send(bin);
 	} else {
-		const bins = await Bin.find();
+		const bins = await Bin.find({group_id: req.user.group_id});
 		res.status(200).send(bins);
 	}
 };
