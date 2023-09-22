@@ -42,6 +42,7 @@ const navbar_1 = __importDefault(require("../../../components/common/navbar"));
 const request_1 = require("../../../configs/request");
 const listItem_1 = __importDefault(require("../../../components/base/listItem"));
 const md_1 = require("react-icons/md");
+const listheader_1 = __importDefault(require("../../../components/base/listheader"));
 function AdminBins() {
     const token = (0, react_redux_1.useSelector)((state) => state.auth.token);
     const [binsList, setBinList] = (0, react_1.useState)([]);
@@ -79,9 +80,14 @@ function AdminBins() {
         react_1.default.createElement("div", { className: "flex flex-col w-full" },
             react_1.default.createElement(navbar_1.default, { label: "Bins" }),
             react_1.default.createElement("div", { className: "p-10" },
-                react_1.default.createElement("h2", null, binsList.map((bin, index) => {
-                    return react_1.default.createElement(listItem_1.default, { key: index, items: [bin.custom_id, bin.waste_type, bin.last_pickup_time], customIcon: react_1.default.createElement(md_1.MdLocationPin, null), customIconAction: () => showLocation() });
+                react_1.default.createElement(listheader_1.default, { items: ["ID", "Waste Type", "Last pickup time", "Actions"] }),
+                binsList.map((bin, index) => {
+                    return (react_1.default.createElement(listItem_1.default, { key: index, items: [
+                            bin.custom_id,
+                            bin.waste_type,
+                            bin.last_pickup_time,
+                        ], customIcon: react_1.default.createElement(md_1.MdLocationPin, null), customIconAction: () => showLocation() }));
                     //TODO: Add location icon to listItem
-                }))))));
+                })))));
 }
 exports.default = AdminBins;

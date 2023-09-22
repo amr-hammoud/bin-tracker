@@ -7,13 +7,14 @@ import Navbar from "../../../components/common/navbar";
 import { sendRequest } from "../../../configs/request";
 import ListItem from "../../../components/base/listItem";
 import { MdLocationPin } from "react-icons/md";
+import ListHeader from "../../../components/base/listheader";
 
 export default function AdminBins() {
 	const token: Token | null = useSelector(
 		(state: RootState) => state.auth.token
 	);
 
-	const [binsList, setBinList] = useState([])
+	const [binsList, setBinList] = useState([]);
 
 	const getBins = async () => {
 		try {
@@ -22,26 +23,23 @@ export default function AdminBins() {
 				token,
 			});
 			if (response.status === 200) {
-				setBinList(response.data)
+				setBinList(response.data);
 			}
 		} catch (err: any) {
 			console.error(err);
 		}
-	}
+	};
 
 	useEffect(() => {
-		getBins()
-	}, [])
+		getBins();
+	}, []);
 
 	const showLocation = () => {
 		console.log("Location");
-		
-	}
+	};
 
 	return (
-		
 		<div className="flex">
-			
 			<Sidebar
 				items={[
 					"Dashboard",
@@ -58,12 +56,24 @@ export default function AdminBins() {
 			<div className="flex flex-col w-full">
 				<Navbar label="Bins" />
 				<div className="p-10">
-					<h2>
-						{binsList.map((bin: Bin, index) => {
-							return <ListItem key={index} items={[bin.custom_id, bin.waste_type, bin.last_pickup_time]} customIcon={<MdLocationPin />} customIconAction={() => showLocation()}/>
-							//TODO: Add location icon to listItem
-						})}
-					</h2>
+					<ListHeader
+						items={["ID", "Waste Type", "Last pickup time", "Actions"]}
+					/>
+					{binsList.map((bin: Bin, index) => {
+						return (
+							<ListItem
+								key={index}
+								items={[
+									bin.custom_id,
+									bin.waste_type,
+									bin.last_pickup_time,
+								]}
+								customIcon={<MdLocationPin />}
+								customIconAction={() => showLocation()}
+							/>
+						);
+						//TODO: Add location icon to listItem
+					})}
 				</div>
 			</div>
 		</div>
