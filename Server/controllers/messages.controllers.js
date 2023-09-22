@@ -29,4 +29,23 @@ const sendChatMessage = async (req, res) => {
 	}
 };
 
-module.exports = { sendChatMessage };
+const getChatMessages = async (req, res) => {
+	const { _id } = req.user;
+	const other_id = req.params.other_id;
+
+	try {
+		const messages = await Message.find({
+			$or: [
+				{ sender_id: _id, receiver_id: other_id },
+				{ sender_id: other_id, receiver_id: _id },
+			],
+		}).sort({ createdAt: 1 });
+
+        res.status(200).send(messages);
+	} catch (error) {
+		console.error(error);
+		res.status(500).send("Internal server error");
+	}
+};
+
+module.exports = { sendChatMessage, getChatMessages };
