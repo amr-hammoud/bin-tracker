@@ -69,6 +69,8 @@ export default function SuperAdminUsers() {
 							user_type = "Super Admin";
 						} else if (user.user_type === "2") {
 							user_type = "Admin";
+						} else if (user.user_type === "3") {
+							user_type = "Driver";
 						}
 						return (
 							<ListItem

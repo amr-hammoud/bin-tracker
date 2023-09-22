@@ -94,6 +94,9 @@ function SuperAdminUsers() {
                     else if (user.user_type === "2") {
                         user_type = "Admin";
                     }
+                    else if (user.user_type === "3") {
+                        user_type = "Driver";
+                    }
                     return (react_1.default.createElement(listItem_1.default, { items: [
                             user._id,
                             `${user.first_name} ${user.last_name}`,
