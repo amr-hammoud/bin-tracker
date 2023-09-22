@@ -22,7 +22,7 @@ export default function ListItem(props: ListItemProps) {
 				{props.items.map((item, index) => {
 					return (
 						<div
-							className="w-full px-3 truncate select-none"
+							className="w-full px-3 truncate"
 							key={index}
 						>
 							<div>{item ? item : "-"}</div>
