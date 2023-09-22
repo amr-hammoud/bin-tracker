@@ -16,7 +16,8 @@ class MyApp extends StatelessWidget {
       title: 'Bin Tracker',
       theme: ThemeData(
         colorScheme:
-            ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 70, 119, 255)),
+            ColorScheme.fromSeed(
+            seedColor: const Color.fromARGB(255, 70, 119, 255)),
         useMaterial3: true,
       ),
       home: const MyHomePage(),
@@ -54,19 +55,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
       final dio = Dio();
 
-      final _data = {
+      final data = {
         'email': _email,
         'username': _username,
         'password': _password,
       };
 
       dio
-          .post('http://localhost:8000/auth/login', data: _data)
+          .post('http://localhost:8000/auth/login', data: data)
           .then((response) {
         print("Response: $response");
         if (response.statusCode == 200) {
-          final response_data = jsonDecode(response.data);
-          String token = response_data['token'];
+          final responseData = jsonDecode(response.data);
+          String token = responseData['token'];
           print("Token: $token");
         } else {
           print("Login Failed");
@@ -93,12 +94,12 @@ class _MyHomePageState extends State<MyHomePage> {
               "Login",
               style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: TextFormField(
                 keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: "Email/Username",
                   border: OutlineInputBorder(),
                 ),
@@ -117,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: const EdgeInsets.all(20.0),
               child: TextFormField(
                 obscureText: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: "Password",
                   border: OutlineInputBorder(),
                 ),
@@ -132,7 +133,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
               ),
             ),
-            ElevatedButton(onPressed: _login, child: Text("Login"))
+            ElevatedButton(onPressed: _login, child: const Text("Login"))
           ],
         ),
       )),
