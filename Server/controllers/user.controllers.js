@@ -10,6 +10,20 @@ const getUser = async (req, res) => {
 	}
 };
 
+const getGroupUser = async (req, res) => {
+	if (req.params.id) {
+		const user = await User.findById(req.params.id);
+		if (req.user.group_id === user.group_id) {
+			res.status(200).send(user);
+		} else {
+			es.status(401).send({ message: "Unauthorized" });
+		}
+	} else {
+		const users = await User.find({ group_id: req.user.group_id });
+		res.status(200).send(users);
+	}
+};
+
 const updateUser = async (req, res) => {
 	const user_data = req.body;
 	const user_id = req.params.id;
@@ -45,4 +59,4 @@ const deleteUser = async (req, res) => {
 	res.status(200).send("User deleted successfully");
 };
 
-module.exports = { getUser, updateUser, deleteUser };
+module.exports = { getUser, updateUser, deleteUser, getGroupUser };
