@@ -1,5 +1,4 @@
 import 'package:bin_tracker_flutter/auth.dart';
-import 'package:bin_tracker_flutter/home.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -21,7 +20,6 @@ class MyApp extends StatelessWidget {
       home: const AuthPage(),
       routes: {
         '/auth': (context) => const AuthPage(),
-        '/home': (context) => const HomePage(),
       },
     );
   }
