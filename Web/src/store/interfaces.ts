@@ -25,8 +25,8 @@ interface Bin {
 	longitude: string | null;
 	latitude: string | null;
 	group_id: string;
-	last_pickup_time: string | null;
-	waste_type: string | null;
+	last_pickup_time: string | undefined;
+	waste_type: string | undefined;
 	data: Array<BinRecord>;
 }
 
