@@ -7,13 +7,9 @@ interface ListItemProps {
 
 
 export default function ListHeader(props: ListItemProps) {
-
-	console.log("OLD ARRAY: ", props.items);
 	
 	const newArray = props.items.slice(0,props.items.length - 1)
-	console.log("NEW ARRAY: ", newArray);
 	
-
 	return (
 		<div
 			className="flex justify-between content-center shadow border border-primary-300 rounded-md px-3 py-4 my-3
