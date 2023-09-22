@@ -5,7 +5,7 @@ const getTruck = async (req, res) => {
 		const truck = await Truck.findById(req.params.id);
 		res.status(200).send(truck);
 	} else {
-		const trucks = await Truck.find({group_id: req.user.group_id});
+		const trucks = await Truck.find({group_id: req.user.group_id}).populate('driver_id');
 		res.status(200).send(trucks);
 	}
 };
