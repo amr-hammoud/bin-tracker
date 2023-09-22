@@ -1,6 +1,4 @@
 import React from "react";
-import { MdOutlineEdit } from "react-icons/md";
-import { RiDeleteBin6Line } from "react-icons/ri";
 
 interface ListItemProps {
 	items: Array<string | null>;
