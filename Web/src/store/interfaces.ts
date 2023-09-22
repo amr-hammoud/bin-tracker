@@ -30,6 +30,16 @@ interface Bin {
 	data: Array<BinRecord>;
 }
 
+interface Truck {
+	_id: string;
+	custom_id: string;
+	plate_number: string;
+	group_id: string;
+	driver_id: any;
+	last_oil_change?: string | undefined;
+	last_wash?: string | undefined;
+}
+
 interface Group {
 	_id: string;
 	name: string;
@@ -37,4 +47,4 @@ interface Group {
 	members: Array<string>;
 }
 
-export { User, Token, Bin, BinRecord, Group };
+export { User, Token, Bin, BinRecord, Group, Truck };
