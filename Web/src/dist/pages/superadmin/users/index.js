@@ -41,6 +41,7 @@ const sidebar_1 = __importDefault(require("../../../components/common/sidebar"))
 const navbar_1 = __importDefault(require("../../../components/common/navbar"));
 const request_1 = require("../../../configs/request");
 const listItem_1 = __importDefault(require("../../../components/base/listItem"));
+const listheader_1 = __importDefault(require("../../../components/base/listheader"));
 function SuperAdminUsers() {
     const token = (0, react_redux_1.useSelector)((state) => state.auth.token);
     const [userList, setUserList] = (0, react_1.useState)([]);
@@ -66,7 +67,8 @@ function SuperAdminUsers() {
         react_1.default.createElement("div", { className: "flex flex-col w-full bg-neutral-0" },
             react_1.default.createElement(navbar_1.default, { label: "Users" }),
             react_1.default.createElement("div", { className: "p-10" },
-                react_1.default.createElement("h2", null, userList.map((user, key) => {
+                react_1.default.createElement(listheader_1.default, { items: ["ID", "Name", "Username", "Role", "Actions"] }),
+                userList.map((user, key) => {
                     let user_type = "";
                     if (user.user_type === "1") {
                         user_type = "Super Admin";
@@ -74,7 +76,12 @@ function SuperAdminUsers() {
                     else if (user.user_type === "2") {
                         user_type = "Admin";
                     }
-                    return react_1.default.createElement(listItem_1.default, { items: [user._id, `${user.first_name} ${user.last_name}`, user.username, user_type] });
-                }))))));
+                    return (react_1.default.createElement(listItem_1.default, { items: [
+                            user._id,
+                            `${user.first_name} ${user.last_name}`,
+                            user.username,
+                            user_type,
+                        ] }));
+                })))));
 }
 exports.default = SuperAdminUsers;
