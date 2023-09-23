@@ -7,6 +7,8 @@ import Navbar from "../../../components/common/navbar";
 import { sendRequest } from "../../../configs/request";
 import ListItem from "../../../components/base/listItem";
 import ListHeader from "../../../components/base/listheader";
+import ModalComponent from "../../../components/common/modal";
+import Button from "../../../components/base/button";
 
 export default function SuperAdminUsers() {
 	const token: Token | null = useSelector(
@@ -51,6 +53,15 @@ export default function SuperAdminUsers() {
 		}
 	};
 
+	const [modalState, setModalState] = useState({
+		open: false,
+		id: "",
+	});
+
+	const activateModal = (id: string) => {
+		setModalState({ ...modalState, open: true, id: id });
+	};
+
 	return (
 		<div className="flex">
 			<Sidebar
@@ -59,6 +70,33 @@ export default function SuperAdminUsers() {
 			/>
 			<div className="flex flex-col w-full bg-neutral-0">
 				<Navbar label="Users" />
+				<ModalComponent
+					showModal={modalState.open}
+					onRequestClose={() =>
+						setModalState({ ...modalState, open: !modalState.open })
+					}
+				>
+					<div className="text-xl">
+						Are you sure you want to delete?
+					</div>
+					<div className="flex w-full justify-center gap-10 mt-5">
+						<Button
+							label="Cancel"
+							color="text-gunmetal"
+							bgColor="bg-neutral-100"
+							hoverColor="hover:bg-neutral-600"
+							onClick={() =>
+								setModalState({ ...modalState, open: false })
+							}
+						/>
+						<Button
+							label="Delete"
+							bgColor="bg-red-400"
+							hoverColor="hover:bg-red-500"
+							onClick={() => deleteUser(modalState.id)}
+						/>
+					</div>
+				</ModalComponent>
 				<div className="p-10">
 					<ListHeader
 						items={["ID", "Name", "Username", "Role", "Actions"]}
@@ -80,7 +118,7 @@ export default function SuperAdminUsers() {
 									user.username,
 									user_type,
 								]}
-								onDelete={deleteUser}
+								onDelete={(id) => activateModal(id)}
 							/>
 						);
 					})}
