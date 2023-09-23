@@ -1,6 +1,6 @@
 class User {
-  final String token;
-  final UserData user;
+  String token;
+  UserData user;
 
   User({required this.token, required this.user});
 
