@@ -62,13 +62,53 @@ function SuperAdminUsers() {
             react_hot_toast_1.toast.error("Couldn't Delete User", { duration: 4000 });
         }
     });
+    const [createModalState, setCreateModalState] = (0, react_1.useState)({
+        open: false,
+        type: "create",
+    });
+    const [userData, setUserData] = (0, react_1.useState)({
+        _id: "",
+        first_name: "",
+        last_name: "",
+        username: "",
+        email: "",
+        password: "",
+        user_type: "",
+    });
 }
 exports.default = SuperAdminUsers;
 ;
 return (react_1.default.createElement("div", { className: "flex" },
     react_1.default.createElement(sidebar_1.default, { items: ["Dashboard", "Users", "Groups", "Account"], selected: "Users" }),
     react_1.default.createElement("div", { className: "flex flex-col w-full bg-neutral-0" },
-        react_1.default.createElement(navbar_1.default, null),
+        react_1.default.createElement(navbar_1.default, { label: "Users", buttonLabel: "+ Create User", buttonAction: () => activateCreateModal() }),
+        react_1.default.createElement("div", null,
+            react_1.default.createElement(react_hot_toast_1.Toaster, null)),
+        react_1.default.createElement(modal_1.default, { showModal: createModalState.open, onRequestClose: () => setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: !createModalState.open })) },
+            react_1.default.createElement("div", { className: "text-xl" }, "Create/Edit User"),
+            react_1.default.createElement("div", { className: "flex flex-col flex-wrap justify-center content-center w-96" },
+                react_1.default.createElement("div", { className: "flex gap-5" },
+                    react_1.default.createElement(input_1.default, { label: "First Name", placeholder: "first name", value: userData.first_name, onChange: (e) => {
+                            setUserData(Object.assign(Object.assign({}, userData), { first_name: e.target.value }));
+                        }, required: true }),
+                    react_1.default.createElement(input_1.default, { label: "Last Name", placeholder: "last name", value: userData.last_name, onChange: (e) => {
+                            setUserData(Object.assign(Object.assign({}, userData), { last_name: e.target.value }));
+                        }, required: true })),
+                react_1.default.createElement(input_1.default, { label: "Username", placeholder: "username", value: userData.username, onChange: (e) => {
+                        setUserData(Object.assign(Object.assign({}, userData), { username: e.target.value }));
+                    }, required: true }),
+                react_1.default.createElement(input_1.default, { label: "Email", type: "email", placeholder: "Email", value: userData.email, onChange: (e) => {
+                        setUserData(Object.assign(Object.assign({}, userData), { email: e.target.value }));
+                    } }),
+                createModalState.type === "create" ? (react_1.default.createElement(input_1.default, { label: "Password", type: "password", placeholder: "Password", value: userData.password, onChange: (e) => {
+                        setUserData(Object.assign(Object.assign({}, userData), { password: e.target.value }));
+                    }, required: true })) : (react_1.default.createElement(input_1.default, { label: "Password", type: "password", placeholder: "Password", value: userData.password, onChange: (e) => {
+                        setUserData(Object.assign(Object.assign({}, userData), { password: e.target.value }));
+                    } })),
+                react_1.default.createElement(select_1.default, { label: "User Type", required: true, value: userData.user_type, options: { "Super Admin": "1", "Admin": "2", "Driver": "3" }, onChange: (e) => setUserData(Object.assign(Object.assign({}, userData), { user_type: e.target.value })) })),
+            react_1.default.createElement("div", { className: "flex w-full justify-center gap-10 mt-5" },
+                react_1.default.createElement(button_1.default, { label: "Cancel", color: "text-gunmetal", bgColor: "bg-neutral-100", hoverColor: "hover:bg-neutral-600", onClick: () => setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false })) }),
+                createModalState.type === "edit" ? (react_1.default.createElement(button_1.default, { label: "Update", bgColor: "bg-primary-500", hoverColor: "hover:bg-primary-700", onClick: () => updateUser() })) : (react_1.default.createElement(button_1.default, { label: "Create", bgColor: "bg-primary-500", hoverColor: "hover:bg-primary-700", onClick: () => createUser() })))),
         react_1.default.createElement(modal_1.default, { showModal: deleteModalState.open, onRequestClose: () => setdeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: !deleteModalState.open })) },
             react_1.default.createElement("div", { className: "text-xl" }, "Are you sure you want to delete?"),
             react_1.default.createElement("div", { className: "flex w-full justify-center gap-10 mt-5" },
@@ -92,5 +132,5 @@ return (react_1.default.createElement("div", { className: "flex" },
                         `${user.first_name} ${user.last_name}`,
                         user.username,
                         user_type,
-                    ], object: user, onDelete: (id) => activateDeleteModal(id) }));
+                    ], object: user, onEdit: (data) => activateEditModal(data), onDelete: (id) => activateDeleteModal(id) }));
             })))));

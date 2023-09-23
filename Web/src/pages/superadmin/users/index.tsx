@@ -69,6 +69,20 @@ export default function SuperAdminUsers() {
 		}
 	};
 
+	const [createModalState, setCreateModalState] = useState({
+		open: false,
+		type: "create",
+	});
+	const [userData, setUserData] = useState({
+		_id: "",
+		first_name: "",
+		last_name: "",
+		username: "",
+		email: "",
+		password: "",
+		user_type: "",
+	});
+
 	};
 
 	return (
@@ -78,7 +92,139 @@ export default function SuperAdminUsers() {
 				selected="Users"
 			/>
 			<div className="flex flex-col w-full bg-neutral-0">
-				<Navbar />
+				<Navbar
+					label="Users"
+					buttonLabel="+ Create User"
+					buttonAction={() => activateCreateModal()}
+				/>
+				<div>
+					<Toaster />
+				</div>
+				{/* Create - Edit Modal */}
+				<ModalComponent
+					showModal={createModalState.open}
+					onRequestClose={() =>
+						setCreateModalState({
+							...createModalState,
+							open: !createModalState.open,
+						})
+					}
+				>
+					<div className="text-xl">Create/Edit User</div>
+					<div className="flex flex-col flex-wrap justify-center content-center w-96">
+						<div className="flex gap-5">
+							<Input
+								label="First Name"
+								placeholder="first name"
+								value={userData.first_name}
+								onChange={(e) => {
+									setUserData({
+										...userData,
+										first_name: e.target.value,
+									});
+								}}
+								required
+							/>
+							<Input
+								label="Last Name"
+								placeholder="last name"
+								value={userData.last_name}
+								onChange={(e) => {
+									setUserData({
+										...userData,
+										last_name: e.target.value,
+									});
+								}}
+								required
+							/>
+						</div>
+						<Input
+							label="Username"
+							placeholder="username"
+							value={userData.username}
+							onChange={(e) => {
+								setUserData({
+									...userData,
+									username: e.target.value,
+								});
+							}}
+							required
+						/>
+						<Input
+							label="Email"
+							type="email"
+							placeholder="Email"
+							value={userData.email}
+							onChange={(e) => {
+								setUserData({
+									...userData,
+									email: e.target.value,
+								});
+							}}
+						/>
+						{createModalState.type === "create" ? (
+							<Input
+								label="Password"
+								type="password"
+								placeholder="Password"
+								value={userData.password}
+								onChange={(e) => {
+									setUserData({
+										...userData,
+										password: e.target.value,
+									});
+								}}
+								required
+							/>
+						) : (
+							<Input
+								label="Password"
+								type="password"
+								placeholder="Password"
+								value={userData.password}
+								onChange={(e) => {
+									setUserData({
+										...userData,
+										password: e.target.value,
+									});
+								}}
+							/>
+						)}
+
+						<Select label="User Type" required value={userData.user_type} options={{"Super Admin": "1", "Admin": "2", "Driver": "3"}} onChange={(e) => setUserData({...userData, user_type: e.target.value})}/>
+
+					</div>
+					<div className="flex w-full justify-center gap-10 mt-5">
+						<Button
+							label="Cancel"
+							color="text-gunmetal"
+							bgColor="bg-neutral-100"
+							hoverColor="hover:bg-neutral-600"
+							onClick={() =>
+								setCreateModalState({
+									...createModalState,
+									open: false,
+								})
+							}
+						/>
+						{createModalState.type === "edit" ? (
+							<Button
+								label="Update"
+								bgColor="bg-primary-500"
+								hoverColor="hover:bg-primary-700"
+								onClick={() => updateUser()}
+							/>
+						) : (
+							<Button
+								label="Create"
+								bgColor="bg-primary-500"
+								hoverColor="hover:bg-primary-700"
+								onClick={() => createUser()}
+							/>
+						)}
+					</div>
+				</ModalComponent>
+				{/* Delete Modal */}
 				<ModalComponent
 					showModal={deleteModalState.open}
 					onRequestClose={() =>
@@ -134,6 +280,7 @@ export default function SuperAdminUsers() {
 									user_type,
 								]}
 								object={user}
+								onEdit={(data) => activateEditModal(data)}
 								onDelete={(id) => activateDeleteModal(id)}
 							/>
 						);
