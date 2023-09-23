@@ -7,8 +7,11 @@ import Navbar from "../../../components/common/navbar";
 import { sendRequest } from "../../../configs/request";
 import ListItem from "../../../components/base/listItem";
 import ListHeader from "../../../components/base/listheader";
-import ModalComponent from "../../../components/common/modal";
+import ModalComponent from "../../../components/base/modal";
 import Button from "../../../components/base/button";
+import Input from "../../../components/base/input";
+import { Toaster, toast } from "react-hot-toast";
+import Select from "../../../components/base/select";
 
 export default function SuperAdminUsers() {
 	const token: Token | null = useSelector(
@@ -35,6 +38,15 @@ export default function SuperAdminUsers() {
 		getUsers();
 	}, []);
 
+	const [deleteModalState, setdeleteModalState] = useState({
+		open: false,
+		id: "",
+	});
+
+	const activateDeleteModal = (id: string) => {
+		setdeleteModalState({ ...deleteModalState, open: true, id: id });
+	};
+
 	const deleteUser = async (id: string) => {
 		try {
 			const response = await sendRequest({
@@ -46,20 +58,17 @@ export default function SuperAdminUsers() {
 				const newArr = userList.filter((user) => {
 					return user?._id !== id;
 				});
+				setdeleteModalState({ ...deleteModalState, open: false });
+				toast.success("User Deleted Successfully", { duration: 2500 });
 				setUserList(newArr);
 			}
 		} catch (err: any) {
 			console.error(err);
+			setdeleteModalState({ ...deleteModalState, open: false });
+			toast.error("Couldn't Delete User", { duration: 4000 });
 		}
 	};
 
-	const [modalState, setModalState] = useState({
-		open: false,
-		id: "",
-	});
-
-	const activateModal = (id: string) => {
-		setModalState({ ...modalState, open: true, id: id });
 	};
 
 	return (
@@ -69,11 +78,14 @@ export default function SuperAdminUsers() {
 				selected="Users"
 			/>
 			<div className="flex flex-col w-full bg-neutral-0">
-				<Navbar label="Users" />
+				<Navbar />
 				<ModalComponent
-					showModal={modalState.open}
+					showModal={deleteModalState.open}
 					onRequestClose={() =>
-						setModalState({ ...modalState, open: !modalState.open })
+						setdeleteModalState({
+							...deleteModalState,
+							open: !deleteModalState.open,
+						})
 					}
 				>
 					<div className="text-xl">
@@ -86,14 +98,17 @@ export default function SuperAdminUsers() {
 							bgColor="bg-neutral-100"
 							hoverColor="hover:bg-neutral-600"
 							onClick={() =>
-								setModalState({ ...modalState, open: false })
+								setdeleteModalState({
+									...deleteModalState,
+									open: false,
+								})
 							}
 						/>
 						<Button
 							label="Delete"
 							bgColor="bg-red-400"
 							hoverColor="hover:bg-red-500"
-							onClick={() => deleteUser(modalState.id)}
+							onClick={() => deleteUser(deleteModalState.id)}
 						/>
 					</div>
 				</ModalComponent>
@@ -118,7 +133,8 @@ export default function SuperAdminUsers() {
 									user.username,
 									user_type,
 								]}
-								onDelete={(id) => activateModal(id)}
+								object={user}
+								onDelete={(id) => activateDeleteModal(id)}
 							/>
 						);
 					})}
