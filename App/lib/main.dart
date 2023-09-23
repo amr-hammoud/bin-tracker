@@ -1,5 +1,7 @@
 import 'package:bin_tracker_flutter/auth.dart';
+import 'package:bin_tracker_flutter/providers/UserProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +20,10 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Poppins',
         useMaterial3: true,
       ),
-      home: const AuthPage(),
+      home: ChangeNotifierProvider(
+        create: (_) => UserProvider(),
+        child: const AuthPage(),
+      ),
       routes: {
         '/auth': (context) => const AuthPage(),
       },
