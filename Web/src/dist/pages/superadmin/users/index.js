@@ -67,6 +67,7 @@ function SuperAdminUsers() {
                 route: "users/",
                 token,
             });
+            console.log(response.data);
             if (response.status === 200) {
                 setUserList(response.data);
             }
@@ -204,10 +205,28 @@ function SuperAdminUsers() {
         }
     });
     const transformedGroupsList = groupsList.reduce((acc, currentItem) => {
-        // Use the name as the key and _id as the value
         acc[currentItem.name] = currentItem._id;
         return acc;
     }, {});
+    const [filters, setfilters] = (0, react_1.useState)({
+        searchQuery: "",
+        selectedFilter: ""
+    });
+    const filterUsers = (query) => {
+        if (!query) {
+            return userList;
+        }
+        const lowerCaseQuery = query.toLowerCase();
+        return userList.filter((user) => {
+            const fullName = `${user.first_name} ${user.last_name}`.toLowerCase();
+            const username = user.username.toLowerCase();
+            return (fullName.includes(lowerCaseQuery) ||
+                username.includes(lowerCaseQuery));
+        });
+    };
+    const filterObjects = (query) => {
+        setfilters(Object.assign(Object.assign({}, filters), { searchQuery: query }));
+    };
     return (react_1.default.createElement("div", { className: "flex" },
         react_1.default.createElement(sidebar_1.default, { items: ["Dashboard", "Users", "Groups", "Account"], selected: "Users" }),
         react_1.default.createElement("div", { className: "flex flex-col w-full bg-neutral-0" },
@@ -253,8 +272,13 @@ function SuperAdminUsers() {
                     react_1.default.createElement(button_1.default, { label: "Cancel", color: "text-gunmetal", bgColor: "bg-neutral-100", hoverColor: "hover:bg-neutral-600", onClick: () => setdeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: false })) }),
                     react_1.default.createElement(button_1.default, { label: "Delete", bgColor: "bg-red-400", hoverColor: "hover:bg-red-500", onClick: () => deleteUser(deleteModalState.id) }))),
             react_1.default.createElement("div", { className: "p-10" },
-                react_1.default.createElement(listheader_1.default, { items: ["ID", "Name", "Username", "Role", "Actions"] }),
-                userList.map((user, key) => {
+                react_1.default.createElement("div", { className: "flex flex-wrap content-center justify-center py-2 rounded-lg bg-primary-200" },
+                    react_1.default.createElement("div", { className: "flex flex-wrap content-center" },
+                        react_1.default.createElement(input_1.default, { placeholder: "Search", onChange: (e) => filterObjects(e.target.value) })))),
+            react_1.default.createElement("div", { className: "p-10" },
+                react_1.default.createElement(listheader_1.default, { items: ["Name", "Username", "Group", "Role", "Actions"] }),
+                filterUsers(filters.searchQuery).map((user, key) => {
+                    var _a;
                     let user_type = "";
                     if (user.user_type === "1") {
                         user_type = "Super Admin";
@@ -266,9 +290,9 @@ function SuperAdminUsers() {
                         user_type = "Driver";
                     }
                     return (react_1.default.createElement(listItem_1.default, { items: [
-                            user._id,
                             `${user.first_name} ${user.last_name}`,
                             user.username,
+                            (_a = user === null || user === void 0 ? void 0 : user.group_id) === null || _a === void 0 ? void 0 : _a.name,
                             user_type,
                         ], object: user, onEdit: (data) => activateEditModal(data), onDelete: (id) => activateDeleteModal(id) }));
                 })))));

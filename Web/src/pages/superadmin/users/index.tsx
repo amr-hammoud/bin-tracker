@@ -26,6 +26,8 @@ export default function SuperAdminUsers() {
 				route: "users/",
 				token,
 			});
+			console.log(response.data);
+			
 			if (response.status === 200) {
 				setUserList(response.data);
 			}
@@ -202,12 +204,41 @@ export default function SuperAdminUsers() {
 
 	const transformedGroupsList = groupsList.reduce(
 		(acc: Record<string, string>, currentItem) => {
-			// Use the name as the key and _id as the value
 			acc[currentItem.name] = currentItem._id;
 			return acc;
 		},
 		{}
 	);
+
+	const [filters, setfilters] = useState<{
+		searchQuery: string;
+		selectedFilter: string;
+	}>({
+		searchQuery: "",
+		selectedFilter: ""
+	});
+
+	const filterUsers = (query: string) => {
+		if (!query) {
+			return userList;
+		}
+		const lowerCaseQuery = query.toLowerCase();
+
+		return userList.filter((user) => {
+			const fullName =
+				`${user.first_name} ${user.last_name}`.toLowerCase();
+			const username = user.username.toLowerCase();
+
+			return (
+				fullName.includes(lowerCaseQuery) ||
+				username.includes(lowerCaseQuery)
+			);
+		});
+	};
+
+	const filterObjects = (query: string) => {
+		setfilters({...filters, searchQuery: query});
+	};
 
 	return (
 		<div className="flex">
@@ -416,10 +447,20 @@ export default function SuperAdminUsers() {
 					</div>
 				</ModalComponent>
 				<div className="p-10">
+					<div className="flex flex-wrap content-center justify-center py-2 rounded-lg bg-primary-200">
+						<div className="flex flex-wrap content-center">
+							<Input
+								placeholder="Search"
+								onChange={(e) => filterObjects(e.target.value)}
+							/>
+						</div>
+					</div>
+				</div>
+				<div className="p-10">
 					<ListHeader
-						items={["ID", "Name", "Username", "Role", "Actions"]}
+						items={["Name", "Username", "Group", "Role", "Actions"]}
 					/>
-					{userList.map((user: User, key) => {
+					{filterUsers(filters.searchQuery).map((user: User, key) => {
 						let user_type: string = "";
 						if (user.user_type === "1") {
 							user_type = "Super Admin";
@@ -431,9 +472,9 @@ export default function SuperAdminUsers() {
 						return (
 							<ListItem
 								items={[
-									user._id,
 									`${user.first_name} ${user.last_name}`,
 									user.username,
+									user?.group_id?.name,
 									user_type,
 								]}
 								object={user}
