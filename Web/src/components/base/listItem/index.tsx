@@ -3,7 +3,7 @@ import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
 interface ListItemProps {
-	data: Record<string, string | undefined>;
+	items: Array<string | undefined | null>;
 	object?: Object;
 	customIcon?: React.ReactNode;
 	customIconAction?: () => void;
@@ -20,11 +20,11 @@ export default function ListItem(props: ListItemProps) {
                         hover:bg-primary-100"
 		>
 			<div className="flex flex-grow justify-between gap-3">
-				{Object.entries(props.data).map(([key, value], index) => {
+				{props.items.map((item, index) => {
 					return (
 						<div className="w-full px-3 truncate" key={index}>
 							<div>
-								{value ? value : "-"}
+								{item ? item : "-"}
 							</div>
 						</div>
 					);
@@ -58,7 +58,7 @@ export default function ListItem(props: ListItemProps) {
 					<div
 						className="flex flex-wrap justify-between content-center opacity-70
                                 hover:cursor-pointer hover:opacity-100"
-						id={props.data ? props.data._id : ""}
+						id={props.items[0] ? props.items[0] : ""}
 						onClick={(e) =>
 							props.onDelete
 								? props.onDelete(e.currentTarget.id)
