@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
-import { Token, User } from "../../../store/interfaces";
+import { Token, User, Group } from "../../../store/interfaces";
 import Sidebar from "../../../components/common/sidebar";
 import Navbar from "../../../components/common/navbar";
 import { sendRequest } from "../../../configs/request";
@@ -36,6 +36,7 @@ export default function SuperAdminUsers() {
 
 	useEffect(() => {
 		getUsers();
+		getGroups();
 	}, []);
 
 	const [deleteModalState, setdeleteModalState] = useState({
@@ -80,6 +81,7 @@ export default function SuperAdminUsers() {
 		username: "",
 		email: "",
 		password: "",
+		group_id: "",
 		user_type: "",
 	});
 
@@ -92,6 +94,7 @@ export default function SuperAdminUsers() {
 			username: "",
 			email: "",
 			password: "",
+			group_id: "",
 			user_type: "1",
 		});
 		setCreateModalState({
@@ -110,6 +113,7 @@ export default function SuperAdminUsers() {
 			last_name: user.last_name,
 			username: user.username,
 			email: user.email,
+			group_id: user.group_id,
 			user_type: user.user_type,
 		});
 
@@ -161,8 +165,6 @@ export default function SuperAdminUsers() {
 				token,
 			});
 
-			console.log(response);
-
 			if (response.status === 200) {
 				setCreateModalState({ ...createModalState, open: false });
 				getUsers();
@@ -177,6 +179,32 @@ export default function SuperAdminUsers() {
 			toast.error("Couldn't Create, Try Again", { duration: 2500 });
 		}
 	};
+
+	const [groupsList, setgroupsList] = useState<Group[]>([]);
+
+	const getGroups = async () => {
+		try {
+			const response = await sendRequest({
+				route: `groups`,
+				token,
+			});
+
+			if (response.status === 200) {
+				setgroupsList(response.data);
+			} else {
+				toast.error("Error Getting Groups", { duration: 4000 });
+			}
+		} catch (err: any) {
+			console.error(err);
+			toast.error("Error Getting Groups", { duration: 2500 });
+		}
+	};
+
+	const transformedGroupsList = groupsList.reduce((acc: Record<string, string>, currentItem) => {
+		// Use the name as the key and _id as the value
+		acc[currentItem.name] = currentItem._id;
+		return acc;
+	}, {});
 
 	return (
 		<div className="flex">
@@ -231,18 +259,50 @@ export default function SuperAdminUsers() {
 								required
 							/>
 						</div>
-						<Input
-							label="Username"
-							placeholder="username"
-							value={userData.username}
-							onChange={(e) => {
+						<div className="flex gap-5">
+							<Input
+								label="Username"
+								placeholder="username"
+								value={userData.username}
+								onChange={(e) => {
+									setUserData({
+										...userData,
+										username: e.target.value,
+									});
+								}}
+								required
+							/>
+							<Select
+								label="User Type"
+								required
+								value={userData.user_type}
+								options={{
+									"Super Admin": "1",
+									Admin: "2",
+									Driver: "3",
+								}}
+								onChange={(e) =>
+									setUserData({
+										...userData,
+										user_type: e.target.value,
+									})
+								}
+							/>
+						</div>
+						<Select
+							label="Group"
+							required
+							value={userData.user_type === "1" ? "" : userData.group_id}
+							options={transformedGroupsList}
+							disabled={userData.user_type === "1"}
+							onChange={(e) =>
 								setUserData({
 									...userData,
-									username: e.target.value,
-								});
-							}}
-							required
+									group_id: e.target.value,
+								})
+							}
 						/>
+
 						<Input
 							label="Email"
 							type="email"
@@ -283,9 +343,6 @@ export default function SuperAdminUsers() {
 								}}
 							/>
 						)}
-
-						<Select label="User Type" required value={userData.user_type} options={{"Super Admin": "1", "Admin": "2", "Driver": "3"}} onChange={(e) => setUserData({...userData, user_type: e.target.value})}/>
-
 					</div>
 					<div className="flex w-full justify-center gap-10 mt-5">
 						<Button

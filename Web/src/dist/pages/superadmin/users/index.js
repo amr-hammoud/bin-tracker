@@ -77,6 +77,7 @@ function SuperAdminUsers() {
     });
     (0, react_1.useEffect)(() => {
         getUsers();
+        getGroups();
     }, []);
     const [deleteModalState, setdeleteModalState] = (0, react_1.useState)({
         open: false,
@@ -118,15 +119,16 @@ function SuperAdminUsers() {
         username: "",
         email: "",
         password: "",
+        group_id: "",
         user_type: "",
     });
     const activateCreateModal = () => {
-        setUserData(Object.assign(Object.assign({}, userData), { _id: "", first_name: "", last_name: "", username: "", email: "", password: "", user_type: "1" }));
+        setUserData(Object.assign(Object.assign({}, userData), { _id: "", first_name: "", last_name: "", username: "", email: "", password: "", group_id: "", user_type: "1" }));
         setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: true, type: "create" }));
     };
     const activateEditModal = (data) => {
         const user = JSON.parse(data);
-        setUserData(Object.assign(Object.assign({}, userData), { _id: user._id, first_name: user.first_name, last_name: user.last_name, username: user.username, email: user.email, user_type: user.user_type }));
+        setUserData(Object.assign(Object.assign({}, userData), { _id: user._id, first_name: user.first_name, last_name: user.last_name, username: user.username, email: user.email, group_id: user.group_id, user_type: user.user_type }));
         setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: true, type: "edit" }));
     };
     const updateUser = () => __awaiter(this, void 0, void 0, function* () {
@@ -166,7 +168,6 @@ function SuperAdminUsers() {
                 body: finalData,
                 token,
             });
-            console.log(response);
             if (response.status === 200) {
                 setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false }));
                 getUsers();
@@ -183,6 +184,30 @@ function SuperAdminUsers() {
             react_hot_toast_1.toast.error("Couldn't Create, Try Again", { duration: 2500 });
         }
     });
+    const [groupsList, setgroupsList] = (0, react_1.useState)([]);
+    const getGroups = () => __awaiter(this, void 0, void 0, function* () {
+        try {
+            const response = yield (0, request_1.sendRequest)({
+                route: `groups`,
+                token,
+            });
+            if (response.status === 200) {
+                setgroupsList(response.data);
+            }
+            else {
+                react_hot_toast_1.toast.error("Error Getting Groups", { duration: 4000 });
+            }
+        }
+        catch (err) {
+            console.error(err);
+            react_hot_toast_1.toast.error("Error Getting Groups", { duration: 2500 });
+        }
+    });
+    const transformedGroupsList = groupsList.reduce((acc, currentItem) => {
+        // Use the name as the key and _id as the value
+        acc[currentItem.name] = currentItem._id;
+        return acc;
+    }, {});
     return (react_1.default.createElement("div", { className: "flex" },
         react_1.default.createElement(sidebar_1.default, { items: ["Dashboard", "Users", "Groups", "Account"], selected: "Users" }),
         react_1.default.createElement("div", { className: "flex flex-col w-full bg-neutral-0" },
@@ -199,9 +224,16 @@ function SuperAdminUsers() {
                         react_1.default.createElement(input_1.default, { label: "Last Name", placeholder: "last name", value: userData.last_name, onChange: (e) => {
                                 setUserData(Object.assign(Object.assign({}, userData), { last_name: e.target.value }));
                             }, required: true })),
-                    react_1.default.createElement(input_1.default, { label: "Username", placeholder: "username", value: userData.username, onChange: (e) => {
-                            setUserData(Object.assign(Object.assign({}, userData), { username: e.target.value }));
-                        }, required: true }),
+                    react_1.default.createElement("div", { className: "flex gap-5" },
+                        react_1.default.createElement(input_1.default, { label: "Username", placeholder: "username", value: userData.username, onChange: (e) => {
+                                setUserData(Object.assign(Object.assign({}, userData), { username: e.target.value }));
+                            }, required: true }),
+                        react_1.default.createElement(select_1.default, { label: "User Type", required: true, value: userData.user_type, options: {
+                                "Super Admin": "1",
+                                Admin: "2",
+                                Driver: "3",
+                            }, onChange: (e) => setUserData(Object.assign(Object.assign({}, userData), { user_type: e.target.value })) })),
+                    react_1.default.createElement(select_1.default, { label: "Group", required: true, value: userData.user_type === "1" ? "" : userData.group_id, options: transformedGroupsList, disabled: userData.user_type === "1", onChange: (e) => setUserData(Object.assign(Object.assign({}, userData), { group_id: e.target.value })) }),
                     react_1.default.createElement(input_1.default, { label: "Email", type: "email", placeholder: "Email", value: userData.email, onChange: (e) => {
                             setUserData(Object.assign(Object.assign({}, userData), { email: e.target.value }));
                         } }),
@@ -209,8 +241,7 @@ function SuperAdminUsers() {
                             setUserData(Object.assign(Object.assign({}, userData), { password: e.target.value }));
                         }, required: true })) : (react_1.default.createElement(input_1.default, { label: "Password", type: "password", placeholder: "Password", value: userData.password, onChange: (e) => {
                             setUserData(Object.assign(Object.assign({}, userData), { password: e.target.value }));
-                        } })),
-                    react_1.default.createElement(select_1.default, { label: "User Type", required: true, value: userData.user_type, options: { "Super Admin": "1", "Admin": "2", "Driver": "3" }, onChange: (e) => setUserData(Object.assign(Object.assign({}, userData), { user_type: e.target.value })) })),
+                        } }))),
                 react_1.default.createElement("div", { className: "flex w-full justify-center gap-10 mt-5" },
                     react_1.default.createElement(button_1.default, { label: "Cancel", color: "text-gunmetal", bgColor: "bg-neutral-100", hoverColor: "hover:bg-neutral-600", onClick: () => setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false })) }),
                     createModalState.type === "edit" ? (react_1.default.createElement(button_1.default, { label: "Update", bgColor: "bg-primary-500", hoverColor: "hover:bg-primary-700", onClick: () => updateUser() })) : (react_1.default.createElement(button_1.default, { label: "Create", bgColor: "bg-primary-500", hoverColor: "hover:bg-primary-700", onClick: () => createUser() })))),
