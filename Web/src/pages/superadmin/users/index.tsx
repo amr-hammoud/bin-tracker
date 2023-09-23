@@ -101,6 +101,46 @@ export default function SuperAdminUsers() {
 		});
 	};
 
+	const activateEditModal = (data: any) => {
+		const user = JSON.parse(data);
+		setUserData({
+			...userData,
+			_id: user._id,
+			first_name: user.first_name,
+			last_name: user.last_name,
+			username: user.username,
+			email: user.email,
+			user_type: user.user_type,
+		});
+
+		setCreateModalState({ ...createModalState, open: true, type: "edit" });
+	};
+
+	const updateUser = async () => {
+		const { _id, ...restData } = userData;
+
+		try {
+			const response = await sendRequest({
+				method: "PUT",
+				route: `users/${userData._id}`,
+				body: restData,
+				token,
+			});
+
+			if (response.status === 200) {
+				setCreateModalState({ ...createModalState, open: false });
+				getUsers();
+				toast.success("User updated successfully", { duration: 2500 });
+			} else {
+				setCreateModalState({ ...createModalState, open: false });
+				toast.error("Couldn't Update, Try Again", { duration: 4000 });
+			}
+		} catch (err: any) {
+			console.error(err);
+			setCreateModalState({ ...createModalState, open: false });
+			toast.error("Couldn't Update, Try Again", { duration: 2500 });
+		}
+	};
 
 	const createUser = async () => {
 		const { _id, ...restData } = userData;

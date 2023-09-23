@@ -124,6 +124,36 @@ function SuperAdminUsers() {
         setUserData(Object.assign(Object.assign({}, userData), { _id: "", first_name: "", last_name: "", username: "", email: "", password: "", user_type: "1" }));
         setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: true, type: "create" }));
     };
+    const activateEditModal = (data) => {
+        const user = JSON.parse(data);
+        setUserData(Object.assign(Object.assign({}, userData), { _id: user._id, first_name: user.first_name, last_name: user.last_name, username: user.username, email: user.email, user_type: user.user_type }));
+        setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: true, type: "edit" }));
+    };
+    const updateUser = () => __awaiter(this, void 0, void 0, function* () {
+        const { _id } = userData, restData = __rest(userData, ["_id"]);
+        try {
+            const response = yield (0, request_1.sendRequest)({
+                method: "PUT",
+                route: `users/${userData._id}`,
+                body: restData,
+                token,
+            });
+            if (response.status === 200) {
+                setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false }));
+                getUsers();
+                react_hot_toast_1.toast.success("User updated successfully", { duration: 2500 });
+            }
+            else {
+                setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false }));
+                react_hot_toast_1.toast.error("Couldn't Update, Try Again", { duration: 4000 });
+            }
+        }
+        catch (err) {
+            console.error(err);
+            setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false }));
+            react_hot_toast_1.toast.error("Couldn't Update, Try Again", { duration: 2500 });
+        }
+    });
     const createUser = () => __awaiter(this, void 0, void 0, function* () {
         const { _id } = userData, restData = __rest(userData, ["_id"]);
         const asArray = Object.entries(restData);
