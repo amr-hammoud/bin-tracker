@@ -12,7 +12,8 @@ export default function Navbar(props: NavbarProps) {
 			{props.label}
             {props.buttonAction ? 
 			<div className="flex flex-wrap justify-center content-center py-1 px-2
-                            rounded text-base shadow-md bg-neutral-0 text-primary-500"
+                            rounded text-base shadow-md bg-neutral-0 text-primary-500
+							hover:cursor-pointer hover:bg-neutral-100"
                     onClick={() => props.buttonAction ? props.buttonAction() : ""}>
 				{props.buttonLabel}
 			</div> : ""}
