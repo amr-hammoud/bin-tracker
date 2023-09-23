@@ -53,7 +53,8 @@ const register = async (req, res) => {
 
 		try {
 			user.save();
-			const get_user = await User.findOne(new_user.username);
+			username = new_user.username;
+			const get_user = await User.findOne({username});
 			res.status(200).send(get_user);
 		} catch (err) {
 			res.status(500).send(err);
