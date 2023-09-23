@@ -10,12 +10,12 @@ function Input(props) {
             react_1.default.createElement("div", { className: " flex content-center flex-wrap text-primary-500" }, props.icon),
             react_1.default.createElement("div", { className: " flex content-center flex-wrap" },
                 props.label,
-                props.required ? react_1.default.createElement("span", { className: " text-red-500" }, "*") : "")),
+                props.required ? (react_1.default.createElement("span", { className: " text-red-500" }, "*")) : (""))),
         react_1.default.createElement("input", { type: props.type || "text", name: props.name, className: `peer/${props.name} rounded w-full text-base
                         bg-neutral-50 border-neutral-700
 						placeholder:text-neutral-700 placeholder:text-base
                         focus:ring-primary-500 focus:border-primary-500
                         focus:invalid:border-red-500 focus:invalid:ring-red-500  ${props.inputHeight ? props.inputHeight : " h-11"}`, placeholder: props.placeholder, value: props.value ? props.value : null, onChange: (e) => props.onChange && props.onChange(e) }),
-        react_1.default.createElement("div", { className: `mt-2 text-red-600 text-sm` }, props.error)));
+        props.error ? (react_1.default.createElement("div", { className: `mt-2 text-red-600 text-sm` }, props.error)) : ("")));
 }
 exports.default = Input;
