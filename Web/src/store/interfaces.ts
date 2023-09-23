@@ -48,4 +48,8 @@ interface Group {
 	members: Array<string>;
 }
 
-export { User, Token, Bin, BinRecord, Group, Truck };
+interface Generic {
+	_id: string
+}
+
+export { User, Token, Bin, BinRecord, Group, Truck, Generic };
