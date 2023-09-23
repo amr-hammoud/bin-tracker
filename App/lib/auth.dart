@@ -1,7 +1,9 @@
 import 'dart:convert';
-
+import 'package:bin_tracker_flutter/classes/User.dart';
+import 'package:bin_tracker_flutter/providers/UserProvider.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
@@ -19,7 +21,8 @@ class _AuthPageState extends State<AuthPage> {
 
   void _login() {
     final form = _formKey.currentState;
-    print("Hello");
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+
     if (form != null && form.validate()) {
       form.save();
 
@@ -28,7 +31,7 @@ class _AuthPageState extends State<AuthPage> {
         _username = "";
       } else {
         _username = _emailOrUsername;
-        String email = "";
+        _email = "";
       }
 
       final dio = Dio();
@@ -39,16 +42,15 @@ class _AuthPageState extends State<AuthPage> {
         'password': _password,
       };
 
+
       dio
-          .post('http://192.168.48.64:8000/auth/login', data: data)
-          .then((response) {
-        print("Data: $data");
-        print("Response: $response");
+          .post('http://192.168.1.15:8000/auth/login', data: data)
+          .then((response) async {
         if (response.statusCode == 200) {
           final responseData = jsonEncode(response.data);
-          // String token = responseData['token'];
-          // print("Token: $token");
-          print(responseData);
+          Map<String, dynamic> jsonMap = json.decode(responseData);
+          User user = User.fromJson(jsonMap);
+          userProvider.setUser(user);
         } else {
           print("Login Failed");
         }
@@ -67,7 +69,13 @@ class _AuthPageState extends State<AuthPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Image.asset('assets/logo.png'),
+            Padding(
+              padding: EdgeInsets.all(20),
+              child: Image.asset(
+                'assets/logo.png',
+                height: 150,
+              ),
+            ),
             const Text(
               "Login",
               style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
@@ -111,7 +119,10 @@ class _AuthPageState extends State<AuthPage> {
                 },
               ),
             ),
-            ElevatedButton(onPressed: _login, child: const Text("Login"))
+            ElevatedButton(
+              onPressed: _login,
+              child: const Text("Login"),
+            )
           ],
         ),
       )),
