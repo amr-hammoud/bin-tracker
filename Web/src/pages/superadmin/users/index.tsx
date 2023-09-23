@@ -200,11 +200,14 @@ export default function SuperAdminUsers() {
 		}
 	};
 
-	const transformedGroupsList = groupsList.reduce((acc: Record<string, string>, currentItem) => {
-		// Use the name as the key and _id as the value
-		acc[currentItem.name] = currentItem._id;
-		return acc;
-	}, {});
+	const transformedGroupsList = groupsList.reduce(
+		(acc: Record<string, string>, currentItem) => {
+			// Use the name as the key and _id as the value
+			acc[currentItem.name] = currentItem._id;
+			return acc;
+		},
+		{}
+	);
 
 	return (
 		<div className="flex">
@@ -292,7 +295,11 @@ export default function SuperAdminUsers() {
 						<Select
 							label="Group"
 							required
-							value={userData.user_type === "1" ? "" : userData.group_id}
+							value={
+								userData.user_type === "1"
+									? ""
+									: userData.group_id
+							}
 							options={transformedGroupsList}
 							disabled={userData.user_type === "1"}
 							onChange={(e) =>

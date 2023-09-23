@@ -233,7 +233,9 @@ function SuperAdminUsers() {
                                 Admin: "2",
                                 Driver: "3",
                             }, onChange: (e) => setUserData(Object.assign(Object.assign({}, userData), { user_type: e.target.value })) })),
-                    react_1.default.createElement(select_1.default, { label: "Group", required: true, value: userData.user_type === "1" ? "" : userData.group_id, options: transformedGroupsList, disabled: userData.user_type === "1", onChange: (e) => setUserData(Object.assign(Object.assign({}, userData), { group_id: e.target.value })) }),
+                    react_1.default.createElement(select_1.default, { label: "Group", required: true, value: userData.user_type === "1"
+                            ? ""
+                            : userData.group_id, options: transformedGroupsList, disabled: userData.user_type === "1", onChange: (e) => setUserData(Object.assign(Object.assign({}, userData), { group_id: e.target.value })) }),
                     react_1.default.createElement(input_1.default, { label: "Email", type: "email", placeholder: "Email", value: userData.email, onChange: (e) => {
                             setUserData(Object.assign(Object.assign({}, userData), { email: e.target.value }));
                         } }),
