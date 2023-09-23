@@ -41,7 +41,7 @@ const updateUser = async (req, res) => {
 
 		for (const key in user_data) {
 			if (user_data.hasOwnProperty(key)) {
-				user[key] = user_data[key];
+				user[key] = user_data[key] ? user_data[key] : user[key];
 			}
 		}
 		await user.save();
