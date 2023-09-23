@@ -10,7 +10,7 @@ function Select(props) {
             react_1.default.createElement("div", { className: " flex content-center flex-wrap" },
                 props.label,
                 props.required ? (react_1.default.createElement("span", { className: " text-red-500" }, "*")) : (""))),
-        react_1.default.createElement("select", { className: "font-poppins w-full bg-neutral-50 border-neutral-700 rounded text-base text-gunmetal\r\n\t\t\t\t\t\t\thover:cursor-pointer focus:ring-primary-500 focus:border-primary-500", value: props.value, onChange: (e) => props.onChange(e) }, Object.entries(props.options).map(([key, value], index) => {
+        react_1.default.createElement("select", { className: "font-poppins w-full bg-neutral-50 border-neutral-700 rounded text-base text-gunmetal\r\n\t\t\t\t\t\t\thover:cursor-pointer focus:ring-primary-500 focus:border-primary-500", value: props.value, disabled: props.disabled, onChange: (e) => props.onChange(e) }, Object.entries(props.options).map(([key, value], index) => {
             return react_1.default.createElement("option", { value: value, key: index }, key);
         }))));
 }
