@@ -1,6 +1,7 @@
 import React from "react";
 import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { Generic } from "../../../store/interfaces";
 
 interface ListItemProps {
 	items: Array<string | undefined | null>;
@@ -13,6 +14,8 @@ interface ListItemProps {
 
 export default function ListItem(props: ListItemProps) {
 	const AdditionalIcon = props.customIcon;
+
+	const object = props.object as Generic
 
 	return (
 		<div
@@ -58,10 +61,9 @@ export default function ListItem(props: ListItemProps) {
 					<div
 						className="flex flex-wrap justify-between content-center opacity-70
                                 hover:cursor-pointer hover:opacity-100"
-						id={props.items[0] ? props.items[0] : ""}
 						onClick={(e) =>
 							props.onDelete
-								? props.onDelete(e.currentTarget.id)
+								? props.onDelete(object._id)
 								: ""
 						}
 					>
