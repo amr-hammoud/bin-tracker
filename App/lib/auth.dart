@@ -1,9 +1,8 @@
 import 'dart:convert';
 import 'package:bin_tracker_flutter/classes/User.dart';
-import 'package:bin_tracker_flutter/providers/UserProvider.dart';
+import 'package:bin_tracker_flutter/custom/BottomNavigation.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
@@ -21,7 +20,6 @@ class _AuthPageState extends State<AuthPage> {
 
   void _login() {
     final form = _formKey.currentState;
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
 
     if (form != null && form.validate()) {
       form.save();
@@ -42,7 +40,6 @@ class _AuthPageState extends State<AuthPage> {
         'password': _password,
       };
 
-
       dio
           .post('http://192.168.1.15:8000/auth/login', data: data)
           .then((response) async {
@@ -50,7 +47,9 @@ class _AuthPageState extends State<AuthPage> {
           final responseData = jsonEncode(response.data);
           Map<String, dynamic> jsonMap = json.decode(responseData);
           User user = User.fromJson(jsonMap);
-          userProvider.setUser(user);
+          saveUser(user);
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => BottomNavigation()));
         } else {
           print("Login Failed");
         }
