@@ -7,7 +7,7 @@ import Navbar from "../../../components/common/navbar";
 import { sendRequest } from "../../../configs/request";
 import ListItem from "../../../components/base/listItem";
 import ListHeader from "../../../components/base/listheader";
-import ModalComponent from "../../../components/common/modal";
+import ModalComponent from "../../../components/base/modal";
 import Button from "../../../components/base/button";
 
 export default function SuperAdminGroups() {

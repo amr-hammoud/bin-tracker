@@ -42,7 +42,7 @@ const navbar_1 = __importDefault(require("../../../components/common/navbar"));
 const request_1 = require("../../../configs/request");
 const listItem_1 = __importDefault(require("../../../components/base/listItem"));
 const listheader_1 = __importDefault(require("../../../components/base/listheader"));
-const modal_1 = __importDefault(require("../../../components/common/modal"));
+const modal_1 = __importDefault(require("../../../components/base/modal"));
 const button_1 = __importDefault(require("../../../components/base/button"));
 function SuperAdminGroups() {
     const token = (0, react_redux_1.useSelector)((state) => state.auth.token);
