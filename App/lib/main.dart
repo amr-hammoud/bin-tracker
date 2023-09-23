@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'Bin Tracker',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color.fromARGB(255, 70, 119, 255)),
+            seedColor: const Color(0xff3DA35D)),
         fontFamily: 'Poppins',
         useMaterial3: true,
       ),
