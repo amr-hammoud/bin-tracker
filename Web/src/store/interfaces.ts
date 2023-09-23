@@ -9,6 +9,7 @@ interface User {
 	updatedAt?: string;
 	__v?: number;
 	device_id?: string;
+	group_id?:Group;
 }
 
 interface Token {
