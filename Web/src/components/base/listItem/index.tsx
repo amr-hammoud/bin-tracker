@@ -4,6 +4,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 
 interface ListItemProps {
 	data: Record<string, string | undefined>;
+	object?: Object;
 	customIcon?: React.ReactNode;
 	customIconAction?: () => void;
 	onEdit?: (data: any) => void;
@@ -43,7 +44,7 @@ export default function ListItem(props: ListItemProps) {
 					<div
 						className="flex flex-wrap justify-between content-center opacity-70
                                 hover:cursor-pointer hover:opacity-100"
-						data-custom={JSON.stringify(props.data)}
+						data-custom={JSON.stringify(props.object? props.object : "")}
 						onClick={(e) =>
 							props.onEdit ? props.onEdit(e.currentTarget.getAttribute("data-custom")) : ""
 						}

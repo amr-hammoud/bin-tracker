@@ -15,7 +15,7 @@ function ListItem(props) {
         })),
         react_1.default.createElement("div", { className: "flex gap-3" },
             react_1.default.createElement("div", { className: "flex flex-wrap justify-between content-center opacity-70\r\n                                hover:cursor-pointer hover:opacity-100", onClick: () => props.customIconAction ? props.customIconAction() : "" }, AdditionalIcon),
-            props.onEdit ? (react_1.default.createElement("div", { className: "flex flex-wrap justify-between content-center opacity-70\r\n                                hover:cursor-pointer hover:opacity-100", "data-custom": JSON.stringify(props.data), onClick: (e) => props.onEdit ? props.onEdit(e.currentTarget.getAttribute("data-custom")) : "" },
+            props.onEdit ? (react_1.default.createElement("div", { className: "flex flex-wrap justify-between content-center opacity-70\r\n                                hover:cursor-pointer hover:opacity-100", "data-custom": JSON.stringify(props.object ? props.object : ""), onClick: (e) => props.onEdit ? props.onEdit(e.currentTarget.getAttribute("data-custom")) : "" },
                 react_1.default.createElement(md_1.MdOutlineEdit, null))) : (""),
             props.onDelete ? (react_1.default.createElement("div", { className: "flex flex-wrap justify-between content-center opacity-70\r\n                                hover:cursor-pointer hover:opacity-100", id: props.data ? props.data._id : "", onClick: (e) => props.onDelete
                     ? props.onDelete(e.currentTarget.id)
