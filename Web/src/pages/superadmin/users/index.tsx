@@ -83,6 +83,59 @@ export default function SuperAdminUsers() {
 		user_type: "",
 	});
 
+	const activateCreateModal = () => {
+		setUserData({
+			...userData,
+			_id: "",
+			first_name: "",
+			last_name: "",
+			username: "",
+			email: "",
+			password: "",
+			user_type: "1",
+		});
+		setCreateModalState({
+			...createModalState,
+			open: true,
+			type: "create",
+		});
+	};
+
+
+	const createUser = async () => {
+		const { _id, ...restData } = userData;
+
+		const asArray = Object.entries(restData);
+
+		const filtered = asArray.filter(
+			([key, value]) => value !== null && value !== ""
+		);
+
+		const finalData = Object.fromEntries(filtered);
+
+		try {
+			const response = await sendRequest({
+				method: "POST",
+				route: `auth/register`,
+				body: finalData,
+				token,
+			});
+
+			console.log(response);
+
+			if (response.status === 200) {
+				setCreateModalState({ ...createModalState, open: false });
+				getUsers();
+				toast.success("User created successfully", { duration: 2500 });
+			} else {
+				setCreateModalState({ ...createModalState, open: false });
+				toast.error("Couldn't Create, Try Again", { duration: 4000 });
+			}
+		} catch (err: any) {
+			console.error(err);
+			setCreateModalState({ ...createModalState, open: false });
+			toast.error("Couldn't Create, Try Again", { duration: 2500 });
+		}
 	};
 
 	return (
