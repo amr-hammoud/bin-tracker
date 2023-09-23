@@ -276,17 +276,18 @@ function SuperAdminUsers() {
                 react_1.default.createElement("div", { className: "flex w-full justify-center gap-10 mt-5" },
                     react_1.default.createElement(button_1.default, { label: "Cancel", color: "text-gunmetal", bgColor: "bg-neutral-100", hoverColor: "hover:bg-neutral-600", onClick: () => setdeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: false })) }),
                     react_1.default.createElement(button_1.default, { label: "Delete", bgColor: "bg-red-400", hoverColor: "hover:bg-red-500", onClick: () => deleteUser(deleteModalState.id) }))),
-            react_1.default.createElement("div", { className: "p-10" },
-                react_1.default.createElement("div", { className: "flex flex-wrap content-center justify-center py-2 rounded-lg bg-primary-200" },
-                    react_1.default.createElement("div", { className: "flex flex-wrap content-center" },
-                        react_1.default.createElement(input_1.default, { placeholder: "Search", onChange: (e) => filterObjects(e.target.value) }),
+            react_1.default.createElement("div", { className: "p-10 pb-2" },
+                react_1.default.createElement("div", { className: "flex content-center justify-center py-2 px-5 gap-5 rounded-lg bg-primary-200" },
+                    react_1.default.createElement("div", { className: "flex flex-wrap content-center w-1/2" },
+                        react_1.default.createElement(input_1.default, { label: "Search", placeholder: "Search by name/username", onChange: (e) => filterObjects(e.target.value) })),
+                    react_1.default.createElement("div", { className: "flex flex-wrap content-center w-1/2" },
                         react_1.default.createElement(select_1.default, { label: "Filter by Role", value: filters.selectedFilter, options: {
                                 All: "All",
                                 "Super Admin": "1",
                                 Admin: "2",
                                 Driver: "3",
                             }, onChange: (e) => setfilters(Object.assign(Object.assign({}, filters), { selectedFilter: e.target.value })) })))),
-            react_1.default.createElement("div", { className: "p-10" },
+            react_1.default.createElement("div", { className: "p-10 pt-3" },
                 react_1.default.createElement(listheader_1.default, { items: ["Name", "Username", "Group", "Role", "Actions"] }),
                 filterByRole(filterBySearch(userList, filters.searchQuery), filters.selectedFilter).map((user, key) => {
                     var _a;
@@ -303,7 +304,7 @@ function SuperAdminUsers() {
                     return (react_1.default.createElement(listItem_1.default, { items: [
                             `${user.first_name} ${user.last_name}`,
                             user.username,
-                            (_a = user === null || user === void 0 ? void 0 : user.group_id) === null || _a === void 0 ? void 0 : _a.name,
+                            (_a = user.group_id) === null || _a === void 0 ? void 0 : _a.name,
                             user_type,
                         ], object: user, onEdit: (data) => activateEditModal(data), onDelete: (id) => activateDeleteModal(id) }));
                 })))));

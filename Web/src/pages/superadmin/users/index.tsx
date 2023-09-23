@@ -454,14 +454,17 @@ export default function SuperAdminUsers() {
 						/>
 					</div>
 				</ModalComponent>
-				<div className="p-10">
-					<div className="flex flex-wrap content-center justify-center py-2 rounded-lg bg-primary-200">
-						<div className="flex flex-wrap content-center">
+				<div className="p-10 pb-2">
+					<div className="flex content-center justify-center py-2 px-5 gap-5 rounded-lg bg-primary-200">
+						<div className="flex flex-wrap content-center w-1/2">
 							<Input
-								placeholder="Search"
+							label="Search"
+								placeholder="Search by name/username"
 								onChange={(e) => filterObjects(e.target.value)}
 							/>
-							<Select
+						</div>
+						<div className="flex flex-wrap content-center w-1/2">
+						<Select
 								label="Filter by Role"
 								value={filters.selectedFilter}
 								options={{
@@ -480,7 +483,7 @@ export default function SuperAdminUsers() {
 						</div>
 					</div>
 				</div>
-				<div className="p-10">
+				<div className="p-10 pt-3">
 					<ListHeader
 						items={["Name", "Username", "Group", "Role", "Actions"]}
 					/>
@@ -493,12 +496,13 @@ export default function SuperAdminUsers() {
 						} else if (user.user_type === "3") {
 							user_type = "Driver";
 						}
+
 						return (
 							<ListItem
 								items={[
 									`${user.first_name} ${user.last_name}`,
 									user.username,
-									user?.group_id?.name,
+									user.group_id?.name,
 									user_type,
 								]}
 								object={user}
