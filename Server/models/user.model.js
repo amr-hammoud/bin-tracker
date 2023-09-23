@@ -37,7 +37,8 @@ const userSchema = new mongoose.Schema(
 			required: true,
 		},
 		group_id: {
-			type: String,
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Group",
 			trim: true,
 		},
 		image: {
@@ -49,7 +50,7 @@ const userSchema = new mongoose.Schema(
 			trim: true,
 			unique: true,
 			sparse: true,
-		}
+		},
 	},
 	{
 		timestamps: true,

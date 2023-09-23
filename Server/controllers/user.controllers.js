@@ -2,10 +2,10 @@ const User = require("../models/user.model");
 
 const getUser = async (req, res) => {
 	if (req.params.id) {
-		const user = await User.findById(req.params.id);
+		const user = await User.findById(req.params.id).populate('group_id');
 		res.status(200).send(user);
 	} else {
-		const users = await User.find();
+		const users = await User.find().populate('group_id');
 		res.status(200).send(users);
 	}
 };
