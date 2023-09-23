@@ -26,8 +26,7 @@ export default function SuperAdminUsers() {
 				route: "users/",
 				token,
 			});
-			console.log(response.data);
-			
+
 			if (response.status === 200) {
 				setUserList(response.data);
 			}
@@ -215,13 +214,14 @@ export default function SuperAdminUsers() {
 		selectedFilter: string;
 	}>({
 		searchQuery: "",
-		selectedFilter: ""
+		selectedFilter: "All",
 	});
 
-	const filterUsers = (query: string) => {
+	const filterBySearch = (userList: User[], query: string) => {
 		if (!query) {
 			return userList;
 		}
+
 		const lowerCaseQuery = query.toLowerCase();
 
 		return userList.filter((user) => {
@@ -236,8 +236,16 @@ export default function SuperAdminUsers() {
 		});
 	};
 
+	const filterByRole = (userList: User[], role: string) => {
+		if (role === "All") {
+			return userList;
+		}
+
+		return userList.filter((user) => user.user_type === role);
+	};
+
 	const filterObjects = (query: string) => {
-		setfilters({...filters, searchQuery: query});
+		setfilters({ ...filters, searchQuery: query });
 	};
 
 	return (
@@ -453,6 +461,22 @@ export default function SuperAdminUsers() {
 								placeholder="Search"
 								onChange={(e) => filterObjects(e.target.value)}
 							/>
+							<Select
+								label="Filter by Role"
+								value={filters.selectedFilter}
+								options={{
+									All: "All",
+									"Super Admin": "1",
+									Admin: "2",
+									Driver: "3",
+								}}
+								onChange={(e) =>
+									setfilters({
+										...filters,
+										selectedFilter: e.target.value,
+									})
+								}
+							/>
 						</div>
 					</div>
 				</div>
@@ -460,7 +484,7 @@ export default function SuperAdminUsers() {
 					<ListHeader
 						items={["Name", "Username", "Group", "Role", "Actions"]}
 					/>
-					{filterUsers(filters.searchQuery).map((user: User, key) => {
+					{filterByRole(filterBySearch(userList, filters.searchQuery), filters.selectedFilter).map((user: User, key) => {
 						let user_type: string = "";
 						if (user.user_type === "1") {
 							user_type = "Super Admin";

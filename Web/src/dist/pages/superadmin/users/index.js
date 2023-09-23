@@ -67,7 +67,6 @@ function SuperAdminUsers() {
                 route: "users/",
                 token,
             });
-            console.log(response.data);
             if (response.status === 200) {
                 setUserList(response.data);
             }
@@ -210,9 +209,9 @@ function SuperAdminUsers() {
     }, {});
     const [filters, setfilters] = (0, react_1.useState)({
         searchQuery: "",
-        selectedFilter: ""
+        selectedFilter: "All",
     });
-    const filterUsers = (query) => {
+    const filterBySearch = (userList, query) => {
         if (!query) {
             return userList;
         }
@@ -223,6 +222,12 @@ function SuperAdminUsers() {
             return (fullName.includes(lowerCaseQuery) ||
                 username.includes(lowerCaseQuery));
         });
+    };
+    const filterByRole = (userList, role) => {
+        if (role === "All") {
+            return userList;
+        }
+        return userList.filter((user) => user.user_type === role);
     };
     const filterObjects = (query) => {
         setfilters(Object.assign(Object.assign({}, filters), { searchQuery: query }));
@@ -274,10 +279,16 @@ function SuperAdminUsers() {
             react_1.default.createElement("div", { className: "p-10" },
                 react_1.default.createElement("div", { className: "flex flex-wrap content-center justify-center py-2 rounded-lg bg-primary-200" },
                     react_1.default.createElement("div", { className: "flex flex-wrap content-center" },
-                        react_1.default.createElement(input_1.default, { placeholder: "Search", onChange: (e) => filterObjects(e.target.value) })))),
+                        react_1.default.createElement(input_1.default, { placeholder: "Search", onChange: (e) => filterObjects(e.target.value) }),
+                        react_1.default.createElement(select_1.default, { label: "Filter by Role", value: filters.selectedFilter, options: {
+                                All: "All",
+                                "Super Admin": "1",
+                                Admin: "2",
+                                Driver: "3",
+                            }, onChange: (e) => setfilters(Object.assign(Object.assign({}, filters), { selectedFilter: e.target.value })) })))),
             react_1.default.createElement("div", { className: "p-10" },
                 react_1.default.createElement(listheader_1.default, { items: ["Name", "Username", "Group", "Role", "Actions"] }),
-                filterUsers(filters.searchQuery).map((user, key) => {
+                filterByRole(filterBySearch(userList, filters.searchQuery), filters.selectedFilter).map((user, key) => {
                     var _a;
                     let user_type = "";
                     if (user.user_type === "1") {
