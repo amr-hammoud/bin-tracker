@@ -22,7 +22,7 @@ const customStyles = {
         alignItems: "center",
     },
     overlay: {
-        backgroundColor: "rgba(0,0,0,0.5)",
+        backgroundColor: "rgba(0,0,0,0.7)",
         top: 0,
         left: 0,
         right: 0,
