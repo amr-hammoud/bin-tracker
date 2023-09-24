@@ -42,17 +42,21 @@ const navbar_1 = __importDefault(require("../../../components/common/navbar"));
 const listheader_1 = __importDefault(require("../../../components/base/listheader"));
 const request_1 = require("../../../configs/request");
 const listItem_1 = __importDefault(require("../../../components/base/listItem"));
+const modal_1 = __importDefault(require("../../../components/base/modal"));
+const button_1 = __importDefault(require("../../../components/base/button"));
+const react_hot_toast_1 = require("react-hot-toast");
 function AdminTrucks() {
     const token = (0, react_redux_1.useSelector)((state) => state.auth.token);
-    const [trucksList, setTrucksList] = (0, react_1.useState)([]);
+    const [truckList, setTruckList] = (0, react_1.useState)([]);
     const getTrucks = () => __awaiter(this, void 0, void 0, function* () {
         try {
             const response = yield (0, request_1.sendRequest)({
                 route: "trucks/",
                 token,
             });
+            console.log(response);
             if (response.status === 200) {
-                setTrucksList(response.data);
+                setTruckList(response.data);
             }
         }
         catch (err) {
@@ -62,6 +66,35 @@ function AdminTrucks() {
     (0, react_1.useEffect)(() => {
         getTrucks();
     }, []);
+    const [deleteModalState, setDeleteModalState] = (0, react_1.useState)({
+        open: false,
+        id: "",
+    });
+    const activateDeleteModal = (id) => {
+        setDeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: true, id: id }));
+    };
+    const deleteTruck = (id) => __awaiter(this, void 0, void 0, function* () {
+        try {
+            const response = yield (0, request_1.sendRequest)({
+                method: "DELETE",
+                route: `trucks/${id}`,
+                token,
+            });
+            if (response.status === 200) {
+                const newArr = truckList.filter((truck) => {
+                    return (truck === null || truck === void 0 ? void 0 : truck._id) !== id;
+                });
+                setDeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: false }));
+                react_hot_toast_1.toast.success("Truck Deleted Successfully", { duration: 2500 });
+                setTruckList(newArr);
+            }
+        }
+        catch (err) {
+            console.error(err);
+            setDeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: false }));
+            react_hot_toast_1.toast.error("Couldn't Delete Truck", { duration: 4000 });
+        }
+    });
     return (react_1.default.createElement("div", { className: "flex" },
         react_1.default.createElement(sidebar_1.default, { items: [
                 "Dashboard",
@@ -73,17 +106,32 @@ function AdminTrucks() {
                 "Chats",
                 "Account",
             ], selected: "Trucks" }),
+        react_1.default.createElement(modal_1.default, { showModal: deleteModalState.open, onRequestClose: () => setDeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: !deleteModalState.open })) },
+            react_1.default.createElement("div", { className: "text-xl" }, "Are you sure you want to delete?"),
+            react_1.default.createElement("div", { className: "flex w-full justify-center gap-10 mt-5" },
+                react_1.default.createElement(button_1.default, { label: "Cancel", color: "text-gunmetal", bgColor: "bg-neutral-100", hoverColor: "hover:bg-neutral-600", onClick: () => setDeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: false })) }),
+                react_1.default.createElement(button_1.default, { label: "Delete", bgColor: "bg-red-400", hoverColor: "hover:bg-red-500", onClick: () => deleteTruck(deleteModalState.id) }))),
         react_1.default.createElement("div", { className: "flex flex-col w-full" },
             react_1.default.createElement(navbar_1.default, { label: "Trucks" }),
+            react_1.default.createElement("div", null,
+                react_1.default.createElement(react_hot_toast_1.Toaster, null)),
             react_1.default.createElement("div", { className: "p-10" },
-                react_1.default.createElement(listheader_1.default, { items: ["Plate Number", "Driver", "Last Oil Change", "Last Wash", "Actions"] }),
-                trucksList.map((truck, index) => {
+                react_1.default.createElement(listheader_1.default, { items: [
+                        "Plate Number",
+                        "Driver",
+                        "Last Oil Change",
+                        "Last Wash",
+                        "Actions",
+                    ] }),
+                truckList.map((truck, index) => {
                     return (react_1.default.createElement(listItem_1.default, { key: index, items: [
                             truck.plate_number,
-                            truck.driver_id.first_name + " " + truck.driver_id.last_name,
+                            truck.driver_id.first_name +
+                                " " +
+                                truck.driver_id.last_name,
                             truck.last_oil_change,
                             truck.last_wash,
-                        ] }));
+                        ], object: truck, onDelete: (id) => activateDeleteModal(id) }));
                 })))));
 }
 exports.default = AdminTrucks;
