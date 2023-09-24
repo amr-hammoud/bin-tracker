@@ -75,15 +75,29 @@ export default function SuperAdminUsers() {
 		open: false,
 		type: "create",
 	});
-	const [userData, setUserData] = useState({
+	const [userData, setUserData] = useState<{
+		_id: string,
+		first_name: string,
+		last_name: string,
+		username: string,
+		email: string,
+		password: string,
+		user_type: string,
+		group_id: Group
+	}>({
 		_id: "",
 		first_name: "",
 		last_name: "",
 		username: "",
 		email: "",
 		password: "",
-		group_id: "",
 		user_type: "",
+		group_id: {
+			_id: "",
+			name: "",
+			admins: [],
+			members: [],
+		},
 	});
 
 	const activateCreateModal = () => {
@@ -95,7 +109,12 @@ export default function SuperAdminUsers() {
 			username: "",
 			email: "",
 			password: "",
-			group_id: "",
+			group_id: {
+				_id: "",
+				name: "",
+				admins: [],
+				members: [],
+			},
 			user_type: "1",
 		});
 		setCreateModalState({
@@ -334,17 +353,13 @@ export default function SuperAdminUsers() {
 						<Select
 							label="Group"
 							required
-							value={
-								userData.user_type === "1"
-									? ""
-									: userData.group_id
-							}
+							value={userData.group_id._id}
 							options={transformedGroupsList}
 							disabled={userData.user_type === "1"}
 							onChange={(e) =>
 								setUserData({
 									...userData,
-									group_id: e.target.value,
+									group_id:{...userData.group_id, _id: e.target.value},
 								})
 							}
 						/>
@@ -458,13 +473,13 @@ export default function SuperAdminUsers() {
 					<div className="flex content-center justify-center py-2 px-5 gap-5 rounded-lg bg-primary-200">
 						<div className="flex flex-wrap content-center w-1/2">
 							<Input
-							label="Search"
+								label="Search"
 								placeholder="Search by name/username"
 								onChange={(e) => filterObjects(e.target.value)}
 							/>
 						</div>
 						<div className="flex flex-wrap content-center w-1/2">
-						<Select
+							<Select
 								label="Filter by Role"
 								value={filters.selectedFilter}
 								options={{
@@ -487,7 +502,10 @@ export default function SuperAdminUsers() {
 					<ListHeader
 						items={["Name", "Username", "Group", "Role", "Actions"]}
 					/>
-					{filterByRole(filterBySearch(userList, filters.searchQuery), filters.selectedFilter).map((user: User, key) => {
+					{filterByRole(
+						filterBySearch(userList, filters.searchQuery),
+						filters.selectedFilter
+					).map((user: User, key) => {
 						let user_type: string = "";
 						if (user.user_type === "1") {
 							user_type = "Super Admin";
