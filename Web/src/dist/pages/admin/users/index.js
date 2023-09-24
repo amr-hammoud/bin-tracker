@@ -31,6 +31,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -44,7 +55,9 @@ const listItem_1 = __importDefault(require("../../../components/base/listItem"))
 const listheader_1 = __importDefault(require("../../../components/base/listheader"));
 const modal_1 = __importDefault(require("../../../components/base/modal"));
 const button_1 = __importDefault(require("../../../components/base/button"));
+const input_1 = __importDefault(require("../../../components/base/input"));
 const react_hot_toast_1 = require("react-hot-toast");
+const select_1 = __importDefault(require("../../../components/base/select"));
 function AdminUsers() {
     const token = (0, react_redux_1.useSelector)((state) => state.auth.token);
     const [userList, setUserList] = (0, react_1.useState)([]);
@@ -94,6 +107,55 @@ function AdminUsers() {
             react_hot_toast_1.toast.error("Couldn't Delete User", { duration: 4000 });
         }
     });
+    const [createModalState, setCreateModalState] = (0, react_1.useState)({
+        open: false,
+        type: "create",
+    });
+    const [userData, setUserData] = (0, react_1.useState)({
+        _id: "",
+        first_name: "",
+        last_name: "",
+        username: "",
+        email: "",
+        password: "",
+        user_type: "",
+        group_id: {
+            _id: "",
+            name: "",
+            admins: [],
+            members: [],
+        },
+    });
+    const activateEditModal = (data) => {
+        const user = JSON.parse(data);
+        setUserData(Object.assign(Object.assign({}, userData), { _id: user._id, first_name: user.first_name, last_name: user.last_name, username: user.username, email: user.email, group_id: user.group_id, user_type: user.user_type }));
+        setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: true, type: "edit" }));
+    };
+    const updateUser = () => __awaiter(this, void 0, void 0, function* () {
+        const { _id } = userData, restData = __rest(userData, ["_id"]);
+        try {
+            const response = yield (0, request_1.sendRequest)({
+                method: "PUT",
+                route: `users/${userData._id}`,
+                body: restData,
+                token,
+            });
+            if (response.status === 200) {
+                setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false }));
+                getUsers();
+                react_hot_toast_1.toast.success("User updated successfully", { duration: 2500 });
+            }
+            else {
+                setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false }));
+                react_hot_toast_1.toast.error("Couldn't Update, Try Again", { duration: 4000 });
+            }
+        }
+        catch (err) {
+            console.error(err);
+            setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false }));
+            react_hot_toast_1.toast.error("Couldn't Update, Try Again", { duration: 2500 });
+        }
+    });
     return (react_1.default.createElement("div", { className: "flex" },
         react_1.default.createElement(sidebar_1.default, { items: [
                 "Dashboard",
@@ -109,6 +171,33 @@ function AdminUsers() {
             react_1.default.createElement(navbar_1.default, { label: "Users" }),
             react_1.default.createElement("div", null,
                 react_1.default.createElement(react_hot_toast_1.Toaster, null)),
+            react_1.default.createElement(modal_1.default, { showModal: createModalState.open, onRequestClose: () => setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: !createModalState.open })) },
+                react_1.default.createElement("div", { className: "text-xl" }, "Create/Edit User"),
+                react_1.default.createElement("div", { className: "flex flex-col flex-wrap justify-center content-center w-96" },
+                    react_1.default.createElement("div", { className: "flex gap-5" },
+                        react_1.default.createElement(input_1.default, { label: "First Name", placeholder: "first name", value: userData.first_name, onChange: (e) => {
+                                setUserData(Object.assign(Object.assign({}, userData), { first_name: e.target.value }));
+                            }, required: true }),
+                        react_1.default.createElement(input_1.default, { label: "Last Name", placeholder: "last name", value: userData.last_name, onChange: (e) => {
+                                setUserData(Object.assign(Object.assign({}, userData), { last_name: e.target.value }));
+                            }, required: true })),
+                    react_1.default.createElement("div", { className: "flex gap-5" },
+                        react_1.default.createElement(input_1.default, { label: "Username", placeholder: "username", value: userData.username, onChange: (e) => {
+                                setUserData(Object.assign(Object.assign({}, userData), { username: e.target.value }));
+                            }, required: true }),
+                        react_1.default.createElement(select_1.default, { label: "User Type", required: true, value: userData.user_type, options: {
+                                Admin: "2",
+                                Driver: "3",
+                            }, onChange: (e) => setUserData(Object.assign(Object.assign({}, userData), { user_type: e.target.value })) })),
+                    react_1.default.createElement(input_1.default, { label: "Email", type: "email", placeholder: "Email", value: userData.email, onChange: (e) => {
+                            setUserData(Object.assign(Object.assign({}, userData), { email: e.target.value }));
+                        } }),
+                    react_1.default.createElement(input_1.default, { label: "Password", type: "password", placeholder: "Password", value: userData.password, onChange: (e) => {
+                            setUserData(Object.assign(Object.assign({}, userData), { password: e.target.value }));
+                        }, required: true })),
+                react_1.default.createElement("div", { className: "flex w-full justify-center gap-10 mt-5" },
+                    react_1.default.createElement(button_1.default, { label: "Cancel", color: "text-gunmetal", bgColor: "bg-neutral-100", hoverColor: "hover:bg-neutral-600", onClick: () => setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false })) }),
+                    react_1.default.createElement(button_1.default, { label: "Update", bgColor: "bg-primary-500", hoverColor: "hover:bg-primary-700", onClick: () => updateUser() }))),
             react_1.default.createElement(modal_1.default, { showModal: deleteModalState.open, onRequestClose: () => setDeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: !deleteModalState.open })) },
                 react_1.default.createElement("div", { className: "text-xl" }, "Are you sure you want to delete?"),
                 react_1.default.createElement("div", { className: "flex w-full justify-center gap-10 mt-5" },
@@ -133,7 +222,7 @@ function AdminUsers() {
                             user.username,
                             (_a = user.group_id) === null || _a === void 0 ? void 0 : _a.name,
                             user_type,
-                        ], object: user, onDelete: (id) => activateDeleteModal(id) }));
+                        ], object: user, onEdit: (data) => activateEditModal(data), onDelete: (id) => activateDeleteModal(id) }));
                 })))));
 }
 exports.default = AdminUsers;

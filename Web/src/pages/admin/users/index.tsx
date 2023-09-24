@@ -70,6 +70,77 @@ export default function AdminUsers() {
 		}
 	};
 
+	const [createModalState, setCreateModalState] = useState({
+		open: false,
+		type: "create",
+	});
+	const [userData, setUserData] = useState<{
+		_id: string;
+		first_name: string;
+		last_name: string;
+		username: string;
+		email: string;
+		password: string;
+		user_type: string;
+		group_id: Group;
+	}>({
+		_id: "",
+		first_name: "",
+		last_name: "",
+		username: "",
+		email: "",
+		password: "",
+		user_type: "",
+		group_id: {
+			_id: "",
+			name: "",
+			admins: [],
+			members: [],
+		},
+	});
+
+	const activateEditModal = (data: any) => {
+		const user = JSON.parse(data);
+		setUserData({
+			...userData,
+			_id: user._id,
+			first_name: user.first_name,
+			last_name: user.last_name,
+			username: user.username,
+			email: user.email,
+			group_id: user.group_id,
+			user_type: user.user_type,
+		});
+
+		setCreateModalState({ ...createModalState, open: true, type: "edit" });
+	};
+
+	const updateUser = async () => {
+		const { _id, ...restData } = userData;
+
+		try {
+			const response = await sendRequest({
+				method: "PUT",
+				route: `users/${userData._id}`,
+				body: restData,
+				token,
+			});
+
+			if (response.status === 200) {
+				setCreateModalState({ ...createModalState, open: false });
+				getUsers();
+				toast.success("User updated successfully", { duration: 2500 });
+			} else {
+				setCreateModalState({ ...createModalState, open: false });
+				toast.error("Couldn't Update, Try Again", { duration: 4000 });
+			}
+		} catch (err: any) {
+			console.error(err);
+			setCreateModalState({ ...createModalState, open: false });
+			toast.error("Couldn't Update, Try Again", { duration: 2500 });
+		}
+	};
+
 	return (
 		<div className="flex">
 			<Sidebar
@@ -90,7 +161,121 @@ export default function AdminUsers() {
 				<div>
 					<Toaster />
 				</div>
-				
+				{/* Create - Edit Modal */}
+				<ModalComponent
+					showModal={createModalState.open}
+					onRequestClose={() =>
+						setCreateModalState({
+							...createModalState,
+							open: !createModalState.open,
+						})
+					}
+				>
+					<div className="text-xl">Create/Edit User</div>
+					<div className="flex flex-col flex-wrap justify-center content-center w-96">
+						<div className="flex gap-5">
+							<Input
+								label="First Name"
+								placeholder="first name"
+								value={userData.first_name}
+								onChange={(e) => {
+									setUserData({
+										...userData,
+										first_name: e.target.value,
+									});
+								}}
+								required
+							/>
+							<Input
+								label="Last Name"
+								placeholder="last name"
+								value={userData.last_name}
+								onChange={(e) => {
+									setUserData({
+										...userData,
+										last_name: e.target.value,
+									});
+								}}
+								required
+							/>
+						</div>
+						<div className="flex gap-5">
+							<Input
+								label="Username"
+								placeholder="username"
+								value={userData.username}
+								onChange={(e) => {
+									setUserData({
+										...userData,
+										username: e.target.value,
+									});
+								}}
+								required
+							/>
+							<Select
+								label="User Type"
+								required
+								value={userData.user_type}
+								options={{
+									Admin: "2",
+									Driver: "3",
+								}}
+								onChange={(e) =>
+									setUserData({
+										...userData,
+										user_type: e.target.value,
+									})
+								}
+							/>
+						</div>
+
+						<Input
+							label="Email"
+							type="email"
+							placeholder="Email"
+							value={userData.email}
+							onChange={(e) => {
+								setUserData({
+									...userData,
+									email: e.target.value,
+								});
+							}}
+						/>
+						<Input
+								label="Password"
+								type="password"
+								placeholder="Password"
+								value={userData.password}
+								onChange={(e) => {
+									setUserData({
+										...userData,
+										password: e.target.value,
+									});
+								}}
+								required
+							/>
+					</div>
+					<div className="flex w-full justify-center gap-10 mt-5">
+						<Button
+							label="Cancel"
+							color="text-gunmetal"
+							bgColor="bg-neutral-100"
+							hoverColor="hover:bg-neutral-600"
+							onClick={() =>
+								setCreateModalState({
+									...createModalState,
+									open: false,
+								})
+							}
+						/>
+						<Button
+							label="Update"
+							bgColor="bg-primary-500"
+							hoverColor="hover:bg-primary-700"
+							onClick={() => updateUser()}
+						/>
+					</div>
+				</ModalComponent>
 				{/* Delete Modal */}
 				<ModalComponent
 					showModal={deleteModalState.open}
@@ -152,6 +337,7 @@ export default function AdminUsers() {
 									user_type,
 								]}
 								object={user}
+								onEdit={(data) => activateEditModal(data)}
 								onDelete={(id) => activateDeleteModal(id)}
 							/>
 						);
