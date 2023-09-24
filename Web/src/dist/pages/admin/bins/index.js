@@ -185,6 +185,29 @@ function AdminBins() {
             react_hot_toast_1.toast.error("Couldn't Update, Try Again", { duration: 2500 });
         }
     });
+    const [filters, setfilters] = (0, react_1.useState)({
+        searchQuery: "",
+        selectedFilter: "All",
+    });
+    const filterBySearch = (binsList, query) => {
+        if (!query) {
+            return binsList;
+        }
+        const lowerCaseQuery = query.toLowerCase();
+        return binsList.filter((bin) => {
+            const custom_id = bin.custom_id.toLowerCase();
+            return custom_id.includes(lowerCaseQuery);
+        });
+    };
+    const filterByWasteType = (binsList, type) => {
+        if (type === "All") {
+            return binsList;
+        }
+        return binsList.filter((bin) => bin.waste_type === type);
+    };
+    const filterObjects = (query) => {
+        setfilters(Object.assign(Object.assign({}, filters), { searchQuery: query }));
+    };
     const showLocation = () => {
         console.log("Location");
     };
@@ -233,14 +256,25 @@ function AdminBins() {
             react_1.default.createElement(navbar_1.default, { label: "Bins", buttonLabel: "+ Create Bin", buttonAction: () => activateCreateModal() }),
             react_1.default.createElement("div", null,
                 react_1.default.createElement(react_hot_toast_1.Toaster, null)),
-            react_1.default.createElement("div", { className: "p-10" },
+            react_1.default.createElement("div", { className: "p-10 pb-2" },
+                react_1.default.createElement("div", { className: "flex content-center justify-center py-2 px-5 gap-5 rounded-lg bg-primary-200" },
+                    react_1.default.createElement("div", { className: "flex flex-wrap content-center w-1/2" },
+                        react_1.default.createElement(input_1.default, { label: "Search", placeholder: "Search by id", onChange: (e) => filterObjects(e.target.value) })),
+                    react_1.default.createElement("div", { className: "flex flex-wrap content-center w-1/2" },
+                        react_1.default.createElement(select_1.default, { label: "Filter by waste type", value: filters.selectedFilter, options: {
+                                All: "All",
+                                General: "General",
+                                Recyclables: "Recyclables",
+                                Hazardous: "Hazardous",
+                            }, onChange: (e) => setfilters(Object.assign(Object.assign({}, filters), { selectedFilter: e.target.value })) })))),
+            react_1.default.createElement("div", { className: "p-10 pt-3" },
                 react_1.default.createElement(listheader_1.default, { items: [
                         "ID",
                         "Waste Type",
                         "Last pickup time",
                         "Actions",
                     ] }),
-                binsList.map((bin, index) => {
+                filterByWasteType(filterBySearch(binsList, filters.searchQuery), filters.selectedFilter).map((bin, index) => {
                     return (react_1.default.createElement(listItem_1.default, { key: index, items: [
                             bin.custom_id,
                             bin.waste_type,

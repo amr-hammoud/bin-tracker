@@ -197,6 +197,40 @@ export default function AdminBins() {
 		}
 	};
 
+	const [filters, setfilters] = useState<{
+		searchQuery: string;
+		selectedFilter: string;
+	}>({
+		searchQuery: "",
+		selectedFilter: "All",
+	});
+
+	const filterBySearch = (binsList: Bin[], query: string) => {
+		if (!query) {
+			return binsList;
+		}
+
+		const lowerCaseQuery = query.toLowerCase();
+
+		return binsList.filter((bin) => {
+			const custom_id = bin.custom_id.toLowerCase();
+
+			return custom_id.includes(lowerCaseQuery);
+		});
+	};
+
+	const filterByWasteType = (binsList: Bin[], type: string) => {
+		if (type === "All") {
+			return binsList;
+		}
+
+		return binsList.filter((bin) => bin.waste_type === type);
+	};
+
+	const filterObjects = (query: string) => {
+		setfilters({ ...filters, searchQuery: query });
+	};
+
 	const showLocation = () => {
 		console.log("Location");
 	};
@@ -368,7 +402,36 @@ export default function AdminBins() {
 				<div>
 					<Toaster />
 				</div>
-				<div className="p-10">
+				<div className="p-10 pb-2">
+					<div className="flex content-center justify-center py-2 px-5 gap-5 rounded-lg bg-primary-200">
+						<div className="flex flex-wrap content-center w-1/2">
+							<Input
+								label="Search"
+								placeholder="Search by id"
+								onChange={(e) => filterObjects(e.target.value)}
+							/>
+						</div>
+						<div className="flex flex-wrap content-center w-1/2">
+							<Select
+								label="Filter by waste type"
+								value={filters.selectedFilter}
+								options={{
+									All: "All",
+									General: "General",
+									Recyclables: "Recyclables",
+									Hazardous: "Hazardous",
+								}}
+								onChange={(e) =>
+									setfilters({
+										...filters,
+										selectedFilter: e.target.value,
+									})
+								}
+							/>
+						</div>
+					</div>
+				</div>
+				<div className="p-10 pt-3">
 					<ListHeader
 						items={[
 							"ID",
@@ -377,7 +440,10 @@ export default function AdminBins() {
 							"Actions",
 						]}
 					/>
-					{binsList.map((bin: Bin, index) => {
+					{filterByWasteType(
+						filterBySearch(binsList, filters.searchQuery),
+						filters.selectedFilter
+					).map((bin: Bin, index) => {
 						return (
 							<ListItem
 								key={index}
