@@ -25,7 +25,6 @@ export default function SuperAdminGroups() {
 				route: "groups/",
 				token,
 			});
-			console.log(response);
 			if (response.status === 200) {
 				setGroupList(response.data);
 			}
