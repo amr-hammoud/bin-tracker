@@ -12,6 +12,22 @@ interface User {
 	group_id?:Group;
 }
 
+interface User2 {
+	_id: string;
+	first_name: string;
+	last_name: string;
+	username: string;
+	email?: string;
+	user_type: string;
+	createdAt?: string;
+	updatedAt?: string;
+	__v?: number;
+	device_id?: string;
+	group_id?:string;
+}
+
+
+
 interface Token {
 	token: string | null;
 }
@@ -52,4 +68,4 @@ interface Generic {
 	_id: string
 }
 
-export { User, Token, Bin, BinRecord, Group, Truck, Generic };
+export { User, User2, Token, Bin, BinRecord, Group, Truck, Generic };
