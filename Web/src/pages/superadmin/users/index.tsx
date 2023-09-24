@@ -40,13 +40,13 @@ export default function SuperAdminUsers() {
 		getGroups();
 	}, []);
 
-	const [deleteModalState, setdeleteModalState] = useState({
+	const [deleteModalState, setDeleteModalState] = useState({
 		open: false,
 		id: "",
 	});
 
 	const activateDeleteModal = (id: string) => {
-		setdeleteModalState({ ...deleteModalState, open: true, id: id });
+		setDeleteModalState({ ...deleteModalState, open: true, id: id });
 	};
 
 	const deleteUser = async (id: string) => {
@@ -60,13 +60,13 @@ export default function SuperAdminUsers() {
 				const newArr = userList.filter((user) => {
 					return user?._id !== id;
 				});
-				setdeleteModalState({ ...deleteModalState, open: false });
+				setDeleteModalState({ ...deleteModalState, open: false });
 				toast.success("User Deleted Successfully", { duration: 2500 });
 				setUserList(newArr);
 			}
 		} catch (err: any) {
 			console.error(err);
-			setdeleteModalState({ ...deleteModalState, open: false });
+			setDeleteModalState({ ...deleteModalState, open: false });
 			toast.error("Couldn't Delete User", { duration: 4000 });
 		}
 	};
@@ -439,7 +439,7 @@ export default function SuperAdminUsers() {
 				<ModalComponent
 					showModal={deleteModalState.open}
 					onRequestClose={() =>
-						setdeleteModalState({
+						setDeleteModalState({
 							...deleteModalState,
 							open: !deleteModalState.open,
 						})
@@ -455,7 +455,7 @@ export default function SuperAdminUsers() {
 							bgColor="bg-neutral-100"
 							hoverColor="hover:bg-neutral-600"
 							onClick={() =>
-								setdeleteModalState({
+								setDeleteModalState({
 									...deleteModalState,
 									open: false,
 								})

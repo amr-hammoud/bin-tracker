@@ -79,12 +79,12 @@ function SuperAdminUsers() {
         getUsers();
         getGroups();
     }, []);
-    const [deleteModalState, setdeleteModalState] = (0, react_1.useState)({
+    const [deleteModalState, setDeleteModalState] = (0, react_1.useState)({
         open: false,
         id: "",
     });
     const activateDeleteModal = (id) => {
-        setdeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: true, id: id }));
+        setDeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: true, id: id }));
     };
     const deleteUser = (id) => __awaiter(this, void 0, void 0, function* () {
         try {
@@ -97,14 +97,14 @@ function SuperAdminUsers() {
                 const newArr = userList.filter((user) => {
                     return (user === null || user === void 0 ? void 0 : user._id) !== id;
                 });
-                setdeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: false }));
+                setDeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: false }));
                 react_hot_toast_1.toast.success("User Deleted Successfully", { duration: 2500 });
                 setUserList(newArr);
             }
         }
         catch (err) {
             console.error(err);
-            setdeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: false }));
+            setDeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: false }));
             react_hot_toast_1.toast.error("Couldn't Delete User", { duration: 4000 });
         }
     });
@@ -279,10 +279,10 @@ function SuperAdminUsers() {
                 react_1.default.createElement("div", { className: "flex w-full justify-center gap-10 mt-5" },
                     react_1.default.createElement(button_1.default, { label: "Cancel", color: "text-gunmetal", bgColor: "bg-neutral-100", hoverColor: "hover:bg-neutral-600", onClick: () => setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false })) }),
                     createModalState.type === "edit" ? (react_1.default.createElement(button_1.default, { label: "Update", bgColor: "bg-primary-500", hoverColor: "hover:bg-primary-700", onClick: () => updateUser() })) : (react_1.default.createElement(button_1.default, { label: "Create", bgColor: "bg-primary-500", hoverColor: "hover:bg-primary-700", onClick: () => createUser() })))),
-            react_1.default.createElement(modal_1.default, { showModal: deleteModalState.open, onRequestClose: () => setdeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: !deleteModalState.open })) },
+            react_1.default.createElement(modal_1.default, { showModal: deleteModalState.open, onRequestClose: () => setDeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: !deleteModalState.open })) },
                 react_1.default.createElement("div", { className: "text-xl" }, "Are you sure you want to delete?"),
                 react_1.default.createElement("div", { className: "flex w-full justify-center gap-10 mt-5" },
-                    react_1.default.createElement(button_1.default, { label: "Cancel", color: "text-gunmetal", bgColor: "bg-neutral-100", hoverColor: "hover:bg-neutral-600", onClick: () => setdeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: false })) }),
+                    react_1.default.createElement(button_1.default, { label: "Cancel", color: "text-gunmetal", bgColor: "bg-neutral-100", hoverColor: "hover:bg-neutral-600", onClick: () => setDeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: false })) }),
                     react_1.default.createElement(button_1.default, { label: "Delete", bgColor: "bg-red-400", hoverColor: "hover:bg-red-500", onClick: () => deleteUser(deleteModalState.id) }))),
             react_1.default.createElement("div", { className: "p-10 pb-2" },
                 react_1.default.createElement("div", { className: "flex content-center justify-center py-2 px-5 gap-5 rounded-lg bg-primary-200" },
