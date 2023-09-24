@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
-import { Token, User, Group } from "../../../store/interfaces";
+import { Token, User, Group, User2 } from "../../../store/interfaces";
 import Sidebar from "../../../components/common/sidebar";
 import Navbar from "../../../components/common/navbar";
 import { sendRequest } from "../../../configs/request";
@@ -18,6 +18,10 @@ export default function AdminUsers() {
 		(state: RootState) => state.auth.token
 	);
 
+	const user: User | null = useSelector(
+		(state: RootState) => state.auth.user
+	);
+
 	const [userList, setUserList] = useState<User[]>([]);
 
 	const getUsers = async () => {
@@ -26,9 +30,9 @@ export default function AdminUsers() {
 				route: "users/group",
 				token,
 			});
-
 			if (response.status === 200) {
-				setUserList(response.data);
+				const usersFilteredList = response.data.filter((userItem: User) => userItem._id !== user?._id);
+				setUserList(usersFilteredList);
 			}
 		} catch (err: any) {
 			console.error(err);

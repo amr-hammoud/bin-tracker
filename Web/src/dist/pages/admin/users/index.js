@@ -60,6 +60,7 @@ const react_hot_toast_1 = require("react-hot-toast");
 const select_1 = __importDefault(require("../../../components/base/select"));
 function AdminUsers() {
     const token = (0, react_redux_1.useSelector)((state) => state.auth.token);
+    const user = (0, react_redux_1.useSelector)((state) => state.auth.user);
     const [userList, setUserList] = (0, react_1.useState)([]);
     const getUsers = () => __awaiter(this, void 0, void 0, function* () {
         try {
@@ -68,7 +69,8 @@ function AdminUsers() {
                 token,
             });
             if (response.status === 200) {
-                setUserList(response.data);
+                const usersFilteredList = response.data.filter((userItem) => userItem._id !== (user === null || user === void 0 ? void 0 : user._id));
+                setUserList(usersFilteredList);
             }
         }
         catch (err) {
