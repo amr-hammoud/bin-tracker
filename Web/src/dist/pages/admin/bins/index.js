@@ -80,6 +80,35 @@ function AdminBins() {
     (0, react_1.useEffect)(() => {
         getBins();
     }, []);
+    const [deleteModalState, setDeleteModalState] = (0, react_1.useState)({
+        open: false,
+        id: "",
+    });
+    const activateDeleteModal = (id) => {
+        setDeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: true, id: id }));
+    };
+    const deleteBins = (id) => __awaiter(this, void 0, void 0, function* () {
+        try {
+            const response = yield (0, request_1.sendRequest)({
+                method: "DELETE",
+                route: `bins/${id}`,
+                token,
+            });
+            if (response.status === 200) {
+                const newArr = binsList.filter((bin) => {
+                    return bin._id !== id;
+                });
+                setDeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: false }));
+                react_hot_toast_1.toast.success("Truck Deleted Successfully", { duration: 2500 });
+                setBinList(newArr);
+            }
+        }
+        catch (err) {
+            console.error(err);
+            setDeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: false }));
+            react_hot_toast_1.toast.error("Couldn't Delete Truck", { duration: 4000 });
+        }
+    });
     const [createModalState, setCreateModalState] = (0, react_1.useState)({
         open: false,
         type: "create",
@@ -158,13 +187,18 @@ function AdminBins() {
                         setBinData(Object.assign(Object.assign({}, binData), { last_pickup_time: e.target.value }));
                     }, required: true }),
                 react_1.default.createElement(select_1.default, { label: "Waste Type", required: true, value: binData.waste_type, options: {
-                        "General": "General",
-                        "Recyclables": "Recyclables",
-                        "Hazardous": "Hazardous",
+                        General: "General",
+                        Recyclables: "Recyclables",
+                        Hazardous: "Hazardous",
                     }, onChange: (e) => setBinData(Object.assign(Object.assign({}, binData), { waste_type: e.target.value })) })),
             react_1.default.createElement("div", { className: "flex w-full justify-center gap-10 mt-5" },
                 react_1.default.createElement(button_1.default, { label: "Cancel", color: "text-gunmetal", bgColor: "bg-neutral-100", hoverColor: "hover:bg-neutral-600", onClick: () => setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false })) }),
                 createModalState.type === "edit" ? (react_1.default.createElement(button_1.default, { label: "Update", bgColor: "bg-primary-500", hoverColor: "hover:bg-primary-700" })) : (react_1.default.createElement(button_1.default, { label: "Create", bgColor: "bg-primary-500", hoverColor: "hover:bg-primary-700", onClick: () => createBin() })))),
+        react_1.default.createElement(modal_1.default, { showModal: deleteModalState.open, onRequestClose: () => setDeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: !deleteModalState.open })) },
+            react_1.default.createElement("div", { className: "text-xl" }, "Are you sure you want to delete?"),
+            react_1.default.createElement("div", { className: "flex w-full justify-center gap-10 mt-5" },
+                react_1.default.createElement(button_1.default, { label: "Cancel", color: "text-gunmetal", bgColor: "bg-neutral-100", hoverColor: "hover:bg-neutral-600", onClick: () => setDeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: false })) }),
+                react_1.default.createElement(button_1.default, { label: "Delete", bgColor: "bg-red-400", hoverColor: "hover:bg-red-500", onClick: () => deleteBins(deleteModalState.id) }))),
         react_1.default.createElement("div", { className: "flex flex-col w-full" },
             react_1.default.createElement(navbar_1.default, { label: "Bins", buttonLabel: "+ Create Bin", buttonAction: () => activateCreateModal() }),
             react_1.default.createElement("div", null,
@@ -177,12 +211,11 @@ function AdminBins() {
                         "Actions",
                     ] }),
                 binsList.map((bin, index) => {
-                    console.log(bin);
                     return (react_1.default.createElement(listItem_1.default, { key: index, items: [
                             bin.custom_id,
                             bin.waste_type,
                             bin.last_pickup_time,
-                        ], customIcon: react_1.default.createElement(md_1.MdLocationPin, null), customIconAction: () => showLocation() }));
+                        ], object: bin, customIcon: react_1.default.createElement(md_1.MdLocationPin, null), customIconAction: () => showLocation(), onDelete: (id) => activateDeleteModal(id) }));
                     //TODO: Add location icon to listItem
                 })))));
 }

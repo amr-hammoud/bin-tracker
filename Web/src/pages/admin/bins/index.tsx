@@ -43,6 +43,37 @@ export default function AdminBins() {
 		getBins();
 	}, []);
 
+	const [deleteModalState, setDeleteModalState] = useState({
+		open: false,
+		id: "",
+	});
+
+	const activateDeleteModal = (id: string) => {
+		setDeleteModalState({ ...deleteModalState, open: true, id: id });
+	};
+
+	const deleteBins = async (id: string) => {
+		try {
+			const response = await sendRequest({
+				method: "DELETE",
+				route: `bins/${id}`,
+				token,
+			});
+			if (response.status === 200) {
+				const newArr = binsList.filter((bin: Bin) => {
+					return bin._id !== id;
+				});
+				setDeleteModalState({ ...deleteModalState, open: false });
+				toast.success("Truck Deleted Successfully", { duration: 2500 });
+				setBinList(newArr);
+			}
+		} catch (err: any) {
+			console.error(err);
+			setDeleteModalState({ ...deleteModalState, open: false });
+			toast.error("Couldn't Delete Truck", { duration: 4000 });
+		}
+	};
+
 	const [createModalState, setCreateModalState] = useState({
 		open: false,
 		type: "create",
@@ -98,7 +129,7 @@ export default function AdminBins() {
 			([key, value]) => value !== null && value !== ""
 		);
 
-		const finalData = Object.fromEntries(filtered);		
+		const finalData = Object.fromEntries(filtered);
 
 		try {
 			const response = await sendRequest({
@@ -195,25 +226,25 @@ export default function AdminBins() {
 						/>
 					</div>
 					<Input
-							label="Last Pickup"
-							type="date"
-							value={binData.last_pickup_time}
-							onChange={(e) => {
-								setBinData({
-									...binData,
-									last_pickup_time: e.target.value,
-								});
-							}}
-							required
-						/>
+						label="Last Pickup"
+						type="date"
+						value={binData.last_pickup_time}
+						onChange={(e) => {
+							setBinData({
+								...binData,
+								last_pickup_time: e.target.value,
+							});
+						}}
+						required
+					/>
 					<Select
 						label="Waste Type"
 						required
 						value={binData.waste_type}
 						options={{
-							"General": "General",
-							"Recyclables": "Recyclables",
-							"Hazardous": "Hazardous",
+							General: "General",
+							Recyclables: "Recyclables",
+							Hazardous: "Hazardous",
 						}}
 						onChange={(e) =>
 							setBinData({
@@ -253,6 +284,38 @@ export default function AdminBins() {
 					)}
 				</div>
 			</ModalComponent>
+			{/* Delete Modal */}
+			<ModalComponent
+				showModal={deleteModalState.open}
+				onRequestClose={() =>
+					setDeleteModalState({
+						...deleteModalState,
+						open: !deleteModalState.open,
+					})
+				}
+			>
+				<div className="text-xl">Are you sure you want to delete?</div>
+				<div className="flex w-full justify-center gap-10 mt-5">
+					<Button
+						label="Cancel"
+						color="text-gunmetal"
+						bgColor="bg-neutral-100"
+						hoverColor="hover:bg-neutral-600"
+						onClick={() =>
+							setDeleteModalState({
+								...deleteModalState,
+								open: false,
+							})
+						}
+					/>
+					<Button
+						label="Delete"
+						bgColor="bg-red-400"
+						hoverColor="hover:bg-red-500"
+						onClick={() => deleteBins(deleteModalState.id)}
+					/>
+				</div>
+			</ModalComponent>
 			<div className="flex flex-col w-full">
 				<Navbar
 					label="Bins"
@@ -272,8 +335,6 @@ export default function AdminBins() {
 						]}
 					/>
 					{binsList.map((bin: Bin, index) => {
-						console.log(bin);
-						
 						return (
 							<ListItem
 								key={index}
@@ -282,8 +343,10 @@ export default function AdminBins() {
 									bin.waste_type,
 									bin.last_pickup_time,
 								]}
+								object={bin}
 								customIcon={<MdLocationPin />}
 								customIconAction={() => showLocation()}
+								onDelete={(id) => activateDeleteModal(id)}
 							/>
 						);
 						//TODO: Add location icon to listItem
