@@ -174,7 +174,6 @@ export default function AdminTrucks() {
 
 	const activateEditModal = (data: any) => {
 		const truck = JSON.parse(data);
-		console.log(truck);
 		setTruckData({
 			...truckData,
 			_id: truck._id,
@@ -214,6 +213,36 @@ export default function AdminTrucks() {
 		}
 	};
 
+	const [filters, setfilters] = useState<{
+		searchQuery: string;
+		selectedFilter: string;
+	}>({
+		searchQuery: "",
+		selectedFilter: "All",
+	});
+
+	const filterBySearch = (userList: Truck[], query: string) => {
+		if (!query) {
+			return userList;
+		}
+
+		const lowerCaseQuery = query.toLowerCase();
+
+		return userList.filter((truck) => {
+			const plate_number = truck.plate_number.toLowerCase();
+			const driver_name = `${truck.driver_id.first_name} ${truck.driver_id.last_name}`.toLowerCase();
+
+			return (
+				plate_number.includes(lowerCaseQuery) ||
+				driver_name.includes(lowerCaseQuery)
+			);
+		});
+	};
+
+	const filterObjects = (query: string) => {
+		setfilters({ ...filters, searchQuery: query });
+	};
+
 	return (
 		<div className="flex">
 			<Sidebar
@@ -251,7 +280,6 @@ export default function AdminTrucks() {
 									...truckData,
 									plate_number: e.target.value,
 								});
-								console.log(truckData);
 							}}
 							required
 						/>
@@ -266,7 +294,6 @@ export default function AdminTrucks() {
 									...truckData,
 									last_oil_change: e.target.value,
 								});
-								console.log(truckData);
 							}}
 							required
 						/>
@@ -279,7 +306,6 @@ export default function AdminTrucks() {
 									...truckData,
 									last_wash: e.target.value,
 								});
-								console.log(truckData);
 							}}
 							required
 						/>
@@ -368,6 +394,17 @@ export default function AdminTrucks() {
 				<div>
 					<Toaster />
 				</div>
+				<div className="p-10 pb-2">
+					<div className="flex content-center justify-center py-2 px-5 gap-5 rounded-lg bg-primary-200">
+						<div className="flex flex-wrap content-center w-1/2">
+							<Input
+								label="Search"
+								placeholder="Search by plate number/driver"
+								onChange={(e) => filterObjects(e.target.value)}
+							/>
+						</div>
+					</div>
+				</div>
 				<div className="p-10">
 					<ListHeader
 						items={[
@@ -378,7 +415,7 @@ export default function AdminTrucks() {
 							"Actions",
 						]}
 					/>
-					{truckList.map((truck: Truck, index) => {
+					{filterBySearch(truckList, filters.searchQuery).map((truck: Truck, index) => {
 						return (
 							<ListItem
 								key={index}

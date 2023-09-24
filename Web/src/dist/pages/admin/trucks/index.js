@@ -178,7 +178,6 @@ function AdminTrucks() {
     }, {});
     const activateEditModal = (data) => {
         const truck = JSON.parse(data);
-        console.log(truck);
         setTruckData(Object.assign(Object.assign({}, truckData), { _id: truck._id, plate_number: truck.plate_number, group_id: truck.group_id, driver_id: truck.driver_id, last_oil_change: truck.last_oil_change, last_wash: truck.last_wash }));
         setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: true, type: "edit" }));
     };
@@ -207,6 +206,25 @@ function AdminTrucks() {
             react_hot_toast_1.toast.error("Couldn't Update, Try Again", { duration: 2500 });
         }
     });
+    const [filters, setfilters] = (0, react_1.useState)({
+        searchQuery: "",
+        selectedFilter: "All",
+    });
+    const filterBySearch = (userList, query) => {
+        if (!query) {
+            return userList;
+        }
+        const lowerCaseQuery = query.toLowerCase();
+        return userList.filter((truck) => {
+            const plate_number = truck.plate_number.toLowerCase();
+            const driver_name = `${truck.driver_id.first_name} ${truck.driver_id.last_name}`.toLowerCase();
+            return (plate_number.includes(lowerCaseQuery) ||
+                driver_name.includes(lowerCaseQuery));
+        });
+    };
+    const filterObjects = (query) => {
+        setfilters(Object.assign(Object.assign({}, filters), { searchQuery: query }));
+    };
     return (react_1.default.createElement("div", { className: "flex" },
         react_1.default.createElement(sidebar_1.default, { items: [
                 "Dashboard",
@@ -224,16 +242,13 @@ function AdminTrucks() {
                 react_1.default.createElement("div", { className: "flex gap-5" },
                     react_1.default.createElement(input_1.default, { label: "Plate Number", placeholder: "plate", value: truckData.plate_number, onChange: (e) => {
                             setTruckData(Object.assign(Object.assign({}, truckData), { plate_number: e.target.value }));
-                            console.log(truckData);
                         }, required: true })),
                 react_1.default.createElement("div", { className: "flex gap-5" },
                     react_1.default.createElement(input_1.default, { label: "Last Oil Change", type: "date", value: truckData.last_oil_change, onChange: (e) => {
                             setTruckData(Object.assign(Object.assign({}, truckData), { last_oil_change: e.target.value }));
-                            console.log(truckData);
                         }, required: true }),
                     react_1.default.createElement(input_1.default, { label: "Last Wash", type: "date", value: truckData.last_wash, onChange: (e) => {
                             setTruckData(Object.assign(Object.assign({}, truckData), { last_wash: e.target.value }));
-                            console.log(truckData);
                         }, required: true })),
                 react_1.default.createElement(select_1.default, { label: "Driver", required: true, value: truckData.driver_id, options: transformedDriversList, onChange: (e) => setTruckData(Object.assign(Object.assign({}, truckData), { driver_id: e.target.value })) })),
             react_1.default.createElement("div", { className: "flex w-full justify-center gap-10 mt-5" },
@@ -248,6 +263,10 @@ function AdminTrucks() {
             react_1.default.createElement(navbar_1.default, { label: "Trucks", buttonLabel: "+ Create Truck", buttonAction: () => activateCreateModal() }),
             react_1.default.createElement("div", null,
                 react_1.default.createElement(react_hot_toast_1.Toaster, null)),
+            react_1.default.createElement("div", { className: "p-10 pb-2" },
+                react_1.default.createElement("div", { className: "flex content-center justify-center py-2 px-5 gap-5 rounded-lg bg-primary-200" },
+                    react_1.default.createElement("div", { className: "flex flex-wrap content-center w-1/2" },
+                        react_1.default.createElement(input_1.default, { label: "Search", placeholder: "Search by plate number/driver", onChange: (e) => filterObjects(e.target.value) })))),
             react_1.default.createElement("div", { className: "p-10" },
                 react_1.default.createElement(listheader_1.default, { items: [
                         "Plate Number",
@@ -256,7 +275,7 @@ function AdminTrucks() {
                         "Last Wash",
                         "Actions",
                     ] }),
-                truckList.map((truck, index) => {
+                filterBySearch(truckList, filters.searchQuery).map((truck, index) => {
                     return (react_1.default.createElement(listItem_1.default, { key: index, items: [
                             truck.plate_number,
                             truck.driver_id.first_name +
