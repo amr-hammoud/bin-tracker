@@ -45,8 +45,49 @@ const updateUser = async (req, res) => {
 				user[key] = user_data[key] ? user_data[key] : user[key];
 			}
 		}
-		await user.save();
 
+		if (user_data.user_type !== undefined) {
+			user.user_type = user_data.user_type;
+		}
+
+		if (user_data.group_id !== undefined) {
+			const previousGroup = user.group_id;
+
+			user.group_id = user_data.group_id;
+
+			if (
+				previousGroup &&
+				previousGroup.toString() !== user_data.group_id
+			) {
+				const previousGroupDoc = await Group.findById(previousGroup);
+				if (previousGroupDoc) {
+					previousGroupDoc.admins = previousGroupDoc.admins.filter(
+						(adminId) => adminId.toString() !== user_id
+					);
+					previousGroupDoc.members = previousGroupDoc.members.filter(
+						(memberId) => memberId.toString() !== user_id
+					);
+
+					await previousGroupDoc.save();
+				}
+			}
+
+			if (user.user_type === "2" && user.group_id) {
+				const group = await Group.findById(user.group_id);
+				if (group) {
+					group.admins.push(user._id);
+					await group.save();
+				}
+			} else if (user.user_type === "3" && user.group_id) {
+				const group = await Group.findById(user.group_id);
+				if (group) {
+					group.members.push(user._id);
+					await group.save();
+				}
+			}
+		}
+
+		await user.save();
 		return res.send(user);
 	} catch (error) {
 		console.error("Error creating/updating user:", error);
