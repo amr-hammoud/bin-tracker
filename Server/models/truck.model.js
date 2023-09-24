@@ -2,16 +2,11 @@ const mongoose = require("mongoose");
 
 const truckSchema = new mongoose.Schema(
 	{
-		custom_id: {
+		plate_number: {
 			type: String,
 			trim: true,
 			index: true,
 			unique: true,
-			required: true,
-		},
-		plate_number: {
-			type: String,
-			trim: true,
             required: true,
 		},
 		group_id: {
