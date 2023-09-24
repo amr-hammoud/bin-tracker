@@ -10,6 +10,7 @@ import ListHeader from "../../../components/base/listheader";
 import ModalComponent from "../../../components/base/modal";
 import Button from "../../../components/base/button";
 import { Toaster, toast } from "react-hot-toast";
+import Input from "../../../components/base/input";
 
 export default function SuperAdminGroups() {
 	const token: Token | null = useSelector(
@@ -68,6 +69,62 @@ export default function SuperAdminGroups() {
 		}
 	};
 
+	const [createModalState, setCreateModalState] = useState({
+		open: false,
+		type: "create",
+	});
+	const [groupData, setGroupData] = useState({
+		_id: "",
+		name: "",
+	});
+
+	const activateCreateModal = () => {
+		setGroupData({
+			...groupData,
+			_id: "",
+			name: "",
+		});
+		setCreateModalState({
+			...createModalState,
+			open: true,
+			type: "create",
+		});
+	};
+
+	const createGroup = async () => {
+		const { _id, ...restData } = groupData;
+
+		const asArray = Object.entries(restData);
+
+		const filtered = asArray.filter(
+			([key, value]) => value !== null && value !== ""
+		);
+
+		const finalData = Object.fromEntries(filtered);
+
+		try {
+			const response = await sendRequest({
+				method: "POST",
+				route: `groups`,
+				body: finalData,
+				token,
+			});
+
+			if (response.status === 200) {
+				setCreateModalState({ ...createModalState, open: false });
+				getGroups();
+				toast.success("Group created successfully", { duration: 2500 });
+			} else {
+				setCreateModalState({ ...createModalState, open: false });
+				toast.error("Couldn't Create, Try Again", { duration: 4000 });
+			}
+		} catch (err: any) {
+			console.error(err);
+			setCreateModalState({ ...createModalState, open: false });
+			toast.error("Couldn't Create, Try Again", { duration: 2500 });
+		}
+	};
+
 	return (
 		<div className="flex">
 			<Sidebar
@@ -75,10 +132,71 @@ export default function SuperAdminGroups() {
 				selected="Groups"
 			/>
 			<div className="flex flex-col w-full">
-				<Navbar label="Groups" />
+				<Navbar
+					label="Groups"
+					buttonLabel="+ Create Group"
+					buttonAction={() => activateCreateModal()}
+				/>
 				<div>
 					<Toaster />
 				</div>
+				{/* Create - Edit Modal */}
+				<ModalComponent
+					showModal={createModalState.open}
+					onRequestClose={() =>
+						setCreateModalState({
+							...createModalState,
+							open: !createModalState.open,
+						})
+					}
+				>
+					<div className="text-xl">Create/Edit User</div>
+					<div className="flex flex-col flex-wrap justify-center content-center w-96">
+						<div className="flex gap-5 w-full">
+							<Input
+								label="Name"
+								placeholder="name"
+								value={groupData.name}
+								onChange={(e) => {
+									setGroupData({
+										...groupData,
+										name: e.target.value,
+									});
+								}}
+								required
+							/>
+						</div>
+					</div>
+					<div className="flex w-full justify-center gap-10 mt-5">
+						<Button
+							label="Cancel"
+							color="text-gunmetal"
+							bgColor="bg-neutral-100"
+							hoverColor="hover:bg-neutral-600"
+							onClick={() =>
+								setCreateModalState({
+									...createModalState,
+									open: false,
+								})
+							}
+						/>
+						{createModalState.type === "edit" ? (
+							<Button
+								label="Update"
+								bgColor="bg-primary-500"
+								hoverColor="hover:bg-primary-700"
+								// onClick={() => updateGroup()}
+							/>
+						) : (
+							<Button
+								label="Create"
+								bgColor="bg-primary-500"
+								hoverColor="hover:bg-primary-700"
+								onClick={() => createGroup()}
+							/>
+						)}
+					</div>
+				</ModalComponent>
 				<ModalComponent
 					showModal={deleteModalState.open}
 					onRequestClose={() =>

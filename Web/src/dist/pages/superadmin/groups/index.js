@@ -31,6 +31,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -45,6 +56,7 @@ const listheader_1 = __importDefault(require("../../../components/base/listheade
 const modal_1 = __importDefault(require("../../../components/base/modal"));
 const button_1 = __importDefault(require("../../../components/base/button"));
 const react_hot_toast_1 = require("react-hot-toast");
+const input_1 = __importDefault(require("../../../components/base/input"));
 function SuperAdminGroups() {
     const token = (0, react_redux_1.useSelector)((state) => state.auth.token);
     const [groupList, setGroupList] = (0, react_1.useState)([]);
@@ -95,12 +107,62 @@ function SuperAdminGroups() {
             react_hot_toast_1.toast.error("Couldn't Delete Group", { duration: 4000 });
         }
     });
+    const [createModalState, setCreateModalState] = (0, react_1.useState)({
+        open: false,
+        type: "create",
+    });
+    const [groupData, setGroupData] = (0, react_1.useState)({
+        _id: "",
+        name: "",
+    });
+    const activateCreateModal = () => {
+        setGroupData(Object.assign(Object.assign({}, groupData), { _id: "", name: "" }));
+        setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: true, type: "create" }));
+    };
+    const createGroup = () => __awaiter(this, void 0, void 0, function* () {
+        const { _id } = groupData, restData = __rest(groupData, ["_id"]);
+        const asArray = Object.entries(restData);
+        const filtered = asArray.filter(([key, value]) => value !== null && value !== "");
+        const finalData = Object.fromEntries(filtered);
+        try {
+            const response = yield (0, request_1.sendRequest)({
+                method: "POST",
+                route: `groups`,
+                body: finalData,
+                token,
+            });
+            if (response.status === 200) {
+                setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false }));
+                getGroups();
+                react_hot_toast_1.toast.success("Group created successfully", { duration: 2500 });
+            }
+            else {
+                setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false }));
+                react_hot_toast_1.toast.error("Couldn't Create, Try Again", { duration: 4000 });
+            }
+        }
+        catch (err) {
+            console.error(err);
+            setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false }));
+            react_hot_toast_1.toast.error("Couldn't Create, Try Again", { duration: 2500 });
+        }
+    });
     return (react_1.default.createElement("div", { className: "flex" },
         react_1.default.createElement(sidebar_1.default, { items: ["Dashboard", "Users", "Groups", "Account"], selected: "Groups" }),
         react_1.default.createElement("div", { className: "flex flex-col w-full" },
-            react_1.default.createElement(navbar_1.default, { label: "Groups" }),
+            react_1.default.createElement(navbar_1.default, { label: "Groups", buttonLabel: "+ Create Group", buttonAction: () => activateCreateModal() }),
             react_1.default.createElement("div", null,
                 react_1.default.createElement(react_hot_toast_1.Toaster, null)),
+            react_1.default.createElement(modal_1.default, { showModal: createModalState.open, onRequestClose: () => setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: !createModalState.open })) },
+                react_1.default.createElement("div", { className: "text-xl" }, "Create/Edit User"),
+                react_1.default.createElement("div", { className: "flex flex-col flex-wrap justify-center content-center w-96" },
+                    react_1.default.createElement("div", { className: "flex gap-5 w-full" },
+                        react_1.default.createElement(input_1.default, { label: "Name", placeholder: "name", value: groupData.name, onChange: (e) => {
+                                setGroupData(Object.assign(Object.assign({}, groupData), { name: e.target.value }));
+                            }, required: true }))),
+                react_1.default.createElement("div", { className: "flex w-full justify-center gap-10 mt-5" },
+                    react_1.default.createElement(button_1.default, { label: "Cancel", color: "text-gunmetal", bgColor: "bg-neutral-100", hoverColor: "hover:bg-neutral-600", onClick: () => setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false })) }),
+                    createModalState.type === "edit" ? (react_1.default.createElement(button_1.default, { label: "Update", bgColor: "bg-primary-500", hoverColor: "hover:bg-primary-700" })) : (react_1.default.createElement(button_1.default, { label: "Create", bgColor: "bg-primary-500", hoverColor: "hover:bg-primary-700", onClick: () => createGroup() })))),
             react_1.default.createElement(modal_1.default, { showModal: deleteModalState.open, onRequestClose: () => setdeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: !deleteModalState.open })) },
                 react_1.default.createElement("div", { className: "text-xl" }, "Are you sure you want to delete?"),
                 react_1.default.createElement("div", { className: "flex w-full justify-center gap-10 mt-5" },
