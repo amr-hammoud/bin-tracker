@@ -154,6 +154,49 @@ export default function AdminBins() {
 		}
 	};
 
+	const activateEditModal = (data: any) => {
+		const bin: Bin = JSON.parse(data);
+		setBinData({
+			...binData,
+			_id: bin._id,
+			custom_id: bin.custom_id,
+			longitude: bin.longitude,
+			latitude: bin.latitude,
+			group_id: bin.group_id,
+			last_pickup_time: bin.last_pickup_time,
+			waste_type: bin.waste_type,
+			data: bin.data,
+		});
+
+		setCreateModalState({ ...createModalState, open: true, type: "edit" });
+	};
+
+	const updateBin = async () => {
+		const { _id, ...restData } = binData;
+
+		try {
+			const response = await sendRequest({
+				method: "POST",
+				route: `bins/${binData._id}`,
+				body: restData,
+				token,
+			});
+
+			if (response.status === 200) {
+				setCreateModalState({ ...createModalState, open: false });
+				getBins();
+				toast.success("User updated successfully", { duration: 2500 });
+			} else {
+				setCreateModalState({ ...createModalState, open: false });
+				toast.error("Couldn't Update, Try Again", { duration: 4000 });
+			}
+		} catch (err: any) {
+			console.error(err);
+			setCreateModalState({ ...createModalState, open: false });
+			toast.error("Couldn't Update, Try Again", { duration: 2500 });
+		}
+	};
+
 	const showLocation = () => {
 		console.log("Location");
 	};
@@ -272,7 +315,7 @@ export default function AdminBins() {
 							label="Update"
 							bgColor="bg-primary-500"
 							hoverColor="hover:bg-primary-700"
-							// onClick={() => updateTruck()}
+							onClick={() => updateBin()}
 						/>
 					) : (
 						<Button
@@ -346,6 +389,7 @@ export default function AdminBins() {
 								object={bin}
 								customIcon={<MdLocationPin />}
 								customIconAction={() => showLocation()}
+								onEdit={(data) => activateEditModal(data)}
 								onDelete={(id) => activateDeleteModal(id)}
 							/>
 						);

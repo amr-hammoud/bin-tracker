@@ -155,6 +155,36 @@ function AdminBins() {
             react_hot_toast_1.toast.error("Couldn't Create, Try Again", { duration: 2500 });
         }
     });
+    const activateEditModal = (data) => {
+        const bin = JSON.parse(data);
+        setBinData(Object.assign(Object.assign({}, binData), { _id: bin._id, custom_id: bin.custom_id, longitude: bin.longitude, latitude: bin.latitude, group_id: bin.group_id, last_pickup_time: bin.last_pickup_time, waste_type: bin.waste_type, data: bin.data }));
+        setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: true, type: "edit" }));
+    };
+    const updateBin = () => __awaiter(this, void 0, void 0, function* () {
+        const { _id } = binData, restData = __rest(binData, ["_id"]);
+        try {
+            const response = yield (0, request_1.sendRequest)({
+                method: "POST",
+                route: `bins/${binData._id}`,
+                body: restData,
+                token,
+            });
+            if (response.status === 200) {
+                setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false }));
+                getBins();
+                react_hot_toast_1.toast.success("User updated successfully", { duration: 2500 });
+            }
+            else {
+                setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false }));
+                react_hot_toast_1.toast.error("Couldn't Update, Try Again", { duration: 4000 });
+            }
+        }
+        catch (err) {
+            console.error(err);
+            setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false }));
+            react_hot_toast_1.toast.error("Couldn't Update, Try Again", { duration: 2500 });
+        }
+    });
     const showLocation = () => {
         console.log("Location");
     };
@@ -193,7 +223,7 @@ function AdminBins() {
                     }, onChange: (e) => setBinData(Object.assign(Object.assign({}, binData), { waste_type: e.target.value })) })),
             react_1.default.createElement("div", { className: "flex w-full justify-center gap-10 mt-5" },
                 react_1.default.createElement(button_1.default, { label: "Cancel", color: "text-gunmetal", bgColor: "bg-neutral-100", hoverColor: "hover:bg-neutral-600", onClick: () => setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false })) }),
-                createModalState.type === "edit" ? (react_1.default.createElement(button_1.default, { label: "Update", bgColor: "bg-primary-500", hoverColor: "hover:bg-primary-700" })) : (react_1.default.createElement(button_1.default, { label: "Create", bgColor: "bg-primary-500", hoverColor: "hover:bg-primary-700", onClick: () => createBin() })))),
+                createModalState.type === "edit" ? (react_1.default.createElement(button_1.default, { label: "Update", bgColor: "bg-primary-500", hoverColor: "hover:bg-primary-700", onClick: () => updateBin() })) : (react_1.default.createElement(button_1.default, { label: "Create", bgColor: "bg-primary-500", hoverColor: "hover:bg-primary-700", onClick: () => createBin() })))),
         react_1.default.createElement(modal_1.default, { showModal: deleteModalState.open, onRequestClose: () => setDeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: !deleteModalState.open })) },
             react_1.default.createElement("div", { className: "text-xl" }, "Are you sure you want to delete?"),
             react_1.default.createElement("div", { className: "flex w-full justify-center gap-10 mt-5" },
@@ -215,7 +245,7 @@ function AdminBins() {
                             bin.custom_id,
                             bin.waste_type,
                             bin.last_pickup_time,
-                        ], object: bin, customIcon: react_1.default.createElement(md_1.MdLocationPin, null), customIconAction: () => showLocation(), onDelete: (id) => activateDeleteModal(id) }));
+                        ], object: bin, customIcon: react_1.default.createElement(md_1.MdLocationPin, null), customIconAction: () => showLocation(), onEdit: (data) => activateEditModal(data), onDelete: (id) => activateDeleteModal(id) }));
                     //TODO: Add location icon to listItem
                 })))));
 }
