@@ -99,7 +99,6 @@ export default function AdminTrucks() {
 	});
 	const [truckData, setTruckData] = useState<{
 		_id: string;
-		custom_id: string;
 		plate_number: string;
 		group_id: string | undefined;
 		driver_id: string;
@@ -107,7 +106,6 @@ export default function AdminTrucks() {
 		last_wash?: string | undefined;
 	}>({
 		_id: "",
-		custom_id: "",
 		plate_number: "",
 		group_id: "",
 		driver_id: "",
@@ -120,7 +118,6 @@ export default function AdminTrucks() {
 		setTruckData({
 			...truckData,
 			_id: "",
-			custom_id: "",
 			plate_number: "",
 			group_id: user?.group_id,
 			driver_id: driverList[0]._id,
@@ -204,19 +201,6 @@ export default function AdminTrucks() {
 				<div className="text-xl">Create/Edit User</div>
 				<div className="flex flex-col flex-wrap justify-center content-center w-96">
 					<div className="flex gap-5">
-						<Input
-							label="Custom ID"
-							placeholder="id"
-							value={truckData.custom_id}
-							onChange={(e) => {
-								setTruckData({
-									...truckData,
-									custom_id: e.target.value,
-								}); console.log(truckData);
-								
-							}}
-							required
-						/>
 						<Input
 							label="Plate Number"
 							placeholder="plate"

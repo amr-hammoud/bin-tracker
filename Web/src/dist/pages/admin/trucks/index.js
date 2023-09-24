@@ -134,7 +134,6 @@ function AdminTrucks() {
     });
     const [truckData, setTruckData] = (0, react_1.useState)({
         _id: "",
-        custom_id: "",
         plate_number: "",
         group_id: "",
         driver_id: "",
@@ -142,7 +141,7 @@ function AdminTrucks() {
         last_wash: "",
     });
     const activateCreateModal = () => {
-        setTruckData(Object.assign(Object.assign({}, truckData), { _id: "", custom_id: "", plate_number: "", group_id: user === null || user === void 0 ? void 0 : user.group_id, driver_id: driverList[0]._id, last_oil_change: "", last_wash: "" }));
+        setTruckData(Object.assign(Object.assign({}, truckData), { _id: "", plate_number: "", group_id: user === null || user === void 0 ? void 0 : user.group_id, driver_id: driverList[0]._id, last_oil_change: "", last_wash: "" }));
         setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: true, type: "create" }));
     };
     const createTruck = () => __awaiter(this, void 0, void 0, function* () {
@@ -192,10 +191,6 @@ function AdminTrucks() {
             react_1.default.createElement("div", { className: "text-xl" }, "Create/Edit User"),
             react_1.default.createElement("div", { className: "flex flex-col flex-wrap justify-center content-center w-96" },
                 react_1.default.createElement("div", { className: "flex gap-5" },
-                    react_1.default.createElement(input_1.default, { label: "Custom ID", placeholder: "id", value: truckData.custom_id, onChange: (e) => {
-                            setTruckData(Object.assign(Object.assign({}, truckData), { custom_id: e.target.value }));
-                            console.log(truckData);
-                        }, required: true }),
                     react_1.default.createElement(input_1.default, { label: "Plate Number", placeholder: "plate", value: truckData.plate_number, onChange: (e) => {
                             setTruckData(Object.assign(Object.assign({}, truckData), { plate_number: e.target.value }));
                             console.log(truckData);

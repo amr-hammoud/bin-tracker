@@ -49,7 +49,6 @@ interface Bin {
 
 interface Truck {
 	_id: string;
-	custom_id: string;
 	plate_number: string;
 	group_id: string;
 	driver_id: any;
