@@ -38,6 +38,7 @@ interface BinRecord{
 }
 
 interface Bin {
+	_id: string;
 	custom_id: string;
 	longitude: string | null;
 	latitude: string | null;
