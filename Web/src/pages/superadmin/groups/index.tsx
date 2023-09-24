@@ -269,7 +269,6 @@ export default function SuperAdminGroups() {
 				<div className="p-10 pt-3">
 					<ListHeader
 						items={[
-							"ID",
 							"Name",
 							"Admins Count",
 							"Members Count",

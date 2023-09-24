@@ -190,7 +190,6 @@ function SuperAdminGroups() {
                         react_1.default.createElement(input_1.default, { label: "Search", placeholder: "Search by name", onChange: (e) => filterObjects(e.target.value) })))),
             react_1.default.createElement("div", { className: "p-10 pt-3" },
                 react_1.default.createElement(listheader_1.default, { items: [
-                        "ID",
                         "Name",
                         "Admins Count",
                         "Members Count",
