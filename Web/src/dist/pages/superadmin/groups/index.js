@@ -147,6 +147,22 @@ function SuperAdminGroups() {
             react_hot_toast_1.toast.error("Couldn't Create, Try Again", { duration: 2500 });
         }
     });
+    const [filters, setfilters] = (0, react_1.useState)({
+        searchQuery: "",
+    });
+    const filterBySearch = (groupList, query) => {
+        if (!query) {
+            return groupList;
+        }
+        const lowerCaseQuery = query.toLowerCase();
+        return groupList.filter((group) => {
+            const name = group.name.toLowerCase();
+            return name.includes(lowerCaseQuery);
+        });
+    };
+    const filterObjects = (query) => {
+        setfilters(Object.assign(Object.assign({}, filters), { searchQuery: query }));
+    };
     return (react_1.default.createElement("div", { className: "flex" },
         react_1.default.createElement(sidebar_1.default, { items: ["Dashboard", "Users", "Groups", "Account"], selected: "Groups" }),
         react_1.default.createElement("div", { className: "flex flex-col w-full" },
@@ -168,7 +184,11 @@ function SuperAdminGroups() {
                 react_1.default.createElement("div", { className: "flex w-full justify-center gap-10 mt-5" },
                     react_1.default.createElement(button_1.default, { label: "Cancel", color: "text-gunmetal", bgColor: "bg-neutral-100", hoverColor: "hover:bg-neutral-600", onClick: () => setdeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: false })) }),
                     react_1.default.createElement(button_1.default, { label: "Delete", bgColor: "bg-red-400", hoverColor: "hover:bg-red-500", onClick: () => deleteGroup(deleteModalState.id) }))),
-            react_1.default.createElement("div", { className: "p-10" },
+            react_1.default.createElement("div", { className: "p-10 pb-2" },
+                react_1.default.createElement("div", { className: "flex content-center justify-center py-2 px-5 gap-5 rounded-lg bg-primary-200" },
+                    react_1.default.createElement("div", { className: "flex flex-wrap content-center w-1/2" },
+                        react_1.default.createElement(input_1.default, { label: "Search", placeholder: "Search by name", onChange: (e) => filterObjects(e.target.value) })))),
+            react_1.default.createElement("div", { className: "p-10 pt-3" },
                 react_1.default.createElement(listheader_1.default, { items: [
                         "ID",
                         "Name",
@@ -176,9 +196,9 @@ function SuperAdminGroups() {
                         "Members Count",
                         "Actions",
                     ] }),
-                groupList.map((group, index) => {
+                filterBySearch(groupList, filters.searchQuery).map((group, index) => {
                     return (react_1.default.createElement(listItem_1.default, { key: index, items: [
-                            group._id,
+                            // group._id,
                             group.name,
                             group.admins.length.toString(),
                             group.members.length.toString(),

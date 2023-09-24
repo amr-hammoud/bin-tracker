@@ -125,6 +125,30 @@ export default function SuperAdminGroups() {
 		}
 	};
 
+	const [filters, setfilters] = useState<{
+		searchQuery: string;
+	}>({
+		searchQuery: "",
+	});
+
+	const filterBySearch = (groupList: Group[], query: string) => {
+		if (!query) {
+			return groupList;
+		}
+
+		const lowerCaseQuery = query.toLowerCase();
+
+		return groupList.filter((group) => {
+			const name = group.name.toLowerCase();
+
+			return name.includes(lowerCaseQuery);
+		});
+	};
+
+	const filterObjects = (query: string) => {
+		setfilters({ ...filters, searchQuery: query });
+	};
+
 	return (
 		<div className="flex">
 			<Sidebar
@@ -230,7 +254,19 @@ export default function SuperAdminGroups() {
 						/>
 					</div>
 				</ModalComponent>
-				<div className="p-10">
+				<div className="p-10 pb-2">
+					<div className="flex content-center justify-center py-2 px-5 gap-5 rounded-lg bg-primary-200">
+						<div className="flex flex-wrap content-center w-1/2">
+							<Input
+							label="Search"
+								placeholder="Search by name"
+								onChange={(e) => filterObjects(e.target.value)}
+							/>
+						</div>
+						
+					</div>
+				</div>
+				<div className="p-10 pt-3">
 					<ListHeader
 						items={[
 							"ID",
@@ -240,12 +276,12 @@ export default function SuperAdminGroups() {
 							"Actions",
 						]}
 					/>
-					{groupList.map((group: Group, index) => {
+					{filterBySearch(groupList, filters.searchQuery).map((group: Group, index) => {
 						return (
 							<ListItem
 								key={index}
 								items={[
-									group._id,
+									// group._id,
 									group.name,
 									group.admins.length.toString(),
 									group.members.length.toString(),
