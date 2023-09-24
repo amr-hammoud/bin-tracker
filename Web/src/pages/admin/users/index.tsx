@@ -379,7 +379,7 @@ export default function AdminUsers() {
 				</div>
 				<div className="p-10 pt-3">
 					<ListHeader
-						items={["Name", "Username", "Group", "Role", "Actions"]}
+						items={["Name", "Username", "Email", "Role", "Actions"]}
 					/>
 					{filterByRole(
 						filterBySearch(userList, filters.searchQuery),
@@ -399,7 +399,7 @@ export default function AdminUsers() {
 								items={[
 									`${user.first_name} ${user.last_name}`,
 									user.username,
-									user.group_id?.name,
+									user.email,
 									user_type,
 								]}
 								object={user}

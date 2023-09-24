@@ -239,9 +239,8 @@ function AdminUsers() {
                                 Driver: "3",
                             }, onChange: (e) => setfilters(Object.assign(Object.assign({}, filters), { selectedFilter: e.target.value })) })))),
             react_1.default.createElement("div", { className: "p-10 pt-3" },
-                react_1.default.createElement(listheader_1.default, { items: ["Name", "Username", "Group", "Role", "Actions"] }),
+                react_1.default.createElement(listheader_1.default, { items: ["Name", "Username", "Email", "Role", "Actions"] }),
                 filterByRole(filterBySearch(userList, filters.searchQuery), filters.selectedFilter).map((user, key) => {
-                    var _a;
                     let user_type = "";
                     if (user.user_type === "1") {
                         user_type = "Super Admin";
@@ -255,7 +254,7 @@ function AdminUsers() {
                     return (react_1.default.createElement(listItem_1.default, { items: [
                             `${user.first_name} ${user.last_name}`,
                             user.username,
-                            (_a = user.group_id) === null || _a === void 0 ? void 0 : _a.name,
+                            user.email,
                             user_type,
                         ], object: user, onEdit: (data) => activateEditModal(data), onDelete: (id) => activateDeleteModal(id) }));
                 })))));
