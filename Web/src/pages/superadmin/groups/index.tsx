@@ -9,6 +9,7 @@ import ListItem from "../../../components/base/listItem";
 import ListHeader from "../../../components/base/listheader";
 import ModalComponent from "../../../components/base/modal";
 import Button from "../../../components/base/button";
+import { Toaster, toast } from "react-hot-toast";
 
 export default function SuperAdminGroups() {
 	const token: Token | null = useSelector(
@@ -36,6 +37,15 @@ export default function SuperAdminGroups() {
 		getGroups();
 	}, []);
 
+	const [deleteModalState, setdeleteModalState] = useState({
+		open: false,
+		id: "",
+	});
+
+	const activateDeleteModal = (id: string) => {
+		setdeleteModalState({ ...deleteModalState, open: true, id: id });
+	};
+
 	const deleteGroup = async (id: string) => {
 		try {
 			const response = await sendRequest({
@@ -47,20 +57,15 @@ export default function SuperAdminGroups() {
 				const newArr = groupList.filter((group) => {
 					return group._id !== id;
 				});
+				setdeleteModalState({ ...deleteModalState, open: false });
+				toast.success("Group Deleted Successfully", { duration: 2500 });
 				setGroupList(newArr);
 			}
 		} catch (err: any) {
 			console.error(err);
+			setdeleteModalState({ ...deleteModalState, open: false });
+			toast.error("Couldn't Delete Group", { duration: 4000 });
 		}
-	};
-
-	const [modalState, setModalState] = useState({
-		open: false,
-		id: "",
-	});
-
-	const activateModal = (id: string) => {
-		setModalState({ ...modalState, open: true, id: id });
 	};
 
 	return (
@@ -71,10 +76,16 @@ export default function SuperAdminGroups() {
 			/>
 			<div className="flex flex-col w-full">
 				<Navbar label="Groups" />
+				<div>
+					<Toaster />
+				</div>
 				<ModalComponent
-					showModal={modalState.open}
+					showModal={deleteModalState.open}
 					onRequestClose={() =>
-						setModalState({ ...modalState, open: !modalState.open })
+						setdeleteModalState({
+							...deleteModalState,
+							open: !deleteModalState.open,
+						})
 					}
 				>
 					<div className="text-xl">
@@ -87,20 +98,29 @@ export default function SuperAdminGroups() {
 							bgColor="bg-neutral-100"
 							hoverColor="hover:bg-neutral-600"
 							onClick={() =>
-								setModalState({ ...modalState, open: false })
+								setdeleteModalState({
+									...deleteModalState,
+									open: false,
+								})
 							}
 						/>
 						<Button
 							label="Delete"
 							bgColor="bg-red-400"
 							hoverColor="hover:bg-red-500"
-							onClick={() => deleteGroup(modalState.id)}
+							onClick={() => deleteGroup(deleteModalState.id)}
 						/>
 					</div>
 				</ModalComponent>
 				<div className="p-10">
 					<ListHeader
-						items={["ID", "Name", "Admins Count", "Members Count", "Actions"]}
+						items={[
+							"ID",
+							"Name",
+							"Admins Count",
+							"Members Count",
+							"Actions",
+						]}
 					/>
 					{groupList.map((group: Group, index) => {
 						return (
@@ -112,7 +132,8 @@ export default function SuperAdminGroups() {
 									group.admins.length.toString(),
 									group.members.length.toString(),
 								]}
-								onDelete={(id) => activateModal(id)}
+								object={group}
+								onDelete={(id) => activateDeleteModal(id)}
 							/>
 						);
 					})}

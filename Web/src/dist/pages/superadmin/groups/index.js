@@ -44,6 +44,7 @@ const listItem_1 = __importDefault(require("../../../components/base/listItem"))
 const listheader_1 = __importDefault(require("../../../components/base/listheader"));
 const modal_1 = __importDefault(require("../../../components/base/modal"));
 const button_1 = __importDefault(require("../../../components/base/button"));
+const react_hot_toast_1 = require("react-hot-toast");
 function SuperAdminGroups() {
     const token = (0, react_redux_1.useSelector)((state) => state.auth.token);
     const [groupList, setGroupList] = (0, react_1.useState)([]);
@@ -65,6 +66,13 @@ function SuperAdminGroups() {
     (0, react_1.useEffect)(() => {
         getGroups();
     }, []);
+    const [deleteModalState, setdeleteModalState] = (0, react_1.useState)({
+        open: false,
+        id: "",
+    });
+    const activateDeleteModal = (id) => {
+        setdeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: true, id: id }));
+    };
     const deleteGroup = (id) => __awaiter(this, void 0, void 0, function* () {
         try {
             const response = yield (0, request_1.sendRequest)({
@@ -76,38 +84,43 @@ function SuperAdminGroups() {
                 const newArr = groupList.filter((group) => {
                     return group._id !== id;
                 });
+                setdeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: false }));
+                react_hot_toast_1.toast.success("Group Deleted Successfully", { duration: 2500 });
                 setGroupList(newArr);
             }
         }
         catch (err) {
             console.error(err);
+            setdeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: false }));
+            react_hot_toast_1.toast.error("Couldn't Delete Group", { duration: 4000 });
         }
     });
-    const [modalState, setModalState] = (0, react_1.useState)({
-        open: false,
-        id: "",
-    });
-    const activateModal = (id) => {
-        setModalState(Object.assign(Object.assign({}, modalState), { open: true, id: id }));
-    };
     return (react_1.default.createElement("div", { className: "flex" },
         react_1.default.createElement(sidebar_1.default, { items: ["Dashboard", "Users", "Groups", "Account"], selected: "Groups" }),
         react_1.default.createElement("div", { className: "flex flex-col w-full" },
             react_1.default.createElement(navbar_1.default, { label: "Groups" }),
-            react_1.default.createElement(modal_1.default, { showModal: modalState.open, onRequestClose: () => setModalState(Object.assign(Object.assign({}, modalState), { open: !modalState.open })) },
+            react_1.default.createElement("div", null,
+                react_1.default.createElement(react_hot_toast_1.Toaster, null)),
+            react_1.default.createElement(modal_1.default, { showModal: deleteModalState.open, onRequestClose: () => setdeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: !deleteModalState.open })) },
                 react_1.default.createElement("div", { className: "text-xl" }, "Are you sure you want to delete?"),
                 react_1.default.createElement("div", { className: "flex w-full justify-center gap-10 mt-5" },
-                    react_1.default.createElement(button_1.default, { label: "Cancel", color: "text-gunmetal", bgColor: "bg-neutral-100", hoverColor: "hover:bg-neutral-600", onClick: () => setModalState(Object.assign(Object.assign({}, modalState), { open: false })) }),
-                    react_1.default.createElement(button_1.default, { label: "Delete", bgColor: "bg-red-400", hoverColor: "hover:bg-red-500", onClick: () => deleteGroup(modalState.id) }))),
+                    react_1.default.createElement(button_1.default, { label: "Cancel", color: "text-gunmetal", bgColor: "bg-neutral-100", hoverColor: "hover:bg-neutral-600", onClick: () => setdeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: false })) }),
+                    react_1.default.createElement(button_1.default, { label: "Delete", bgColor: "bg-red-400", hoverColor: "hover:bg-red-500", onClick: () => deleteGroup(deleteModalState.id) }))),
             react_1.default.createElement("div", { className: "p-10" },
-                react_1.default.createElement(listheader_1.default, { items: ["ID", "Name", "Admins Count", "Members Count", "Actions"] }),
+                react_1.default.createElement(listheader_1.default, { items: [
+                        "ID",
+                        "Name",
+                        "Admins Count",
+                        "Members Count",
+                        "Actions",
+                    ] }),
                 groupList.map((group, index) => {
                     return (react_1.default.createElement(listItem_1.default, { key: index, items: [
                             group._id,
                             group.name,
                             group.admins.length.toString(),
                             group.members.length.toString(),
-                        ], onDelete: (id) => activateModal(id) }));
+                        ], object: group, onDelete: (id) => activateDeleteModal(id) }));
                 })))));
 }
 exports.default = SuperAdminGroups;
