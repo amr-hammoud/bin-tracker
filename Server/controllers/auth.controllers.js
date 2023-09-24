@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const User = require("../models/user.model");
+const Group = require("../models/group.model");
 
 const login = async (req, res) => {
 	const { email, username, password } = req.body;
@@ -52,16 +53,32 @@ const register = async (req, res) => {
 		});
 
 		try {
-			user.save();
-			username = new_user.username;
-			const get_user = await User.findOne({username});
-			res.status(200).send(get_user);
+			await user.save();
+			const { user_type, group_id } = new_user;
+
+			if (user_type === "2" && group_id) {
+				const group = await Group.findById(group_id);
+
+				if (group) {
+					group.admins.push(user._id);
+					await group.save();
+				}
+			} else if (user_type === "3" && group_id) {
+				const group = await Group.findById(group_id);
+
+				if (group) {
+					group.members.push(user._id);
+					await group.save();
+				}
+			}
+
+			res.status(200).send(user);
 		} catch (err) {
 			res.status(500).send(err);
 		}
 	} else {
 		res.send(
-			"first_name, last_name, username, password, group and user_type are required"
+			"first_name, last_name, username, password, group_id and user_type are required"
 		);
 	}
 };
