@@ -1,11 +1,12 @@
 const User = require("../models/user.model");
+const Group = require("../models/group.model");
 
 const getUser = async (req, res) => {
 	if (req.params.id) {
-		const user = await User.findById(req.params.id).populate('group_id');
+		const user = await User.findById(req.params.id).populate("group_id");
 		res.status(200).send(user);
 	} else {
-		const users = await User.find().populate('group_id');
+		const users = await User.find().populate("group_id");
 		res.status(200).send(users);
 	}
 };
@@ -55,8 +56,41 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
 	const id = req.params.id;
-	await User.deleteOne({ _id: id });
-	res.status(200).send("User deleted successfully");
+
+	try {
+		const user = await User.findById(id);
+
+		if (!user) {
+			return res.status(404).send("User not found");
+		}
+
+		const { user_type, group_id } = user;
+
+		if (user_type === "2" && group_id) {
+			const group = await Group.findById(group_id);
+
+			if (group) {
+				group.admins = group.admins.filter(
+					(adminId) => adminId.toString() !== id
+				);
+				await group.save();
+			}
+		} else if (user_type === "3" && group_id) {
+			const group = await Group.findById(group_id);
+
+			if (group) {
+				group.members = group.members.filter(
+					(memberId) => memberId.toString() !== id
+				);
+				await group.save();
+			}
+		}
+
+		await User.deleteOne({ _id: id });
+		res.status(200).send("User deleted successfully");
+	} catch (err) {
+		res.status(500).send(err);
+	}
 };
 
 module.exports = { getUser, updateUser, deleteUser, getGroupUser };
