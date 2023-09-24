@@ -141,6 +141,45 @@ export default function AdminUsers() {
 		}
 	};
 
+	const [filters, setfilters] = useState<{
+		searchQuery: string;
+		selectedFilter: string;
+	}>({
+		searchQuery: "",
+		selectedFilter: "All",
+	});
+
+	const filterBySearch = (userList: User[], query: string) => {
+		if (!query) {
+			return userList;
+		}
+
+		const lowerCaseQuery = query.toLowerCase();
+
+		return userList.filter((user) => {
+			const fullName =
+				`${user.first_name} ${user.last_name}`.toLowerCase();
+			const username = user.username.toLowerCase();
+
+			return (
+				fullName.includes(lowerCaseQuery) ||
+				username.includes(lowerCaseQuery)
+			);
+		});
+	};
+
+	const filterByRole = (userList: User[], role: string) => {
+		if (role === "All") {
+			return userList;
+		}
+
+		return userList.filter((user) => user.user_type === role);
+	};
+
+	const filterObjects = (query: string) => {
+		setfilters({ ...filters, searchQuery: query });
+	};
+
 	return (
 		<div className="flex">
 			<Sidebar
@@ -310,7 +349,34 @@ export default function AdminUsers() {
 						/>
 					</div>
 				</ModalComponent>
-				
+				<div className="p-10 pb-2">
+					<div className="flex content-center justify-center py-2 px-5 gap-5 rounded-lg bg-primary-200">
+						<div className="flex flex-wrap content-center w-1/2">
+							<Input
+								label="Search"
+								placeholder="Search by name/username"
+								onChange={(e) => filterObjects(e.target.value)}
+							/>
+						</div>
+						<div className="flex flex-wrap content-center w-1/2">
+							<Select
+								label="Filter by Role"
+								value={filters.selectedFilter}
+								options={{
+									All: "All",
+									Admin: "2",
+									Driver: "3",
+								}}
+								onChange={(e) =>
+									setfilters({
+										...filters,
+										selectedFilter: e.target.value,
+									})
+								}
+							/>
+						</div>
+					</div>
+				</div>
 				<div className="p-10 pt-3">
 					<ListHeader
 						items={["Name", "Username", "Group", "Role", "Actions"]}
