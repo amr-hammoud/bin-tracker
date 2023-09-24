@@ -40,12 +40,15 @@ const react_redux_1 = require("react-redux");
 const sidebar_1 = __importDefault(require("../../../components/common/sidebar"));
 const navbar_1 = __importDefault(require("../../../components/common/navbar"));
 const request_1 = require("../../../configs/request");
-const listheader_1 = __importDefault(require("../../../components/base/listheader"));
 const listItem_1 = __importDefault(require("../../../components/base/listItem"));
+const listheader_1 = __importDefault(require("../../../components/base/listheader"));
+const modal_1 = __importDefault(require("../../../components/base/modal"));
+const button_1 = __importDefault(require("../../../components/base/button"));
+const react_hot_toast_1 = require("react-hot-toast");
 function AdminUsers() {
     const token = (0, react_redux_1.useSelector)((state) => state.auth.token);
     const [userList, setUserList] = (0, react_1.useState)([]);
-    const getTrucks = () => __awaiter(this, void 0, void 0, function* () {
+    const getUsers = () => __awaiter(this, void 0, void 0, function* () {
         try {
             const response = yield (0, request_1.sendRequest)({
                 route: "users/group",
@@ -60,8 +63,37 @@ function AdminUsers() {
         }
     });
     (0, react_1.useEffect)(() => {
-        getTrucks();
+        getUsers();
     }, []);
+    const [deleteModalState, setDeleteModalState] = (0, react_1.useState)({
+        open: false,
+        id: "",
+    });
+    const activateDeleteModal = (id) => {
+        setDeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: true, id: id }));
+    };
+    const deleteUser = (id) => __awaiter(this, void 0, void 0, function* () {
+        try {
+            const response = yield (0, request_1.sendRequest)({
+                method: "DELETE",
+                route: `users/${id}`,
+                token,
+            });
+            if (response.status === 200) {
+                const newArr = userList.filter((user) => {
+                    return (user === null || user === void 0 ? void 0 : user._id) !== id;
+                });
+                setDeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: false }));
+                react_hot_toast_1.toast.success("User Deleted Successfully", { duration: 2500 });
+                setUserList(newArr);
+            }
+        }
+        catch (err) {
+            console.error(err);
+            setDeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: false }));
+            react_hot_toast_1.toast.error("Couldn't Delete User", { duration: 4000 });
+        }
+    });
     return (react_1.default.createElement("div", { className: "flex" },
         react_1.default.createElement(sidebar_1.default, { items: [
                 "Dashboard",
@@ -73,11 +105,19 @@ function AdminUsers() {
                 "Chats",
                 "Account",
             ], selected: "Users" }),
-        react_1.default.createElement("div", { className: "flex flex-col w-full" },
+        react_1.default.createElement("div", { className: "flex flex-col w-full bg-neutral-0" },
             react_1.default.createElement(navbar_1.default, { label: "Users" }),
-            react_1.default.createElement("div", { className: "p-10" },
-                react_1.default.createElement(listheader_1.default, { items: ["ID", "Name", "Username", "Role", "Actions"] }),
-                userList.map((user, key) => {
+            react_1.default.createElement("div", null,
+                react_1.default.createElement(react_hot_toast_1.Toaster, null)),
+            react_1.default.createElement(modal_1.default, { showModal: deleteModalState.open, onRequestClose: () => setDeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: !deleteModalState.open })) },
+                react_1.default.createElement("div", { className: "text-xl" }, "Are you sure you want to delete?"),
+                react_1.default.createElement("div", { className: "flex w-full justify-center gap-10 mt-5" },
+                    react_1.default.createElement(button_1.default, { label: "Cancel", color: "text-gunmetal", bgColor: "bg-neutral-100", hoverColor: "hover:bg-neutral-600", onClick: () => setDeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: false })) }),
+                    react_1.default.createElement(button_1.default, { label: "Delete", bgColor: "bg-red-400", hoverColor: "hover:bg-red-500", onClick: () => deleteUser(deleteModalState.id) }))),
+            react_1.default.createElement("div", { className: "p-10 pt-3" },
+                react_1.default.createElement(listheader_1.default, { items: ["Name", "Username", "Group", "Role", "Actions"] }),
+                filterByRole(filterBySearch(userList, filters.searchQuery), filters.selectedFilter).map((user, key) => {
+                    var _a;
                     let user_type = "";
                     if (user.user_type === "1") {
                         user_type = "Super Admin";
@@ -89,11 +129,11 @@ function AdminUsers() {
                         user_type = "Driver";
                     }
                     return (react_1.default.createElement(listItem_1.default, { items: [
-                            user._id,
                             `${user.first_name} ${user.last_name}`,
                             user.username,
+                            (_a = user.group_id) === null || _a === void 0 ? void 0 : _a.name,
                             user_type,
-                        ] }));
+                        ], object: user, onDelete: (id) => activateDeleteModal(id) }));
                 })))));
 }
 exports.default = AdminUsers;
