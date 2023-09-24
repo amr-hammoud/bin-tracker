@@ -17,11 +17,27 @@ const getGroupUser = async (req, res) => {
 		if (req.user.group_id === user.group_id) {
 			res.status(200).send(user);
 		} else {
-			es.status(401).send({ message: "Unauthorized" });
+			res.status(401).send({ message: "Unauthorized" });
 		}
 	} else {
-		const users = await User.find({ group_id: req.user.group_id }).populate("group_id");
+		const users = await User.find({ group_id: req.user.group_id }).populate(
+			"group_id"
+		);
 		res.status(200).send(users);
+	}
+};
+
+const getGroupDrivers = async (req, res) => {
+	try {
+		const groupUsers = await User.find({
+			group_id: req.user.group_id,
+			user_type: "3",
+		});
+
+		res.status(200).send(groupUsers);
+	} catch (error) {
+		console.error("Error fetching group drivers:", error);
+		res.status(500).send("Internal server error");
 	}
 };
 
@@ -134,4 +150,4 @@ const deleteUser = async (req, res) => {
 	}
 };
 
-module.exports = { getUser, updateUser, deleteUser, getGroupUser };
+module.exports = { getUser, updateUser, deleteUser, getGroupUser, getGroupDrivers };
