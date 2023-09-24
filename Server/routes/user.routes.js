@@ -6,7 +6,7 @@ const authMiddleware = require("../middlewares/auth.middleware");
 
 router.get("/group/:id?", authMiddleware, userController.getGroupUser)
 router.get("/:id?", superAdminMiddleware, userController.getUser)
-router.put("/:id", superAdminMiddleware, userController.updateUser)
-router.delete("/:id", superAdminMiddleware, userController.deleteUser)
+router.put("/:id", authMiddleware, userController.updateUser)
+router.delete("/:id", authMiddleware, userController.deleteUser)
 
 module.exports = router;

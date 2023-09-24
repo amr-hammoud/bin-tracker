@@ -13,14 +13,14 @@ const getUser = async (req, res) => {
 
 const getGroupUser = async (req, res) => {
 	if (req.params.id) {
-		const user = await User.findById(req.params.id);
+		const user = await User.findById(req.params.id).populate("group_id");
 		if (req.user.group_id === user.group_id) {
 			res.status(200).send(user);
 		} else {
 			es.status(401).send({ message: "Unauthorized" });
 		}
 	} else {
-		const users = await User.find({ group_id: req.user.group_id });
+		const users = await User.find({ group_id: req.user.group_id }).populate("group_id");
 		res.status(200).send(users);
 	}
 };
