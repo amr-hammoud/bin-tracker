@@ -114,7 +114,6 @@ export default function AdminTrucks() {
 	});
 
 	const activateCreateModal = () => {
-
 		setTruckData({
 			...truckData,
 			_id: "",
@@ -140,7 +139,7 @@ export default function AdminTrucks() {
 			([key, value]) => value !== null && value !== ""
 		);
 
-		const finalData = Object.fromEntries(filtered);		
+		const finalData = Object.fromEntries(filtered);
 
 		try {
 			const response = await sendRequest({
@@ -172,6 +171,48 @@ export default function AdminTrucks() {
 		},
 		{}
 	);
+
+	const activateEditModal = (data: any) => {
+		const truck = JSON.parse(data);
+		console.log(truck);
+		setTruckData({
+			...truckData,
+			_id: truck._id,
+			plate_number: truck.plate_number,
+			group_id: truck.group_id,
+			driver_id: truck.driver_id,
+			last_oil_change: truck.last_oil_change,
+			last_wash: truck.last_wash,
+		});
+
+		setCreateModalState({ ...createModalState, open: true, type: "edit" });
+	};
+
+	const updateTruck = async () => {
+		const { _id, ...restData } = truckData;
+
+		try {
+			const response = await sendRequest({
+				method: "POST",
+				route: `trucks/${truckData._id}`,
+				body: restData,
+				token,
+			});
+
+			if (response.status === 200) {
+				setCreateModalState({ ...createModalState, open: false });
+				getTrucks();
+				toast.success("User updated successfully", { duration: 2500 });
+			} else {
+				setCreateModalState({ ...createModalState, open: false });
+				toast.error("Couldn't Update, Try Again", { duration: 4000 });
+			}
+		} catch (err: any) {
+			console.error(err);
+			setCreateModalState({ ...createModalState, open: false });
+			toast.error("Couldn't Update, Try Again", { duration: 2500 });
+		}
+	};
 
 	return (
 		<div className="flex">
@@ -209,7 +250,8 @@ export default function AdminTrucks() {
 								setTruckData({
 									...truckData,
 									plate_number: e.target.value,
-								}); console.log(truckData);
+								});
+								console.log(truckData);
 							}}
 							required
 						/>
@@ -223,7 +265,8 @@ export default function AdminTrucks() {
 								setTruckData({
 									...truckData,
 									last_oil_change: e.target.value,
-								}); console.log(truckData);
+								});
+								console.log(truckData);
 							}}
 							required
 						/>
@@ -235,7 +278,8 @@ export default function AdminTrucks() {
 								setTruckData({
 									...truckData,
 									last_wash: e.target.value,
-								}); console.log(truckData);
+								});
+								console.log(truckData);
 							}}
 							required
 						/>
@@ -271,7 +315,7 @@ export default function AdminTrucks() {
 							label="Update"
 							bgColor="bg-primary-500"
 							hoverColor="hover:bg-primary-700"
-							// onClick={() => updateUser()}
+							onClick={() => updateTruck()}
 						/>
 					) : (
 						<Button
@@ -347,6 +391,7 @@ export default function AdminTrucks() {
 									truck.last_wash,
 								]}
 								object={truck}
+								onEdit={(data) => activateEditModal(data)}
 								onDelete={(id) => activateDeleteModal(id)}
 							/>
 						);

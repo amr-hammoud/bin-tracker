@@ -176,6 +176,37 @@ function AdminTrucks() {
         acc[currentItem.username] = currentItem._id;
         return acc;
     }, {});
+    const activateEditModal = (data) => {
+        const truck = JSON.parse(data);
+        console.log(truck);
+        setTruckData(Object.assign(Object.assign({}, truckData), { _id: truck._id, plate_number: truck.plate_number, group_id: truck.group_id, driver_id: truck.driver_id, last_oil_change: truck.last_oil_change, last_wash: truck.last_wash }));
+        setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: true, type: "edit" }));
+    };
+    const updateTruck = () => __awaiter(this, void 0, void 0, function* () {
+        const { _id } = truckData, restData = __rest(truckData, ["_id"]);
+        try {
+            const response = yield (0, request_1.sendRequest)({
+                method: "POST",
+                route: `trucks/${truckData._id}`,
+                body: restData,
+                token,
+            });
+            if (response.status === 200) {
+                setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false }));
+                getTrucks();
+                react_hot_toast_1.toast.success("User updated successfully", { duration: 2500 });
+            }
+            else {
+                setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false }));
+                react_hot_toast_1.toast.error("Couldn't Update, Try Again", { duration: 4000 });
+            }
+        }
+        catch (err) {
+            console.error(err);
+            setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false }));
+            react_hot_toast_1.toast.error("Couldn't Update, Try Again", { duration: 2500 });
+        }
+    });
     return (react_1.default.createElement("div", { className: "flex" },
         react_1.default.createElement(sidebar_1.default, { items: [
                 "Dashboard",
@@ -207,7 +238,7 @@ function AdminTrucks() {
                 react_1.default.createElement(select_1.default, { label: "Driver", required: true, value: truckData.driver_id, options: transformedDriversList, onChange: (e) => setTruckData(Object.assign(Object.assign({}, truckData), { driver_id: e.target.value })) })),
             react_1.default.createElement("div", { className: "flex w-full justify-center gap-10 mt-5" },
                 react_1.default.createElement(button_1.default, { label: "Cancel", color: "text-gunmetal", bgColor: "bg-neutral-100", hoverColor: "hover:bg-neutral-600", onClick: () => setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false })) }),
-                createModalState.type === "edit" ? (react_1.default.createElement(button_1.default, { label: "Update", bgColor: "bg-primary-500", hoverColor: "hover:bg-primary-700" })) : (react_1.default.createElement(button_1.default, { label: "Create", bgColor: "bg-primary-500", hoverColor: "hover:bg-primary-700", onClick: () => createTruck() })))),
+                createModalState.type === "edit" ? (react_1.default.createElement(button_1.default, { label: "Update", bgColor: "bg-primary-500", hoverColor: "hover:bg-primary-700", onClick: () => updateTruck() })) : (react_1.default.createElement(button_1.default, { label: "Create", bgColor: "bg-primary-500", hoverColor: "hover:bg-primary-700", onClick: () => createTruck() })))),
         react_1.default.createElement(modal_1.default, { showModal: deleteModalState.open, onRequestClose: () => setDeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: !deleteModalState.open })) },
             react_1.default.createElement("div", { className: "text-xl" }, "Are you sure you want to delete?"),
             react_1.default.createElement("div", { className: "flex w-full justify-center gap-10 mt-5" },
@@ -233,7 +264,7 @@ function AdminTrucks() {
                                 truck.driver_id.last_name,
                             truck.last_oil_change,
                             truck.last_wash,
-                        ], object: truck, onDelete: (id) => activateDeleteModal(id) }));
+                        ], object: truck, onEdit: (data) => activateEditModal(data), onDelete: (id) => activateDeleteModal(id) }));
                 })))));
 }
 exports.default = AdminTrucks;
