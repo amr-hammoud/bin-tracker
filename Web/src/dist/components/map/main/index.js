@@ -31,8 +31,13 @@ function MapComponent(props) {
                 : mapTileLayers[0] }),
         props.bins.map((bin, index) => {
             var _a;
-            return (react_1.default.createElement(react_leaflet_1.Marker, { position: [parseFloat(bin.latitude), parseFloat(bin.longitude)], icon: icon, key: index },
-                react_1.default.createElement(react_leaflet_1.Tooltip, null, ((_a = bin.data[0]) === null || _a === void 0 ? void 0 : _a.record) ? `${bin.data[0].record}%` : "unavailable")));
+            return (react_1.default.createElement(react_leaflet_1.Marker, { position: [
+                    parseFloat(bin.latitude),
+                    parseFloat(bin.longitude),
+                ], icon: icon, key: bin._id, eventHandlers: { click: () => props.activeBinSetter(bin) } },
+                react_1.default.createElement(react_leaflet_1.Tooltip, null, ((_a = bin.data[0]) === null || _a === void 0 ? void 0 : _a.record)
+                    ? `${bin.data[0].record}%`
+                    : "unavailable")));
         })));
 }
 exports.default = MapComponent;

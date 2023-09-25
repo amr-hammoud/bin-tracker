@@ -1,5 +1,5 @@
 import React from "react";
-import { MapContainer, Marker, Popup, TileLayer, Tooltip } from "react-leaflet";
+import { MapContainer, Marker, TileLayer, Tooltip, useMapEvents } from "react-leaflet";
 import L, { LatLngLiteral } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import pin from "../../../assets/icons/pin.svg";
@@ -9,8 +9,11 @@ import { Bin } from "../../../store/interfaces";
 interface MapProps {
 	center: LatLngLiteral | undefined;
 	zoom: number;
-	layerStyle?: number;
+	layerStyle: number;
 	bins: Array<Bin>;
+	positionSetter: (position: LatLngLiteral) => void;
+	activeBinSetter: (bin: Bin | null) => void;
+	onbinClick: (e: any) => void;
 }
 
 const icon = new L.Icon({
@@ -32,11 +35,15 @@ const mapTileLayers = [
 ];
 
 export default function MapComponent(props: MapProps) {
+
+
+
 	return (
 		<MapContainer
 			center={props.center}
 			zoom={props.zoom}
 			style={{ height: "100%", width: "100%" }}
+			
 		>
 			<TileLayer
 				url={
@@ -47,9 +54,21 @@ export default function MapComponent(props: MapProps) {
 			/>
 			{props.bins.map((bin, index) => {
 				return (
-					<Marker position={[parseFloat(bin.latitude), parseFloat(bin.longitude)]} icon={icon} key={index}>
-						<Tooltip>{bin.data[0]?.record ? `${bin.data[0].record}%` : "unavailable"}</Tooltip>
-					</Marker>
+						<Marker
+							position={[
+								parseFloat(bin.latitude),
+								parseFloat(bin.longitude),
+							]}
+							icon={icon}
+							key={bin._id}
+							eventHandlers={{click: () => props.activeBinSetter(bin)}}
+						>
+							<Tooltip>
+								{bin.data[0]?.record
+									? `${bin.data[0].record}%`
+									: "unavailable"}
+							</Tooltip>
+						</Marker>
 				);
 			})}
 		</MapContainer>
