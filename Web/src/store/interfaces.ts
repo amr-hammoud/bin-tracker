@@ -33,8 +33,10 @@ interface Token {
 }
 
 interface BinRecord{
-    timestamp: string;
+    _id: string;
     record: string;
+    createdAt: string;
+    updatedAt: string;
 }
 
 interface Bin {

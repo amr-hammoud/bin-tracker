@@ -87,8 +87,10 @@ export default function AdminBins() {
 		last_pickup_time: string | undefined;
 		waste_type: string | undefined;
 		data: Array<{
-			timestamp: string;
+			_id: string;
 			record: string;
+			createdAt: string;
+			updatedAt: string;
 		}>;
 	}>({
 		_id: "",
