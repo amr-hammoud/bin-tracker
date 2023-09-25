@@ -34,41 +34,38 @@ function LineChart(props) {
     const marginTop = 20;
     const marginRight = 20;
     const marginBottom = 20;
-    const marginLeft = 40; // Increased margin to accommodate x-axis labels
-    // Parse updatedAt as timestamps
-    const parseTime = d3.timeParse("%Y-%m-%d %H:%M:%S");
+    const marginLeft = 40;
     const timeData = props.data.map((d) => ({
-        time: parseTime(d.updatedAt),
+        time: new Date(d.updatedAt),
         value: parseInt(d.record),
     }));
-    // Create scales for time and value
+    const [minDate, maxDate] = d3.extent(timeData, (d) => d.time);
     const x = d3
         .scaleTime()
-        .domain(d3.extent(timeData, (d) => d.time))
+        .domain([minDate, maxDate])
         .range([marginLeft, width - marginRight]);
     const y = d3
         .scaleLinear()
-        .domain([0, d3.max(timeData, (d) => d.value) || 0])
+        .domain([d3.min(timeData, (d) => d.value) || 0, d3.max(timeData, (d) => d.value) || 0])
         .range([height - marginBottom, marginTop]);
-    // Create a line generator for the line chart
+    console.log(y.ticks(5));
     const line = d3
         .line()
-        .x((d) => x(d[0]))
-        .y((d) => y(d[1]));
+        .x((d) => d[0])
+        .y((d) => d[1]);
     const timeDataAsCoordinates = timeData.map((d) => [
         x(d.time ? d.time : 0) || 0,
         y(d.value),
     ]);
-    // Generate the path data
     const pathD = line(timeDataAsCoordinates);
     return (react_1.default.createElement("svg", { width: width, height: height },
         react_1.default.createElement("g", { transform: `translate(0, ${height - marginBottom})` },
-            react_1.default.createElement("line", { x1: marginLeft, x2: width - marginRight, stroke: "currentColor" }),
-            react_1.default.createElement("g", null, x.ticks().map((tick) => (react_1.default.createElement("text", { key: tick.toString(), x: x(tick), y: 20, textAnchor: "middle", fill: "currentColor" }, d3.timeFormat("%Y-%m-%d")(tick)))))),
+            react_1.default.createElement("line", { x1: marginLeft, x2: width - marginRight, stroke: "#000000" }),
+            react_1.default.createElement("g", null, x.ticks().map((tick) => (react_1.default.createElement("text", { key: tick.toString(), x: x(tick), y: 20, textAnchor: "middle", fill: "currentColor" }, d3.timeFormat("%m-%d")(tick)))))),
         react_1.default.createElement("g", { transform: `translate(${marginLeft}, 0)` },
-            react_1.default.createElement("line", { y1: marginTop, y2: height - marginBottom, stroke: "currentColor" }),
-            react_1.default.createElement("g", null, y.ticks().map((tick) => (react_1.default.createElement("text", { key: tick.toString(), x: -10, y: y(tick), dy: "0.32em", textAnchor: "end", fill: "currentColor" }, tick))))),
+            react_1.default.createElement("line", { y1: marginTop, y2: height - marginBottom, stroke: "#000000" }),
+            react_1.default.createElement("g", null, y.ticks(5).map((tick) => (react_1.default.createElement("text", { key: tick.toString(), x: -10, y: y(tick), dy: "0.32em", textAnchor: "end", fill: "currentColor" }, tick))))),
         react_1.default.createElement("path", { fill: "none", stroke: "currentColor", strokeWidth: 1.5, d: pathD || undefined }),
-        react_1.default.createElement("g", { fill: "currentColor", stroke: "currentColor", strokeWidth: 1.5 }, timeData.map((d, i) => (react_1.default.createElement("circle", { key: i, cx: x(d.time ? d.time : 0), cy: y(d.value), r: "2.5", fill: "currentColor" }))))));
+        react_1.default.createElement("g", { fill: "#3DA35D", stroke: "#3DA35D", strokeWidth: 1.5 }, timeData.map((d, i) => (react_1.default.createElement("circle", { key: i, cx: x(d.time ? d.time : 0), cy: y(d.value), r: "2.5", fill: "3DA35D" }))))));
 }
 exports.default = LineChart;
