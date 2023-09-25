@@ -71,6 +71,7 @@ export default function AdminMap() {
 						layerStyle={activeStyle}
 						bins={binsList}
 						positionSetter={() => setMapPosition}
+						activeBin={activeBin}
 						activeBinSetter={setActiveBin}
 						onbinClick={(e) => {
 							console.log(e);

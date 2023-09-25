@@ -30,12 +30,12 @@ function MapComponent(props) {
                 ? mapTileLayers[props.layerStyle]
                 : mapTileLayers[0] }),
         props.bins.map((bin, index) => {
-            var _a;
+            var _a, _b;
             return (react_1.default.createElement(react_leaflet_1.Marker, { position: [
                     parseFloat(bin.latitude),
                     parseFloat(bin.longitude),
-                ], icon: icon, key: bin._id, eventHandlers: { click: () => props.activeBinSetter(bin) } },
-                react_1.default.createElement(react_leaflet_1.Tooltip, null, ((_a = bin.data[0]) === null || _a === void 0 ? void 0 : _a.record)
+                ], icon: bin._id === ((_a = props.activeBin) === null || _a === void 0 ? void 0 : _a._id) ? selectedIcon : icon, key: bin._id, eventHandlers: { click: () => props.activeBinSetter(bin) } },
+                react_1.default.createElement(react_leaflet_1.Tooltip, null, ((_b = bin.data[0]) === null || _b === void 0 ? void 0 : _b.record)
                     ? `${bin.data[0].record}%`
                     : "unavailable")));
         })));
