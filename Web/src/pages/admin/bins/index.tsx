@@ -64,13 +64,13 @@ export default function AdminBins() {
 					return bin._id !== id;
 				});
 				setDeleteModalState({ ...deleteModalState, open: false });
-				toast.success("Truck Deleted Successfully", { duration: 2500 });
+				toast.success("Bin Deleted Successfully", { duration: 2500 });
 				setBinList(newArr);
 			}
 		} catch (err: any) {
 			console.error(err);
 			setDeleteModalState({ ...deleteModalState, open: false });
-			toast.error("Couldn't Delete Truck", { duration: 4000 });
+			toast.error("Couldn't Delete Bin", { duration: 4000 });
 		}
 	};
 
@@ -87,8 +87,10 @@ export default function AdminBins() {
 		last_pickup_time: string | undefined;
 		waste_type: string | undefined;
 		data: Array<{
-			timestamp: string;
+			_id: string;
 			record: string;
+			createdAt: string;
+			updatedAt: string;
 		}>;
 	}>({
 		_id: "",
@@ -142,7 +144,7 @@ export default function AdminBins() {
 			if (response.status === 200) {
 				setCreateModalState({ ...createModalState, open: false });
 				getBins();
-				toast.success("Truck created successfully", { duration: 2500 });
+				toast.success("Bin created successfully", { duration: 2500 });
 			} else {
 				setCreateModalState({ ...createModalState, open: false });
 				toast.error("Couldn't Create, Try Again", { duration: 4000 });
@@ -435,8 +437,11 @@ export default function AdminBins() {
 					<ListHeader
 						items={[
 							"ID",
+							"Custom ID",
 							"Waste Type",
 							"Last pickup time",
+							"Latitude",
+							"Longitude",
 							"Actions",
 						]}
 					/>
@@ -448,8 +453,11 @@ export default function AdminBins() {
 							<ListItem
 								key={index}
 								items={[
+									bin._id,
 									bin.custom_id,
 									bin.waste_type,
+									bin.latitude,
+									bin.longitude,
 									bin.last_pickup_time,
 								]}
 								object={bin}

@@ -18,6 +18,10 @@ export default function SuperAdminUsers() {
 		(state: RootState) => state.auth.token
 	);
 
+	const user: User | null = useSelector(
+		(state: RootState) => state.auth.user
+	);
+
 	const [userList, setUserList] = useState<User[]>([]);
 
 	const getUsers = async () => {
@@ -28,7 +32,8 @@ export default function SuperAdminUsers() {
 			});
 
 			if (response.status === 200) {
-				setUserList(response.data);
+				const usersFilteredList = response.data.filter((userItem: User) => userItem._id !== user?._id);
+				setUserList(usersFilteredList);
 			}
 		} catch (err: any) {
 			console.error(err);
@@ -83,7 +88,7 @@ export default function SuperAdminUsers() {
 		email: string,
 		password: string,
 		user_type: string,
-		group_id: Group
+		group_id: string
 	}>({
 		_id: "",
 		first_name: "",
@@ -92,12 +97,7 @@ export default function SuperAdminUsers() {
 		email: "",
 		password: "",
 		user_type: "",
-		group_id: {
-			_id: "",
-			name: "",
-			admins: [],
-			members: [],
-		},
+		group_id: "",
 	});
 
 	const activateCreateModal = () => {
@@ -109,12 +109,7 @@ export default function SuperAdminUsers() {
 			username: "",
 			email: "",
 			password: "",
-			group_id: {
-				_id: "",
-				name: "",
-				admins: [],
-				members: [],
-			},
+			group_id: "",
 			user_type: "1",
 		});
 		setCreateModalState({
@@ -353,13 +348,13 @@ export default function SuperAdminUsers() {
 						<Select
 							label="Group"
 							required
-							value={userData.group_id._id}
+							value={userData.group_id}
 							options={transformedGroupsList}
 							disabled={userData.user_type === "1"}
 							onChange={(e) =>
 								setUserData({
 									...userData,
-									group_id:{...userData.group_id, _id: e.target.value},
+									group_id: e.target.value,
 								})
 							}
 						/>

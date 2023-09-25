@@ -60,6 +60,7 @@ const react_hot_toast_1 = require("react-hot-toast");
 const select_1 = __importDefault(require("../../../components/base/select"));
 function SuperAdminUsers() {
     const token = (0, react_redux_1.useSelector)((state) => state.auth.token);
+    const user = (0, react_redux_1.useSelector)((state) => state.auth.user);
     const [userList, setUserList] = (0, react_1.useState)([]);
     const getUsers = () => __awaiter(this, void 0, void 0, function* () {
         try {
@@ -68,7 +69,8 @@ function SuperAdminUsers() {
                 token,
             });
             if (response.status === 200) {
-                setUserList(response.data);
+                const usersFilteredList = response.data.filter((userItem) => userItem._id !== (user === null || user === void 0 ? void 0 : user._id));
+                setUserList(usersFilteredList);
             }
         }
         catch (err) {
@@ -120,20 +122,10 @@ function SuperAdminUsers() {
         email: "",
         password: "",
         user_type: "",
-        group_id: {
-            _id: "",
-            name: "",
-            admins: [],
-            members: [],
-        },
+        group_id: "",
     });
     const activateCreateModal = () => {
-        setUserData(Object.assign(Object.assign({}, userData), { _id: "", first_name: "", last_name: "", username: "", email: "", password: "", group_id: {
-                _id: "",
-                name: "",
-                admins: [],
-                members: [],
-            }, user_type: "1" }));
+        setUserData(Object.assign(Object.assign({}, userData), { _id: "", first_name: "", last_name: "", username: "", email: "", password: "", group_id: "", user_type: "1" }));
         setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: true, type: "create" }));
     };
     const activateEditModal = (data) => {
@@ -267,7 +259,7 @@ function SuperAdminUsers() {
                                 Admin: "2",
                                 Driver: "3",
                             }, onChange: (e) => setUserData(Object.assign(Object.assign({}, userData), { user_type: e.target.value })) })),
-                    react_1.default.createElement(select_1.default, { label: "Group", required: true, value: userData.group_id._id, options: transformedGroupsList, disabled: userData.user_type === "1", onChange: (e) => setUserData(Object.assign(Object.assign({}, userData), { group_id: Object.assign(Object.assign({}, userData.group_id), { _id: e.target.value }) })) }),
+                    react_1.default.createElement(select_1.default, { label: "Group", required: true, value: userData.group_id, options: transformedGroupsList, disabled: userData.user_type === "1", onChange: (e) => setUserData(Object.assign(Object.assign({}, userData), { group_id: e.target.value })) }),
                     react_1.default.createElement(input_1.default, { label: "Email", type: "email", placeholder: "Email", value: userData.email, onChange: (e) => {
                             setUserData(Object.assign(Object.assign({}, userData), { email: e.target.value }));
                         } }),

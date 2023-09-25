@@ -99,14 +99,14 @@ function AdminBins() {
                     return bin._id !== id;
                 });
                 setDeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: false }));
-                react_hot_toast_1.toast.success("Truck Deleted Successfully", { duration: 2500 });
+                react_hot_toast_1.toast.success("Bin Deleted Successfully", { duration: 2500 });
                 setBinList(newArr);
             }
         }
         catch (err) {
             console.error(err);
             setDeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: false }));
-            react_hot_toast_1.toast.error("Couldn't Delete Truck", { duration: 4000 });
+            react_hot_toast_1.toast.error("Couldn't Delete Bin", { duration: 4000 });
         }
     });
     const [createModalState, setCreateModalState] = (0, react_1.useState)({
@@ -142,7 +142,7 @@ function AdminBins() {
             if (response.status === 200) {
                 setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false }));
                 getBins();
-                react_hot_toast_1.toast.success("Truck created successfully", { duration: 2500 });
+                react_hot_toast_1.toast.success("Bin created successfully", { duration: 2500 });
             }
             else {
                 setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false }));
@@ -270,14 +270,20 @@ function AdminBins() {
             react_1.default.createElement("div", { className: "p-10 pt-3" },
                 react_1.default.createElement(listheader_1.default, { items: [
                         "ID",
+                        "Custom ID",
                         "Waste Type",
                         "Last pickup time",
+                        "Latitude",
+                        "Longitude",
                         "Actions",
                     ] }),
                 filterByWasteType(filterBySearch(binsList, filters.searchQuery), filters.selectedFilter).map((bin, index) => {
                     return (react_1.default.createElement(listItem_1.default, { key: index, items: [
+                            bin._id,
                             bin.custom_id,
                             bin.waste_type,
+                            bin.latitude,
+                            bin.longitude,
                             bin.last_pickup_time,
                         ], object: bin, customIcon: react_1.default.createElement(md_1.MdLocationPin, null), customIconAction: () => showLocation(), onEdit: (data) => activateEditModal(data), onDelete: (id) => activateDeleteModal(id) }));
                     //TODO: Add location icon to listItem
