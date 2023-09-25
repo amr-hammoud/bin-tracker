@@ -206,12 +206,9 @@ function SuperAdminUsers() {
         }
     });
     const transformedGroupsList = groupsList.reduce((acc, currentItem) => {
-        console.log(currentItem);
         acc[currentItem.name] = currentItem._id;
         return acc;
-    }, 
-    // First Element Type Bug (Object -> string)
-    {});
+    }, {});
     const [filters, setfilters] = (0, react_1.useState)({
         searchQuery: "",
         selectedFilter: "All",
