@@ -4,12 +4,12 @@ const announcementSchema = new mongoose.Schema(
 	{
 		group_id: {
 			type: mongoose.Schema.Types.ObjectId,
-			rel: 'Group',
+			ref: 'Group',
             required: true,
 		},
         sender_id: {
 			type: mongoose.Schema.Types.ObjectId,
-			rel: 'User',
+			ref: 'User',
             required: true,
 		},
         content: {
