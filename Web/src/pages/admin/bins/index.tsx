@@ -435,8 +435,11 @@ export default function AdminBins() {
 					<ListHeader
 						items={[
 							"ID",
+							"Custom ID",
 							"Waste Type",
 							"Last pickup time",
+							"Latitude",
+							"Longitude",
 							"Actions",
 						]}
 					/>
@@ -448,8 +451,11 @@ export default function AdminBins() {
 							<ListItem
 								key={index}
 								items={[
+									bin._id,
 									bin.custom_id,
 									bin.waste_type,
+									bin.latitude,
+									bin.longitude,
 									bin.last_pickup_time,
 								]}
 								object={bin}

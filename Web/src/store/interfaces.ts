@@ -40,8 +40,8 @@ interface BinRecord{
 interface Bin {
 	_id: string;
 	custom_id: string;
-	longitude: string | null;
-	latitude: string | null;
+	longitude: string;
+	latitude: string;
 	group_id: string;
 	last_pickup_time: string | undefined;
 	waste_type: string | undefined;

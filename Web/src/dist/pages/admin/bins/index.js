@@ -270,14 +270,20 @@ function AdminBins() {
             react_1.default.createElement("div", { className: "p-10 pt-3" },
                 react_1.default.createElement(listheader_1.default, { items: [
                         "ID",
+                        "Custom ID",
                         "Waste Type",
                         "Last pickup time",
+                        "Latitude",
+                        "Longitude",
                         "Actions",
                     ] }),
                 filterByWasteType(filterBySearch(binsList, filters.searchQuery), filters.selectedFilter).map((bin, index) => {
                     return (react_1.default.createElement(listItem_1.default, { key: index, items: [
+                            bin._id,
                             bin.custom_id,
                             bin.waste_type,
+                            bin.latitude,
+                            bin.longitude,
                             bin.last_pickup_time,
                         ], object: bin, customIcon: react_1.default.createElement(md_1.MdLocationPin, null), customIconAction: () => showLocation(), onEdit: (data) => activateEditModal(data), onDelete: (id) => activateDeleteModal(id) }));
                     //TODO: Add location icon to listItem
