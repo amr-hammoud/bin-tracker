@@ -33,7 +33,7 @@ const getAnnouncements = async (req, res) => {
 	const { group_id } = req.params;
 
 	try {
-		const announcements = await Announcement.find({group_id: group_id}).sort({ createdAt: 1 });
+		const announcements = await Announcement.find({group_id: group_id}).sort({ createdAt: 1 }).populate("sender_id");
         res.status(200).send(announcements);
 	} catch (error) {
 		console.error(error);
