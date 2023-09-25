@@ -30,13 +30,15 @@ function SidebarItem(props) {
             : `/${props.label.toLowerCase()}`, { replace: true });
     };
     return (react_1.default.createElement("div", { className: props.selected
-            ? `flex flex-wrap content-center font-poppins
-						my-2 gap-3 w-full p-2 rounded-xl font-medium shadow-md
+            ? `flex content-center font-poppins
+						my-2 gap-3 ${props.collapse ? "w-fit justify-center" : "w-full"} p-2 rounded-xl font-medium shadow-md
 						text-neutral-0 bg-primary-500 hover:cursor-pointer`
-            : `flex flex-wrap content-center font-poppins
-						my-2 gap-3 w-full p-2 rounded-xl font-medium text-gunmetal
+            : `flex content-center font-poppins
+						my-2 gap-3 ${props.collapse ? "w-fit justify-center" : "w-full"} p-2 rounded-xl font-medium text-gunmetal
 						hover:bg-primary-200 hover:cursor-pointer`, onClick: () => clickHandler() },
-        react_1.default.createElement("div", { className: " flex content-center flex-wrap text-lg" }, Icon ? react_1.default.createElement(Icon, null) : ""),
-        react_1.default.createElement("div", { className: " flex content-center flex-wrap" }, props.label)));
+        Icon ? (react_1.default.createElement("div", { className: " flex content-center flex-wrap text-lg" },
+            react_1.default.createElement(Icon, null),
+            " ")) : (""),
+        props.collapse ? ("") : (react_1.default.createElement("div", { className: " flex content-center flex-wrap" }, props.label))));
 }
 exports.default = SidebarItem;
