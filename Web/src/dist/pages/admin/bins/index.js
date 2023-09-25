@@ -99,14 +99,14 @@ function AdminBins() {
                     return bin._id !== id;
                 });
                 setDeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: false }));
-                react_hot_toast_1.toast.success("Truck Deleted Successfully", { duration: 2500 });
+                react_hot_toast_1.toast.success("Bin Deleted Successfully", { duration: 2500 });
                 setBinList(newArr);
             }
         }
         catch (err) {
             console.error(err);
             setDeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: false }));
-            react_hot_toast_1.toast.error("Couldn't Delete Truck", { duration: 4000 });
+            react_hot_toast_1.toast.error("Couldn't Delete Bin", { duration: 4000 });
         }
     });
     const [createModalState, setCreateModalState] = (0, react_1.useState)({
@@ -142,7 +142,7 @@ function AdminBins() {
             if (response.status === 200) {
                 setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false }));
                 getBins();
-                react_hot_toast_1.toast.success("Truck created successfully", { duration: 2500 });
+                react_hot_toast_1.toast.success("Bin created successfully", { duration: 2500 });
             }
             else {
                 setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false }));
