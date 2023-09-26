@@ -79,7 +79,7 @@
 ### Bin Tracker is built using the following technologies
 
 1) MERN Stack using TypeScript for the web application
-	- ["React Library"](https://react.dev/) for the webapp frontend development. It is a robust JavaScript library for building reusable UI components.
+	- ["React Library"](https://react.dev/) for the web application frontend development. It is a robust JavaScript library for building reusable UI components.
 	- ["React Redux Library"](https://react-redux.js.org/) for state management.
 	- ["Express.js Framework"](https://expressjs.com/) on [Node.js](https://nodejs.org/en) runtime environment for the backend server.
 	- ["MongoDB"](https://www.mongodb.com/) for the database. It is an open source NoSQL database management system.
@@ -121,8 +121,8 @@
 	- "readme" which contains the files related to the readme.md
 
 2) Install NPM packages
-	You need to install the NPM packages in both "Server" & "Web"
-	navigate to each folder then run this command
+    - You need to install the NPM packages in both "Server" & "Web"
+	- navigate to each folder and then run this command
 
    ```sh
    npm install
