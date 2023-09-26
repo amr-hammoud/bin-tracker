@@ -195,8 +195,9 @@ function AdminBins() {
         }
         const lowerCaseQuery = query.toLowerCase();
         return binsList.filter((bin) => {
+            const id = bin._id.toLowerCase();
             const custom_id = bin.custom_id.toLowerCase();
-            return custom_id.includes(lowerCaseQuery);
+            return custom_id.includes(lowerCaseQuery) || id.includes(lowerCaseQuery);
         });
     };
     const filterByWasteType = (binsList, type) => {
@@ -259,7 +260,7 @@ function AdminBins() {
             react_1.default.createElement("div", { className: "p-10 pb-2" },
                 react_1.default.createElement("div", { className: "flex content-center justify-center py-2 px-5 gap-5 rounded-lg bg-primary-200" },
                     react_1.default.createElement("div", { className: "flex flex-wrap content-center w-1/2" },
-                        react_1.default.createElement(input_1.default, { label: "Search", placeholder: "Search by id", onChange: (e) => filterObjects(e.target.value) })),
+                        react_1.default.createElement(input_1.default, { label: "Search", placeholder: "Search by id/custom id", onChange: (e) => filterObjects(e.target.value) })),
                     react_1.default.createElement("div", { className: "flex flex-wrap content-center w-1/2" },
                         react_1.default.createElement(select_1.default, { label: "Filter by waste type", value: filters.selectedFilter, options: {
                                 All: "All",
