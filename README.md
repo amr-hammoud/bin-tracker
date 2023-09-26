@@ -10,44 +10,14 @@
 
 ### User Stories
 
-#### Super Admin
-
-- As a super admin, admin, and other users, I want to login so that I can access the website.
-- As a super admin, I want to create accounts so that users can access the website.
-- As a super admin, I want to see accounts so that I can make decisions about them.
-- As a super admin, I want to delete accounts so that users no longer have access to the website.
-- As a super admin, I want to update account details so that users maintain access to the website.
-
-#### Admin
-
-- As an admin, I want to view real-time and historical data on bins fill levels to generate reports and make decisions based on data.
 - As an admin, I want to view the bins on an interactive map.
-- As an admin, I want to view the bins in a list, so that I can manage them quickly.
-- As an admin, I want to add bins so that I can see their data on my dashboard
-- As an admin, I want to update bin details so that their data stays accurate.
-- As an admin, I want to delete bins so that their data doesn't appear on my dashboard
-- As an admin, I want to filter bin data so that I can make better decisions.
-- As an admin, I want to view the trucks on an interactive map.
-- As an admin, I want to view the trucks in a list, so that I can manage them quickly.
-- As an admin, I want to add trucks so that I can track their activity on my dashboard
-- As an admin, I want to update truck details so that their activity info stays accurate.
-- As an admin, I want to delete trucks so that their activity doesn't appear on my dashboard
-- As an admin, I want to update my account details so that I maintain access to the website.
-- As an admin, I want to create users with different permissions so that they have access to our website.
-- As an admin, I want to update user details so that they maintain access to the website.
-- As an admin, I want to delete accounts so that users no longer have access to the website
-- As an admin, I want to send announcements to users so that I can communicate easily.
-- As an admin, I want to chat with users using text messages so that we maintain live support.
-
-#### User
-
+- As an admin, I want to view real-time and historical data on bins fill levels to generate reports and make decisions based on data.
 - As a user, I want to have a real-time route suggestion on a map for me to follow and reduce unnecessary trips.
-- As a user, I want to chat with the admins using text messages so that we maintain live support.
-- As a user, I want to receive announcements from the admins so that we can communicate easily.
+- As a super admin, I want to manage user accounts so that they can access the website.
+- As an admin, I want to manage the bins, so that their data stays accurate.
+- As an admin, I want to manage the trucks so that I can track their details on my dashboard.
+- As an admin, I want to communicate with users using text messages so that we maintain live support.
 - As a user, I want to view my truck details so that I keep track of its maintenance schedule.
-- As a user, I want to edit my profile info so that I maintain access to the system.
-
-<br><br>
 
 <!-- Prototyping -->
 <img src="./readme/title3.svg"/>
@@ -56,17 +26,13 @@
 
 ### Wireframes (Web - Admin)
 
-| Login screen  | Dashboard screen |  Bins Map screen |
+| Bins Map screen  | Dashboard screen |  Bin Management screen |
 | ---| ---| ---|
-| ![Landing](./readme/wireframes/web/login.png) | ![Admin Dashboard](./readme/wireframes/web/dashboard.png) | ![User Management](./readme/wireframes/web/map.png) |
+| ![Landing](./readme/wireframes/web/map.png) | ![Admin Dashboard](./readme/wireframes/web/dashboard.png) | ![User Management](./readme/wireframes/web/bin_crud.png) |
 
-| User Management screen  | Bin Management screen |  Truck Management screen |
+| Truck Management screen  | Chats screen |  Announcements screen |
 | ---| ---| ---|
-| ![User Management](./readme/wireframes/web/users_crud.png)| ![Bin Management](./readme/wireframes/web/bin_crud.png)| ![Truck Management](./readme/wireframes/web/trucks_crud.png)|
-
-| Announcements screen  | Chats screen |  Account screen |
-| ---| ---| ---|
-| ![Announcements](./readme/wireframes/web/announcements.png)| ![Chats](./readme/wireframes/web/chats.png)| ![Account](./readme/wireframes/web/account.png)|
+| ![User Management](./readme/wireframes/web/trucks_crud.png)| ![Bin Management](./readme/wireframes/web/chats.png)| ![Truck Management](./readme/wireframes/web/announcements.png)|
 
 ### Wireframes (Mobile - User)
 
@@ -76,17 +42,13 @@
 
 ### Mockups
 
-| Login screen  | Dashboard screen |  Landing screen |
+| Map screen  | Dashboard screen |  Bin Management screen |
 | ---| ---| ---|
-| ![Map](readme/mockups/web/login.png)| ![Map](./readme/mockups/web/landing.png)| ![Map](./readme/mockups/web/dashboard.png)|
+| ![Map](readme/mockups/web/map.png)| ![Map](./readme/mockups/web/dashboard.png)| ![Map](./readme/mockups/web/bin_crud.png)|
 
-| Bins Map screen  | Announcements screen |  Chats screen |
+| Truck Management screen  | Announcements screen |  Chats screen |
 | ---| ---| ---|
-| ![Map](./readme/mockups/web/map.png)| ![Map](./readme/mockups/web/announcements.png)| ![Map](./readme/mockups/web/chats.png)|
-
-| User Management screen  | Bin Management screen |  Truck Management screen |
-| ---| ---| ---|
-| ![User Management](./readme/mockups/web/user_crud.png)| ![Bin Management](./readme/mockups/web/bin_crud.png)| ![Truck Management](./readme/mockups/web/truck_crud.png)|
+| ![Map](./readme/mockups/web/truck_crud.png)| ![Map](./readme/mockups/web/announcements.png)| ![Map](./readme/mockups/web/chats.png)|
 
 <!-- Implementation -->
 <!-- <img src="./readme/title4.svg"/>
@@ -116,15 +78,16 @@
 
 ### Bin Tracker is built using the following technologies
 
-- This project uses ["React Library"](https://react.dev/) for the webapp frontend development. It is a robust JavaScript library for building reusable UI components.
-- This project uses ["React Redux Library"](https://react-redux.js.org/) for state management.
-- This project uses ["Express.js Framework"](https://expressjs.com/) on Node.js runtime environment for the backend server.
-- This project uses ["MongoDB"](https://www.mongodb.com/) for the database. It is an open source NoSQL database management system.
-- This project uses the [Flutter app development framework](https://flutter.dev/) for the mobile application. Flutter is a cross-platform hybrid app development platform which allows us to use a single codebase for apps on mobile, desktop, and the web.
-- To send local push notifications, the app uses the [flutter_local_notifications](https://pub.dev/packages/flutter_local_notifications) package which supports Android, iOS, and macOS.
-- The app uses the font ["Poppins"](https://fonts.google.com/specimen/Poppins) as its main font, and the design of the app adheres to the material design guidelines.
+1) MERN Stack using TypeScript for the web application
+	- ["React Library"](https://react.dev/) for the webapp frontend development. It is a robust JavaScript library for building reusable UI components.
+	- ["React Redux Library"](https://react-redux.js.org/) for state management.
+	- ["Express.js Framework"](https://expressjs.com/) on [Node.js](https://nodejs.org/en) runtime environment for the backend server.
+	- ["MongoDB"](https://www.mongodb.com/) for the database. It is an open source NoSQL database management system.
+2) Flutter Framework for the app
+	- This project uses the [Flutter app development framework](https://flutter.dev/) for the mobile application. Flutter is a cross-platform hybrid app development platform which allows us to use a single codebase for apps on mobile, desktop, and the web.
+	- To send push notifications, the app uses [Firebase](https://firebase.google.com/) which is a backend-as-a-service from google that offers tons of features.
+	- The app uses the font ["Poppins"](https://fonts.google.com/specimen/Poppins) as its main font, and the design of the app adheres to the material design guidelines.
 
-<br><br>
 
 <!-- How to run -->
 <img src="./readme/title6.svg"/>
@@ -166,9 +129,9 @@
    ```
 
 3) Setup the .env file
-	- Navigate to /bin-tracker/Web
+	- Navigate to /bin-tracker/Server
 	- Rename the file named ".env.example" to ".env"
-	- Create a JWT key
+	- Replace the "ADD_YOUR_KEY_HERE" with you JWT key
 	```sh
 	JWT_SECRET="ADD_YOUR_KEY_HERE"
 	```
