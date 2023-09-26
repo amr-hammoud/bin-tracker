@@ -35,6 +35,7 @@ const bi_1 = require("react-icons/bi");
 const react_redux_1 = require("react-redux");
 const authSlice_1 = require("../../../store/authSlice");
 const react_router_dom_1 = require("react-router-dom");
+const sidebarSlice_1 = require("../../../store/sidebarSlice");
 function Sidebar(props) {
     var _a;
     const [selectedTab, setSelectedTab] = (0, react_1.useState)(props.selected);
@@ -48,12 +49,12 @@ function Sidebar(props) {
         dispatch((0, authSlice_1.setUser)(null));
         navigate("/", { replace: true });
     };
-    const [collapse, setCollapse] = (0, react_1.useState)(true);
-    return (react_1.default.createElement("div", { className: "flex flex-col flex-wrap shadow-md bg-neutral-50 h-screen w-fit p-4" },
-        react_1.default.createElement("div", { className: "flex justify-center w-fill mt-2 mb-8 text-xl rounded-md p-2\r\n\t\t\t\t\t\t\thover:bg-primary-400 hover:text-neutral-0 hover:cursor-pointer", onClick: () => setCollapse(!collapse) },
+    const collapse = (0, react_redux_1.useSelector)((state) => state.sidebar.collapse);
+    return (react_1.default.createElement("div", { className: "flex flex-col flex-wrap fixed shadow-md bg-neutral-50 h-screen w-fit p-4 z-50 select-none" },
+        react_1.default.createElement("div", { className: "flex justify-center w-fill mt-2 mb-8 text-xl rounded-md p-2\r\n\t\t\t\t\t\t\thover:bg-primary-400 hover:text-neutral-0 hover:cursor-pointer", onClick: () => dispatch((0, sidebarSlice_1.setCollapse)(!collapse)) },
             react_1.default.createElement(lu_1.LuMenu, null)),
-        react_1.default.createElement("div", { className: "w-full flex justify-center" }, collapse ? (react_1.default.createElement("img", { src: Logo_collapse_svg_1.default, className: " w-3/4", alt: "logo" })) : (react_1.default.createElement("img", { src: Logo_full_svg_1.default, className: "w-32", alt: "logo" }))),
-        react_1.default.createElement("div", { className: `mt-8 ${collapse ? "flex flex-col justify-center" : ""}` }, (_a = props.items) === null || _a === void 0 ? void 0 : _a.map((item, index) => {
+        react_1.default.createElement("div", { className: "w-full flex justify-center" }, collapse ? (react_1.default.createElement("img", { src: Logo_collapse_svg_1.default, className: " w-2/3", alt: "logo" })) : (react_1.default.createElement("img", { src: Logo_full_svg_1.default, className: "w-32", alt: "logo" }))),
+        react_1.default.createElement("div", { className: `mt-8 ${collapse ? "flex flex-col flex-wrap justify-center content-center" : ""}` }, (_a = props.items) === null || _a === void 0 ? void 0 : _a.map((item, index) => {
             return (react_1.default.createElement(sidebarItem_1.default, { key: index, collapse: collapse, label: item, selected: selectedTab === item, onSelected: (label) => selectHandler(label) }));
         })),
         react_1.default.createElement("div", { className: "flex flex-wrap content-center font-poppins\r\n\t\t\t\tmt-12 gap-3 w-full p-2 rounded-xl font-medium text-gunmetal\r\n\t\t\t\thover:bg-red-200 hover:cursor-pointer", onClick: () => handleLogout() },
