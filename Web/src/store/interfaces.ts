@@ -9,7 +9,7 @@ interface User {
 	updatedAt?: string;
 	__v?: number;
 	device_id?: string;
-	group_id?:Group;
+	group_id?: Group;
 }
 
 interface User2 {
@@ -23,20 +23,18 @@ interface User2 {
 	updatedAt?: string;
 	__v?: number;
 	device_id?: string;
-	group_id?:string;
+	group_id?: string;
 }
-
-
 
 interface Token {
 	token: string | null;
 }
 
-interface BinRecord{
-    _id: string;
-    record: string;
-    createdAt: string;
-    updatedAt: string;
+interface BinRecord {
+	_id: string;
+	record: string;
+	createdAt: string;
+	updatedAt: string;
 }
 
 interface Bin {
@@ -67,7 +65,17 @@ interface Group {
 }
 
 interface Generic {
-	_id: string
+	_id: string;
 }
 
-export { User, User2, Token, Bin, BinRecord, Group, Truck, Generic };
+interface Message {
+	__v: number;
+	_id: string;
+	content: string;
+	createdAt: string;
+	receiver_id: User;
+	sender_id: User;
+	updatedAt: string;
+}
+
+export { User, User2, Token, Bin, BinRecord, Group, Truck, Generic, Message };
