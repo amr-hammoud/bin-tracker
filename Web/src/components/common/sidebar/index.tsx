@@ -70,9 +70,9 @@ export default function Sidebar(props: SidebarProps) {
 				})}
 			</div>
 			<div
-				className="flex flex-wrap content-center font-poppins
-				mt-12 gap-3 w-full p-2 rounded-xl font-medium text-gunmetal
-				hover:bg-red-200 hover:cursor-pointer"
+				className={`flex flex-wrap content-center ${collapse ? "justify-center w-full" : ""}  font-poppins
+				mt-12 gap-3 p-2 rounded-xl font-medium text-gunmetal
+				hover:bg-red-200 hover:cursor-pointer`}
 				onClick={() => handleLogout()}
 			>
 				<div className=" flex content-center flex-wrap">

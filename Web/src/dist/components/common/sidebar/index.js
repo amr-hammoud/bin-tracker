@@ -57,7 +57,9 @@ function Sidebar(props) {
         react_1.default.createElement("div", { className: `mt-8 ${collapse ? "flex flex-col flex-wrap justify-center content-center" : ""}` }, (_a = props.items) === null || _a === void 0 ? void 0 : _a.map((item, index) => {
             return (react_1.default.createElement(sidebarItem_1.default, { key: index, collapse: collapse, label: item, selected: selectedTab === item, onSelected: (label) => selectHandler(label) }));
         })),
-        react_1.default.createElement("div", { className: "flex flex-wrap content-center font-poppins\r\n\t\t\t\tmt-12 gap-3 w-full p-2 rounded-xl font-medium text-gunmetal\r\n\t\t\t\thover:bg-red-200 hover:cursor-pointer", onClick: () => handleLogout() },
+        react_1.default.createElement("div", { className: `flex flex-wrap content-center ${collapse ? "justify-center w-full" : ""}  font-poppins
+				mt-12 gap-3 p-2 rounded-xl font-medium text-gunmetal
+				hover:bg-red-200 hover:cursor-pointer`, onClick: () => handleLogout() },
             react_1.default.createElement("div", { className: " flex content-center flex-wrap" },
                 react_1.default.createElement(bi_1.BiLogOut, null)),
             collapse ? ("") : (react_1.default.createElement("div", { className: " flex content-center flex-wrap" }, "Logout")))));
