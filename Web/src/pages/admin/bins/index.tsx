@@ -23,6 +23,10 @@ export default function AdminBins() {
 		(state: RootState) => state.auth.user as User2
 	);
 
+	const collapse: boolean = useSelector(
+		(state: RootState) => state.sidebar.collapse
+	);
+
 	const [binsList, setBinList] = useState([]);
 
 	const getBins = async () => {
@@ -396,7 +400,7 @@ export default function AdminBins() {
 					/>
 				</div>
 			</ModalComponent>
-			<div className="flex flex-col w-full">
+			<div className={`flex flex-col w-full ${collapse ? "ml-20" : "ml-52"}`}>
 				<Navbar
 					label="Bins"
 					buttonLabel="+ Create Bin"

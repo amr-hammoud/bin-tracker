@@ -43,8 +43,8 @@ const main_1 = __importDefault(require("../../../components/map/main"));
 const request_1 = require("../../../configs/request");
 const chart_1 = __importDefault(require("../../../components/map/chart"));
 function AdminMap() {
-    const user = (0, react_redux_1.useSelector)((state) => state.auth.user);
     const token = (0, react_redux_1.useSelector)((state) => state.auth.token);
+    const collapse = (0, react_redux_1.useSelector)((state) => state.sidebar.collapse);
     const [binsList, setBinList] = (0, react_1.useState)([]);
     const getBins = () => __awaiter(this, void 0, void 0, function* () {
         try {
@@ -69,7 +69,7 @@ function AdminMap() {
         lng: 36.0,
     });
     const [activeBin, setActiveBin] = (0, react_1.useState)(null);
-    return (react_1.default.createElement("div", { className: "flex" },
+    return (react_1.default.createElement("div", { className: "flex h-screen w-full" },
         react_1.default.createElement(sidebar_1.default, { items: [
                 "Dashboard",
                 "Bins",
@@ -80,9 +80,9 @@ function AdminMap() {
                 "Chats",
                 "Account",
             ], selected: "Map" }),
-        react_1.default.createElement("div", { className: "flex flex-col w-full relative" },
+        react_1.default.createElement("div", { className: `flex flex-col w-full relative ${collapse ? "ml-20" : "ml-52"}` },
             react_1.default.createElement(navbar_1.default, { label: "Map" }),
-            react_1.default.createElement("div", { className: "h-full z-10" },
+            react_1.default.createElement("div", { className: `w-full h-full z-10` },
                 react_1.default.createElement(main_1.default, { center: mapPosition, zoom: 8, layerStyle: activeStyle, bins: binsList, positionSetter: () => setMapPosition, activeBin: activeBin, activeBinSetter: setActiveBin, onbinClick: (e) => {
                         console.log(e);
                     } })),

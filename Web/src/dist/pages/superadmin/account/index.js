@@ -9,9 +9,10 @@ const sidebar_1 = __importDefault(require("../../../components/common/sidebar"))
 const navbar_1 = __importDefault(require("../../../components/common/navbar"));
 function SuperAdminAccount() {
     const user = (0, react_redux_1.useSelector)((state) => state.auth.user);
+    const collapse = (0, react_redux_1.useSelector)((state) => state.sidebar.collapse);
     return (react_1.default.createElement("div", { className: "flex" },
         react_1.default.createElement(sidebar_1.default, { items: ["Dashboard", "Users", "Groups", "Account"], selected: "Account" }),
-        react_1.default.createElement("div", { className: "flex flex-col w-full" },
+        react_1.default.createElement("div", { className: `flex flex-col w-full ${collapse ? "ml-20" : "ml-40"}` },
             react_1.default.createElement(navbar_1.default, { label: "Account" }),
             react_1.default.createElement("div", { className: "p-5" },
                 react_1.default.createElement("h2", null,

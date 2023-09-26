@@ -22,6 +22,10 @@ export default function SuperAdminUsers() {
 		(state: RootState) => state.auth.user
 	);
 
+	const collapse: boolean = useSelector(
+		(state: RootState) => state.sidebar.collapse
+	);
+
 	const [userList, setUserList] = useState<User[]>([]);
 
 	const getUsers = async () => {
@@ -268,7 +272,11 @@ export default function SuperAdminUsers() {
 				items={["Dashboard", "Users", "Groups", "Account"]}
 				selected="Users"
 			/>
-			<div className="flex flex-col w-full bg-neutral-0">
+			<div
+				className={`flex flex-col w-full ${
+					collapse ? "ml-20" : "ml-40"
+				}`}
+			>
 				<Navbar
 					label="Users"
 					buttonLabel="+ Create User"

@@ -22,6 +22,10 @@ export default function AdminUsers() {
 		(state: RootState) => state.auth.user
 	);
 
+	const collapse: boolean = useSelector(
+		(state: RootState) => state.sidebar.collapse
+	);
+
 	const [userList, setUserList] = useState<User[]>([]);
 
 	const getUsers = async () => {
@@ -31,7 +35,9 @@ export default function AdminUsers() {
 				token,
 			});
 			if (response.status === 200) {
-				const usersFilteredList = response.data.filter((userItem: User) => userItem._id !== user?._id);
+				const usersFilteredList = response.data.filter(
+					(userItem: User) => userItem._id !== user?._id
+				);
 				setUserList(usersFilteredList);
 			}
 		} catch (err: any) {
@@ -199,7 +205,11 @@ export default function AdminUsers() {
 				]}
 				selected="Users"
 			/>
-			<div className="flex flex-col w-full bg-neutral-0">
+			<div
+				className={`flex flex-col w-full ${
+					collapse ? "ml-20" : "ml-52"
+				}`}
+			>
 				<Navbar label="Users" />
 				<div>
 					<Toaster />
@@ -285,18 +295,18 @@ export default function AdminUsers() {
 							}}
 						/>
 						<Input
-								label="Password"
-								type="password"
-								placeholder="Password"
-								value={userData.password}
-								onChange={(e) => {
-									setUserData({
-										...userData,
-										password: e.target.value,
-									});
-								}}
-								required
-							/>
+							label="Password"
+							type="password"
+							placeholder="Password"
+							value={userData.password}
+							onChange={(e) => {
+								setUserData({
+									...userData,
+									password: e.target.value,
+								});
+							}}
+							required
+						/>
 					</div>
 					<div className="flex w-full justify-center gap-10 mt-5">
 						<Button

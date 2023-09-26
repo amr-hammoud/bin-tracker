@@ -62,6 +62,7 @@ const modal_1 = __importDefault(require("../../../components/base/modal"));
 function AdminBins() {
     const token = (0, react_redux_1.useSelector)((state) => state.auth.token);
     const user = (0, react_redux_1.useSelector)((state) => state.auth.user);
+    const collapse = (0, react_redux_1.useSelector)((state) => state.sidebar.collapse);
     const [binsList, setBinList] = (0, react_1.useState)([]);
     const getBins = () => __awaiter(this, void 0, void 0, function* () {
         try {
@@ -253,7 +254,7 @@ function AdminBins() {
             react_1.default.createElement("div", { className: "flex w-full justify-center gap-10 mt-5" },
                 react_1.default.createElement(button_1.default, { label: "Cancel", color: "text-gunmetal", bgColor: "bg-neutral-100", hoverColor: "hover:bg-neutral-600", onClick: () => setDeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: false })) }),
                 react_1.default.createElement(button_1.default, { label: "Delete", bgColor: "bg-red-400", hoverColor: "hover:bg-red-500", onClick: () => deleteBins(deleteModalState.id) }))),
-        react_1.default.createElement("div", { className: "flex flex-col w-full" },
+        react_1.default.createElement("div", { className: `flex flex-col w-full ${collapse ? "ml-20" : "ml-52"}` },
             react_1.default.createElement(navbar_1.default, { label: "Bins", buttonLabel: "+ Create Bin", buttonAction: () => activateCreateModal() }),
             react_1.default.createElement("div", null,
                 react_1.default.createElement(react_hot_toast_1.Toaster, null)),

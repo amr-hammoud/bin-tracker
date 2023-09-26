@@ -78,7 +78,11 @@ export default function AdminAnnouncements() {
 				]}
 				selected="Announcements"
 			/>
-			<div className={`flex flex-col w-full ${collapse ? "ml-20" : "ml-52"}`}>
+			<div
+				className={`flex flex-col w-full ${
+					collapse ? "ml-20" : "ml-52"
+				}`}
+			>
 				<Navbar label="Announcements" />
 				<div className="p-5 bg-neutral-100 h-full">
 					{Object.keys(groupedAnnouncements).map((date) => (

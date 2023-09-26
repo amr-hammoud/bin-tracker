@@ -10,13 +10,21 @@ export default function SuperAdminAccount() {
 		(state: RootState) => state.auth.user
 	);
 
+	const collapse: boolean = useSelector(
+		(state: RootState) => state.sidebar.collapse
+	);
+
 	return (
 		<div className="flex">
 			<Sidebar
 				items={["Dashboard", "Users", "Groups", "Account"]}
 				selected="Account"
 			/>
-			<div className="flex flex-col w-full">
+			<div
+				className={`flex flex-col w-full ${
+					collapse ? "ml-20" : "ml-40"
+				}`}
+			>
 				<Navbar label="Account" />
 				<div className="p-5">
 					<h2>

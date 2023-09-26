@@ -59,6 +59,7 @@ const react_hot_toast_1 = require("react-hot-toast");
 const input_1 = __importDefault(require("../../../components/base/input"));
 function SuperAdminGroups() {
     const token = (0, react_redux_1.useSelector)((state) => state.auth.token);
+    const collapse = (0, react_redux_1.useSelector)((state) => state.sidebar.collapse);
     const [groupList, setGroupList] = (0, react_1.useState)([]);
     const getGroups = () => __awaiter(this, void 0, void 0, function* () {
         try {
@@ -164,7 +165,7 @@ function SuperAdminGroups() {
     };
     return (react_1.default.createElement("div", { className: "flex" },
         react_1.default.createElement(sidebar_1.default, { items: ["Dashboard", "Users", "Groups", "Account"], selected: "Groups" }),
-        react_1.default.createElement("div", { className: "flex flex-col w-full" },
+        react_1.default.createElement("div", { className: `flex flex-col w-full ${collapse ? "ml-20" : "ml-40"}` },
             react_1.default.createElement(navbar_1.default, { label: "Groups", buttonLabel: "+ Create Group", buttonAction: () => activateCreateModal() }),
             react_1.default.createElement("div", null,
                 react_1.default.createElement(react_hot_toast_1.Toaster, null)),

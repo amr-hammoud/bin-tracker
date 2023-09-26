@@ -10,6 +10,10 @@ export default function AdminAccount() {
 		(state: RootState) => state.auth.user
 	);
 
+	const collapse: boolean = useSelector(
+		(state: RootState) => state.sidebar.collapse
+	);
+
 	return (
 		<div className="flex">
 			<Sidebar
@@ -25,7 +29,7 @@ export default function AdminAccount() {
 				]}
 				selected="Account"
 			/>
-			<div className="flex flex-col w-full">
+			<div className={`flex flex-col w-full ${collapse ? "ml-20" : "ml-52"}`}>
 				<Navbar label="Account" />
 				<div className="p-5">
 					<h2>

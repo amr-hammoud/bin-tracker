@@ -10,12 +10,12 @@ import { LatLngLiteral } from "leaflet";
 import LineChart from "../../../components/map/chart";
 
 export default function AdminMap() {
-	const user: User | null = useSelector(
-		(state: RootState) => state.auth.user
-	);
-
 	const token: Token | null = useSelector(
 		(state: RootState) => state.auth.token
+	);
+
+	const collapse: boolean = useSelector(
+		(state: RootState) => state.sidebar.collapse
 	);
 
 	const [binsList, setBinList] = useState([]);
@@ -48,7 +48,7 @@ export default function AdminMap() {
 	const [activeBin, setActiveBin] = useState<Bin | null>(null);
 
 	return (
-		<div className="flex">
+		<div className="flex h-screen w-full">
 			<Sidebar
 				items={[
 					"Dashboard",
@@ -62,9 +62,13 @@ export default function AdminMap() {
 				]}
 				selected="Map"
 			/>
-			<div className="flex flex-col w-full relative">
+			<div
+				className={`flex flex-col w-full relative ${
+					collapse ? "ml-20" : "ml-52"
+				}`}
+			>
 				<Navbar label="Map" />
-				<div className="h-full z-10">
+				<div className={`w-full h-full z-10`}>
 					<MapComponent
 						center={mapPosition}
 						zoom={8}

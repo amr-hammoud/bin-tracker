@@ -61,6 +61,7 @@ const select_1 = __importDefault(require("../../../components/base/select"));
 function AdminUsers() {
     const token = (0, react_redux_1.useSelector)((state) => state.auth.token);
     const user = (0, react_redux_1.useSelector)((state) => state.auth.user);
+    const collapse = (0, react_redux_1.useSelector)((state) => state.sidebar.collapse);
     const [userList, setUserList] = (0, react_1.useState)([]);
     const getUsers = () => __awaiter(this, void 0, void 0, function* () {
         try {
@@ -194,7 +195,7 @@ function AdminUsers() {
                 "Chats",
                 "Account",
             ], selected: "Users" }),
-        react_1.default.createElement("div", { className: "flex flex-col w-full bg-neutral-0" },
+        react_1.default.createElement("div", { className: `flex flex-col w-full ${collapse ? "ml-20" : "ml-52"}` },
             react_1.default.createElement(navbar_1.default, { label: "Users" }),
             react_1.default.createElement("div", null,
                 react_1.default.createElement(react_hot_toast_1.Toaster, null)),

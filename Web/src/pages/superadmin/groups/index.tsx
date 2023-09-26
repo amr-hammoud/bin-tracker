@@ -17,6 +17,10 @@ export default function SuperAdminGroups() {
 		(state: RootState) => state.auth.token
 	);
 
+	const collapse: boolean = useSelector(
+		(state: RootState) => state.sidebar.collapse
+	);
+
 	const [groupList, setGroupList] = useState<Group[]>([]);
 
 	const getGroups = async () => {
@@ -154,7 +158,11 @@ export default function SuperAdminGroups() {
 				items={["Dashboard", "Users", "Groups", "Account"]}
 				selected="Groups"
 			/>
-			<div className="flex flex-col w-full">
+			<div
+				className={`flex flex-col w-full ${
+					collapse ? "ml-20" : "ml-40"
+				}`}
+			>
 				<Navbar
 					label="Groups"
 					buttonLabel="+ Create Group"

@@ -21,6 +21,10 @@ export default function AdminTrucks() {
 		(state: RootState) => state.auth.user as User2
 	);
 
+	const collapse: boolean = useSelector(
+		(state: RootState) => state.sidebar.collapse
+	);
+
 	const [truckList, setTruckList] = useState<Truck[]>([]);
 	const [driverList, setDriverList] = useState<User[]>([]);
 
@@ -230,7 +234,8 @@ export default function AdminTrucks() {
 
 		return userList.filter((truck) => {
 			const plate_number = truck.plate_number.toLowerCase();
-			const driver_name = `${truck.driver_id.first_name} ${truck.driver_id.last_name}`.toLowerCase();
+			const driver_name =
+				`${truck.driver_id.first_name} ${truck.driver_id.last_name}`.toLowerCase();
 
 			return (
 				plate_number.includes(lowerCaseQuery) ||
@@ -385,7 +390,11 @@ export default function AdminTrucks() {
 					/>
 				</div>
 			</ModalComponent>
-			<div className="flex flex-col w-full">
+			<div
+				className={`flex flex-col w-full ${
+					collapse ? "ml-20" : "ml-52"
+				}`}
+			>
 				<Navbar
 					label="Trucks"
 					buttonLabel="+ Create Truck"
@@ -415,24 +424,26 @@ export default function AdminTrucks() {
 							"Actions",
 						]}
 					/>
-					{filterBySearch(truckList, filters.searchQuery).map((truck: Truck, index) => {
-						return (
-							<ListItem
-								key={index}
-								items={[
-									truck.plate_number,
-									truck.driver_id.first_name +
-										" " +
-										truck.driver_id.last_name,
-									truck.last_oil_change,
-									truck.last_wash,
-								]}
-								object={truck}
-								onEdit={(data) => activateEditModal(data)}
-								onDelete={(id) => activateDeleteModal(id)}
-							/>
-						);
-					})}
+					{filterBySearch(truckList, filters.searchQuery).map(
+						(truck: Truck, index) => {
+							return (
+								<ListItem
+									key={index}
+									items={[
+										truck.plate_number,
+										truck.driver_id.first_name +
+											" " +
+											truck.driver_id.last_name,
+										truck.last_oil_change,
+										truck.last_wash,
+									]}
+									object={truck}
+									onEdit={(data) => activateEditModal(data)}
+									onDelete={(id) => activateDeleteModal(id)}
+								/>
+							);
+						}
+					)}
 				</div>
 			</div>
 		</div>
