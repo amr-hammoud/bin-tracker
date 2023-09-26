@@ -83,7 +83,7 @@ function AdminMap() {
         react_1.default.createElement("div", { className: "flex flex-col w-full relative" },
             react_1.default.createElement(navbar_1.default, { label: "Map" }),
             react_1.default.createElement("div", { className: "h-full z-10" },
-                react_1.default.createElement(main_1.default, { center: mapPosition, zoom: 8, layerStyle: activeStyle, bins: binsList, positionSetter: () => setMapPosition, activeBinSetter: setActiveBin, onbinClick: (e) => {
+                react_1.default.createElement(main_1.default, { center: mapPosition, zoom: 8, layerStyle: activeStyle, bins: binsList, positionSetter: () => setMapPosition, activeBin: activeBin, activeBinSetter: setActiveBin, onbinClick: (e) => {
                         console.log(e);
                     } })),
             react_1.default.createElement("div", { className: "absolute flex content-center gap-2 top-16 right-5 z-20" },

@@ -11,6 +11,7 @@ interface MapProps {
 	zoom: number;
 	layerStyle: number;
 	bins: Array<Bin>;
+	activeBin?: Bin | null;
 	positionSetter: (position: LatLngLiteral) => void;
 	activeBinSetter: (bin: Bin | null) => void;
 	onbinClick: (e: any) => void;
@@ -59,7 +60,7 @@ export default function MapComponent(props: MapProps) {
 								parseFloat(bin.latitude),
 								parseFloat(bin.longitude),
 							]}
-							icon={icon}
+							icon={bin._id === props.activeBin?._id ? selectedIcon : icon}
 							key={bin._id}
 							eventHandlers={{click: () => props.activeBinSetter(bin)}}
 						>

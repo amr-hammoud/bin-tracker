@@ -215,9 +215,10 @@ export default function AdminBins() {
 		const lowerCaseQuery = query.toLowerCase();
 
 		return binsList.filter((bin) => {
+			const id = bin._id.toLowerCase();
 			const custom_id = bin.custom_id.toLowerCase();
 
-			return custom_id.includes(lowerCaseQuery);
+			return custom_id.includes(lowerCaseQuery) || id.includes(lowerCaseQuery);
 		});
 	};
 
@@ -409,7 +410,7 @@ export default function AdminBins() {
 						<div className="flex flex-wrap content-center w-1/2">
 							<Input
 								label="Search"
-								placeholder="Search by id"
+								placeholder="Search by id/custom id"
 								onChange={(e) => filterObjects(e.target.value)}
 							/>
 						</div>

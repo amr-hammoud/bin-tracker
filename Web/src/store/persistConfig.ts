@@ -1,8 +1,8 @@
-// reduxPersistConfig.ts
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 import { combineReducers } from "redux";
 import authReducer from "./authSlice";
+import sidebarSlice from "./sidebarSlice";
 
 const persistConfig = {
 	key: "root",
@@ -12,6 +12,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
 	auth: authReducer,
+	sidebar: sidebarSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

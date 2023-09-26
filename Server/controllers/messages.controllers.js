@@ -39,7 +39,7 @@ const getChatMessages = async (req, res) => {
 				{ sender_id: _id, receiver_id: other_id },
 				{ sender_id: other_id, receiver_id: _id },
 			],
-		}).sort({ createdAt: 1 });
+		}).sort({ createdAt: 1 }).populate("receiver_id").populate("sender_id");
 
         res.status(200).send(messages);
 	} catch (error) {

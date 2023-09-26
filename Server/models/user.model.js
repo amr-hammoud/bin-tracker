@@ -30,6 +30,7 @@ const userSchema = new mongoose.Schema(
 			type: String,
 			trim: true,
 			required: true,
+			select:false,
 		},
 		user_type: {
 			type: String,
