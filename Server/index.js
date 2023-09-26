@@ -30,6 +30,9 @@ app.use("/messages", messageRouter)
 const announcementRouter = require("./routes/announcement.routes")
 app.use("/announcements", announcementRouter)
 
+const analyticsRouter = require("./routes/analytics.routes")
+app.use("/analytics", analyticsRouter)
+
 app.listen(8000, (err) => {
 	if (err) {
 		console.error("\u001b[1;34m⚡[server]: " + `\u001b[0m${err}`);
