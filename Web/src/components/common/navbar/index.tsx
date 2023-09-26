@@ -8,7 +8,7 @@ interface NavbarProps {
 
 export default function Navbar(props: NavbarProps) {
 	return (
-		<div className="flex justify-between px-5 py-3 font-semibold text-2xl text-neutral-0 bg-primary-500 w-full select-none">
+		<div className="sticky top-0 left-0 flex justify-between px-5 py-3 font-semibold text-2xl text-neutral-0 bg-primary-500 w-full select-none">
 			{props.label}
             {props.buttonAction ? 
 			<div className="flex flex-wrap justify-center content-center py-1 px-2
