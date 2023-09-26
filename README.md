@@ -206,6 +206,6 @@ In Order to use the app you need to
 
 ### Installation
 #### On Android Phones:
-	1) Download the ".apk" file from this link (will be added soon)
-	2) Install the ".apk" file
-	3) Make sure to have
+1) Download the ".apk" file from this link (will be added soon)
+2) Install the ".apk" file
+3) Make sure to have
