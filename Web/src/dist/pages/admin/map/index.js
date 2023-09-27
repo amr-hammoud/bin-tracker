@@ -42,6 +42,7 @@ const navbar_1 = __importDefault(require("../../../components/common/navbar"));
 const main_1 = __importDefault(require("../../../components/map/main"));
 const request_1 = require("../../../configs/request");
 const chart_1 = __importDefault(require("../../../components/map/chart"));
+const react_router_dom_1 = require("react-router-dom");
 function AdminMap() {
     const token = (0, react_redux_1.useSelector)((state) => state.auth.token);
     const collapse = (0, react_redux_1.useSelector)((state) => state.sidebar.collapse);
@@ -51,6 +52,16 @@ function AdminMap() {
         lat: 34.0,
         lng: 36.0,
     });
+    const { id } = (0, react_router_dom_1.useParams)();
+    const setActiveBinID = (data) => {
+        let bins = [];
+        id !== null
+            ? (bins = data.filter((bin) => {
+                return bin._id === id;
+            }))
+            : console.log("No Active Bin");
+        id && bins.length > 0 ? setActiveBin(bins[0]) : setActiveBin(null);
+    };
     const [binsList, setBinList] = (0, react_1.useState)([]);
     const getBins = () => __awaiter(this, void 0, void 0, function* () {
         try {
@@ -60,6 +71,7 @@ function AdminMap() {
             });
             if (response.status === 200) {
                 setBinList(response.data);
+                setActiveBinID(response.data);
             }
         }
         catch (err) {

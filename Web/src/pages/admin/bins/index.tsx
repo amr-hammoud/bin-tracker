@@ -13,6 +13,7 @@ import Button from "../../../components/base/button";
 import Select from "../../../components/base/select";
 import Input from "../../../components/base/input";
 import ModalComponent from "../../../components/base/modal";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminBins() {
 	const token: Token | null = useSelector(
@@ -238,8 +239,9 @@ export default function AdminBins() {
 		setfilters({ ...filters, searchQuery: query });
 	};
 
-	const showLocation = () => {
-		console.log("Location");
+	const navigate = useNavigate()
+	const showLocation = (object: any) => {
+		navigate(`/map/${object._id}`, {replace: true})
 	};
 
 	return (
@@ -467,7 +469,7 @@ export default function AdminBins() {
 								]}
 								object={bin}
 								customIcon={<MdLocationPin />}
-								customIconAction={() => showLocation()}
+								customIconAction={(object) => showLocation(object)}
 								onEdit={(data) => activateEditModal(data)}
 								onDelete={(id) => activateDeleteModal(id)}
 							/>

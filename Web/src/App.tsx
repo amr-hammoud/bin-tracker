@@ -55,7 +55,7 @@ function App() {
 								element={<AdminBins />}
 							/>
 							<Route
-								path="/map"
+								path="/map/:id?"
 								element={<AdminMap />}
 							/>
 							<Route

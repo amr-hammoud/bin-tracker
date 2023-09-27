@@ -59,6 +59,7 @@ const button_1 = __importDefault(require("../../../components/base/button"));
 const select_1 = __importDefault(require("../../../components/base/select"));
 const input_1 = __importDefault(require("../../../components/base/input"));
 const modal_1 = __importDefault(require("../../../components/base/modal"));
+const react_router_dom_1 = require("react-router-dom");
 function AdminBins() {
     const token = (0, react_redux_1.useSelector)((state) => state.auth.token);
     const user = (0, react_redux_1.useSelector)((state) => state.auth.user);
@@ -210,8 +211,9 @@ function AdminBins() {
     const filterObjects = (query) => {
         setfilters(Object.assign(Object.assign({}, filters), { searchQuery: query }));
     };
-    const showLocation = () => {
-        console.log("Location");
+    const navigate = (0, react_router_dom_1.useNavigate)();
+    const showLocation = (object) => {
+        navigate(`/map/${object._id}`, { replace: true });
     };
     return (react_1.default.createElement("div", { className: "flex" },
         react_1.default.createElement(sidebar_1.default, { items: [
@@ -287,7 +289,7 @@ function AdminBins() {
                             bin.last_pickup_time,
                             bin.latitude,
                             bin.longitude,
-                        ], object: bin, customIcon: react_1.default.createElement(md_1.MdLocationPin, null), customIconAction: () => showLocation(), onEdit: (data) => activateEditModal(data), onDelete: (id) => activateDeleteModal(id) }));
+                        ], object: bin, customIcon: react_1.default.createElement(md_1.MdLocationPin, null), customIconAction: (object) => showLocation(object), onEdit: (data) => activateEditModal(data), onDelete: (id) => activateDeleteModal(id) }));
                     //TODO: Add location icon to listItem
                 })))));
 }

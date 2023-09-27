@@ -8,6 +8,7 @@ import MapComponent from "../../../components/map/main";
 import { sendRequest } from "../../../configs/request";
 import { LatLngLiteral } from "leaflet";
 import LineChart from "../../../components/map/chart";
+import { useParams } from "react-router-dom";
 
 export default function AdminMap() {
 	const token: Token | null = useSelector(
@@ -25,6 +26,19 @@ export default function AdminMap() {
 		lng: 36.0,
 	});
 
+	const { id } = useParams();
+
+	const setActiveBinID = (data: Bin[]) => {
+		let bins: any[] = [];
+		id !== null
+			? (bins = data.filter((bin: Bin) => {
+					return bin._id === id;
+			  }))
+			: console.log("No Active Bin");
+
+		id && bins.length > 0 ? setActiveBin(bins[0]) : setActiveBin(null);
+	};
+
 	const [binsList, setBinList] = useState<Bin[]>([]);
 
 	const getBins = async () => {
@@ -35,6 +49,7 @@ export default function AdminMap() {
 			});
 			if (response.status === 200) {
 				setBinList(response.data);
+				setActiveBinID(response.data)
 			}
 		} catch (err: any) {
 			console.error(err);
@@ -84,7 +99,6 @@ export default function AdminMap() {
 			console.error("Error calculating optimal route:", error);
 		}
 	};
-
 
 	return (
 		<div className="flex h-screen w-full">
@@ -189,9 +203,7 @@ export default function AdminMap() {
 									{activeBin?._id}
 								</div>
 								<div>
-									<span className="font-bold">
-										Name:
-									</span>{" "}
+									<span className="font-bold">Name:</span>{" "}
 									{activeBin?.name}
 								</div>
 								<div>

@@ -38,7 +38,7 @@ function App() {
                         react_1.default.createElement(react_router_dom_1.Route, { path: "/admin/account", element: react_1.default.createElement(account_1.default, null) }),
                         react_1.default.createElement(react_router_dom_1.Route, { path: "/dashboard", element: react_1.default.createElement(dashboard_2.default, null) }),
                         react_1.default.createElement(react_router_dom_1.Route, { path: "/bins", element: react_1.default.createElement(bins_1.default, null) }),
-                        react_1.default.createElement(react_router_dom_1.Route, { path: "/map", element: react_1.default.createElement(map_1.default, null) }),
+                        react_1.default.createElement(react_router_dom_1.Route, { path: "/map/:id?", element: react_1.default.createElement(map_1.default, null) }),
                         react_1.default.createElement(react_router_dom_1.Route, { path: "/users", element: react_1.default.createElement(users_2.default, null) }),
                         react_1.default.createElement(react_router_dom_1.Route, { path: "/trucks", element: react_1.default.createElement(trucks_1.default, null) }),
                         react_1.default.createElement(react_router_dom_1.Route, { path: "/announcements", element: react_1.default.createElement(announcements_1.default, null) }),
