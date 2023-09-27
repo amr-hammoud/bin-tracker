@@ -41,6 +41,7 @@ const sidebar_1 = __importDefault(require("../../../components/common/sidebar"))
 const navbar_1 = __importDefault(require("../../../components/common/navbar"));
 const request_1 = require("../../../configs/request");
 const piechart_1 = require("../../../components/dashboard/piechart");
+const barchart_1 = __importDefault(require("../../../components/dashboard/barchart"));
 function AdminDashboard() {
     const user = (0, react_redux_1.useSelector)((state) => state.auth.user);
     const token = (0, react_redux_1.useSelector)((state) => state.auth.token);
@@ -145,7 +146,16 @@ function AdminDashboard() {
                                             name: "Hazardous",
                                             value: stats.hazardous_bins_count,
                                         },
-                                    ] })))),
+                                    ] })),
+                            react_1.default.createElement("div", { className: "flex flex-wrap h-fit w-full justify-center content-center p-1  bg-neutral-50" },
+                                react_1.default.createElement(barchart_1.default, { data: stats.collected_bins_per_day
+                                        ? stats.collected_bins_per_day
+                                        : [
+                                            {
+                                                date: new Date().toISOString(),
+                                                count: 0,
+                                            },
+                                        ] })))),
                     react_1.default.createElement("div", { className: "flex flex-col w-full h-full gap-2" },
                         react_1.default.createElement("div", { className: "flex flex-col w-full h-full gap-2" },
                             react_1.default.createElement("div", { className: "flex flex-col flex-wrap justify-center content-center h-full w-full bg-primary-100 hover:bg-primary-200 p-3 text-center rounded" },

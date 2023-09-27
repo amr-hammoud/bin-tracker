@@ -6,6 +6,7 @@ import Sidebar from "../../../components/common/sidebar";
 import Navbar from "../../../components/common/navbar";
 import { sendRequest } from "../../../configs/request";
 import { PieChart } from "../../../components/dashboard/piechart";
+import DashboardBarChart from "../../../components/dashboard/barchart";
 
 export default function AdminDashboard() {
 	const user: User | null = useSelector(
@@ -181,6 +182,20 @@ export default function AdminDashboard() {
 												value: stats.hazardous_bins_count,
 											},
 										]}
+									/>
+								</div>
+								<div className="flex flex-wrap h-fit w-full justify-center content-center p-1  bg-neutral-50">
+									<DashboardBarChart
+										data={
+											stats.collected_bins_per_day
+												? stats.collected_bins_per_day
+												: [
+														{
+															date: new Date().toISOString(),
+															count: 0,
+														},
+												]
+										}
 									/>
 								</div>
 							</div>
