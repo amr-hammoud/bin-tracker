@@ -116,7 +116,7 @@ function AdminBins() {
     });
     const [binData, setBinData] = (0, react_1.useState)({
         _id: "",
-        custom_id: "",
+        name: "",
         longitude: "",
         latitude: "",
         group_id: "",
@@ -125,7 +125,7 @@ function AdminBins() {
         data: [],
     });
     const activateCreateModal = () => {
-        setBinData(Object.assign(Object.assign({}, binData), { _id: "", custom_id: "", longitude: "", latitude: "", group_id: user === null || user === void 0 ? void 0 : user.group_id, last_pickup_time: "", waste_type: "General", data: [] }));
+        setBinData(Object.assign(Object.assign({}, binData), { _id: "", name: "", longitude: "", latitude: "", group_id: user === null || user === void 0 ? void 0 : user.group_id, last_pickup_time: "", waste_type: "General", data: [] }));
         setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: true, type: "create" }));
     };
     const createBin = () => __awaiter(this, void 0, void 0, function* () {
@@ -158,7 +158,7 @@ function AdminBins() {
     });
     const activateEditModal = (data) => {
         const bin = JSON.parse(data);
-        setBinData(Object.assign(Object.assign({}, binData), { _id: bin._id, custom_id: bin.name, longitude: bin.longitude, latitude: bin.latitude, group_id: bin.group_id, last_pickup_time: bin.last_pickup_time, waste_type: bin.waste_type, data: bin.data }));
+        setBinData(Object.assign(Object.assign({}, binData), { _id: bin._id, name: bin.name, longitude: bin.longitude, latitude: bin.latitude, group_id: bin.group_id, last_pickup_time: bin.last_pickup_time, waste_type: bin.waste_type, data: bin.data }));
         setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: true, type: "edit" }));
     };
     const updateBin = () => __awaiter(this, void 0, void 0, function* () {
@@ -228,8 +228,8 @@ function AdminBins() {
             react_1.default.createElement("div", { className: "text-xl" }, "Create/Edit User"),
             react_1.default.createElement("div", { className: "flex flex-col flex-wrap justify-center content-center w-96" },
                 react_1.default.createElement("div", { className: "flex gap-5" },
-                    react_1.default.createElement(input_1.default, { label: "Custom ID", placeholder: "id", value: binData.custom_id, onChange: (e) => {
-                            setBinData(Object.assign(Object.assign({}, binData), { custom_id: e.target.value }));
+                    react_1.default.createElement(input_1.default, { label: "Custom ID", placeholder: "id", value: binData.name, onChange: (e) => {
+                            setBinData(Object.assign(Object.assign({}, binData), { name: e.target.value }));
                         }, required: true })),
                 react_1.default.createElement("div", { className: "flex gap-5" },
                     react_1.default.createElement(input_1.default, { label: "Latitude", placeholder: "latitude", value: binData.latitude, onChange: (e) => {
@@ -284,9 +284,9 @@ function AdminBins() {
                             bin._id,
                             bin.name,
                             bin.waste_type,
+                            bin.last_pickup_time,
                             bin.latitude,
                             bin.longitude,
-                            bin.last_pickup_time,
                         ], object: bin, customIcon: react_1.default.createElement(md_1.MdLocationPin, null), customIconAction: () => showLocation(), onEdit: (data) => activateEditModal(data), onDelete: (id) => activateDeleteModal(id) }));
                     //TODO: Add location icon to listItem
                 })))));

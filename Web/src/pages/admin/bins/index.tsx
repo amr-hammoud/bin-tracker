@@ -84,7 +84,7 @@ export default function AdminBins() {
 	});
 	const [binData, setBinData] = useState<{
 		_id: string;
-		custom_id: string;
+		name: string;
 		longitude: string | null;
 		latitude: string | null;
 		group_id: string | undefined;
@@ -98,7 +98,7 @@ export default function AdminBins() {
 		}>;
 	}>({
 		_id: "",
-		custom_id: "",
+		name: "",
 		longitude: "",
 		latitude: "",
 		group_id: "",
@@ -111,7 +111,7 @@ export default function AdminBins() {
 		setBinData({
 			...binData,
 			_id: "",
-			custom_id: "",
+			name: "",
 			longitude: "",
 			latitude: "",
 			group_id: user?.group_id,
@@ -165,7 +165,7 @@ export default function AdminBins() {
 		setBinData({
 			...binData,
 			_id: bin._id,
-			custom_id: bin.name,
+			name: bin.name,
 			longitude: bin.longitude,
 			latitude: bin.latitude,
 			group_id: bin.group_id,
@@ -273,11 +273,11 @@ export default function AdminBins() {
 						<Input
 							label="Custom ID"
 							placeholder="id"
-							value={binData.custom_id}
+							value={binData.name}
 							onChange={(e) => {
 								setBinData({
 									...binData,
-									custom_id: e.target.value,
+									name: e.target.value,
 								});
 							}}
 							required
@@ -461,9 +461,9 @@ export default function AdminBins() {
 									bin._id,
 									bin.name,
 									bin.waste_type,
+									bin.last_pickup_time,
 									bin.latitude,
 									bin.longitude,
-									bin.last_pickup_time,
 								]}
 								object={bin}
 								customIcon={<MdLocationPin />}
