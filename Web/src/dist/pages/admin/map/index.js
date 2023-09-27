@@ -69,6 +69,37 @@ function AdminMap() {
     (0, react_1.useEffect)(() => {
         getBins();
     }, []);
+    const [routeSuggestion, setRouteSuggestion] = (0, react_1.useState)();
+    const formatBins = (binsList) => {
+        return binsList.map((bin) => ({
+            latitude: bin.latitude,
+            longitude: bin.longitude,
+            fill_level: bin.data.length > 0 ? bin.data[bin.data.length - 1].record : 0,
+            last_pickup_time: bin.last_pickup_time,
+        }));
+    };
+    const prepareAndSendToAPI = () => __awaiter(this, void 0, void 0, function* () {
+        try {
+            const filteredBins = binsList.filter((bin) => bin.data.some((record) => record.record >= 90));
+            if (filteredBins.length === 0) {
+                console.log("No bins with fill level above 90% found.");
+                return;
+            }
+            const bins = formatBins(binsList);
+            const osrmResponse = yield (0, request_1.sendRequest)({
+                method: "POST",
+                route: "bins/best-route",
+                body: { bins: bins },
+                token,
+            });
+            const routeData = osrmResponse.data;
+            setRouteSuggestion(routeData);
+            console.log("Optimal route data:", routeData);
+        }
+        catch (error) {
+            console.error("Error calculating optimal route:", error);
+        }
+    });
     return (react_1.default.createElement("div", { className: "flex h-screen w-full" },
         react_1.default.createElement(sidebar_1.default, { items: [
                 "Dashboard",
@@ -81,11 +112,11 @@ function AdminMap() {
                 "Account",
             ], selected: "Map" }),
         react_1.default.createElement("div", { className: `flex flex-col w-full relative ${collapse ? "ml-20" : "ml-52"}` },
-            react_1.default.createElement(navbar_1.default, { label: "Map" }),
+            react_1.default.createElement(navbar_1.default, { label: "Map", buttonLabel: "Suggest Route", buttonAction: () => prepareAndSendToAPI() }),
             react_1.default.createElement("div", { className: `w-full h-full z-10` },
                 react_1.default.createElement(main_1.default, { center: mapPosition, zoom: 8, layerStyle: activeStyle, bins: binsList, positionSetter: () => setMapPosition, activeBin: activeBin, activeBinSetter: setActiveBin, onbinClick: (e) => {
                         console.log(e);
-                    } })),
+                    }, osrmResponse: routeSuggestion })),
             react_1.default.createElement("div", { className: "absolute flex content-center gap-2 top-16 right-5 z-20" },
                 react_1.default.createElement("h3", { className: "flex flex-wrap content-center m-1 font-semibold text-gunmetal" }, "Map Style"),
                 react_1.default.createElement("div", { className: "flex w-fit h-10 bg-neutral-0 shadow-lg p-2 gap-2 text-gunmetal rounded-md border border-primary-500" },

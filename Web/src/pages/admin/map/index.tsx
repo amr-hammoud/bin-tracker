@@ -45,6 +45,46 @@ export default function AdminMap() {
 		getBins();
 	}, []);
 
+	const [routeSuggestion, setRouteSuggestion] = useState();
+
+	const formatBins = (binsList: Bin[]) => {
+		return binsList.map((bin) => ({
+			latitude: bin.latitude,
+			longitude: bin.longitude,
+			fill_level:
+				bin.data.length > 0 ? bin.data[bin.data.length - 1].record : 0,
+			last_pickup_time: bin.last_pickup_time,
+		}));
+	};
+
+	const prepareAndSendToAPI = async () => {
+		try {
+			const filteredBins = binsList.filter((bin: Bin) =>
+				bin.data.some((record: any) => record.record >= 90)
+			);
+
+			if (filteredBins.length === 0) {
+				console.log("No bins with fill level above 90% found.");
+				return;
+			}
+
+			const bins = formatBins(binsList);
+
+			const osrmResponse = await sendRequest({
+				method: "POST",
+				route: "bins/best-route",
+				body: { bins: bins },
+				token,
+			});
+
+			const routeData = osrmResponse.data;
+			setRouteSuggestion(routeData);
+			console.log("Optimal route data:", routeData);
+		} catch (error) {
+			console.error("Error calculating optimal route:", error);
+		}
+	};
+
 
 	return (
 		<div className="flex h-screen w-full">
@@ -68,6 +108,8 @@ export default function AdminMap() {
 			>
 				<Navbar
 					label="Map"
+					buttonLabel="Suggest Route"
+					buttonAction={() => prepareAndSendToAPI()}
 				/>
 				<div className={`w-full h-full z-10`}>
 					<MapComponent
@@ -81,6 +123,7 @@ export default function AdminMap() {
 						onbinClick={(e) => {
 							console.log(e);
 						}}
+						osrmResponse={routeSuggestion}
 					/>
 				</div>
 				<div className="absolute flex content-center gap-2 top-16 right-5 z-20">
