@@ -7,8 +7,8 @@ import Navbar from "../../../components/common/navbar";
 import MapComponent from "../../../components/map/main";
 import { sendRequest } from "../../../configs/request";
 import { LatLngLiteral } from "leaflet";
-import LineChart from "../../../components/map/chart";
 import { useParams } from "react-router-dom";
+import LineChart from "../../../components/map/linechart";
 
 export default function AdminMap() {
 	const token: Token | null = useSelector(
@@ -197,7 +197,7 @@ export default function AdminMap() {
 							Active Bin
 						</h3>
 						<div className="flex h-fit w-fit bg-neutral-0 shadow-lg p-3 rounded-md border border-primary-500">
-							<div className="flex flex-col h-fit p-4 gap-2 text-gunmetal w-full">
+							<div className="flex flex-col h-fit p-4 gap-2 text-gunmetal w-fit mr-3">
 								<div>
 									<span className="font-bold">ID:</span>{" "}
 									{activeBin?._id}
@@ -219,7 +219,7 @@ export default function AdminMap() {
 									{`${activeBin?.latitude}, ${activeBin?.longitude}`}
 								</div>
 							</div>
-							<div className="h-full w-full z-30 bg-neutral-0">
+							<div className=" h-52 w-96 z-30 bg-neutral-0">
 								<LineChart data={activeBin.data} />
 							</div>
 						</div>
