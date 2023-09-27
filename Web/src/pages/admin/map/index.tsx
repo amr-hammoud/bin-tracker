@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
-import { Bin, Token, User } from "../../../store/interfaces";
+import { Bin, Token } from "../../../store/interfaces";
 import Sidebar from "../../../components/common/sidebar";
 import Navbar from "../../../components/common/navbar";
 import MapComponent from "../../../components/map/main";
@@ -18,7 +18,14 @@ export default function AdminMap() {
 		(state: RootState) => state.sidebar.collapse
 	);
 
-	const [binsList, setBinList] = useState([]);
+	const [activeStyle, setActiveStyle] = useState<number>(0);
+	const [activeBin, setActiveBin] = useState<Bin | null>(null);
+	const [mapPosition, setMapPosition] = useState<LatLngLiteral>({
+		lat: 34.0,
+		lng: 36.0,
+	});
+
+	const [binsList, setBinList] = useState<Bin[]>([]);
 
 	const getBins = async () => {
 		try {
@@ -38,14 +45,6 @@ export default function AdminMap() {
 		getBins();
 	}, []);
 
-	const [activeStyle, setActiveStyle] = useState<number>(0);
-
-	const [mapPosition, setMapPosition] = useState<LatLngLiteral>({
-		lat: 34.0,
-		lng: 36.0,
-	});
-
-	const [activeBin, setActiveBin] = useState<Bin | null>(null);
 
 	return (
 		<div className="flex h-screen w-full">
@@ -67,7 +66,9 @@ export default function AdminMap() {
 					collapse ? "ml-20" : "ml-52"
 				}`}
 			>
-				<Navbar label="Map" />
+				<Navbar
+					label="Map"
+				/>
 				<div className={`w-full h-full z-10`}>
 					<MapComponent
 						center={mapPosition}
@@ -97,17 +98,19 @@ export default function AdminMap() {
 										hover:border-primary-500 hover:bg-primary-200 hover:cursor-pointer`}
 							onClick={() => setActiveStyle(0)}
 						>
-							Atlas
+							Default
 						</div>
 						<div
 							className={`flex flex-wrap justify-center content-center p-2 text-center
-							rounded-md border border-neutral-700 ${
-								activeStyle === 1 ? "bg-primary-100" : ""
-							}
-							hover:border-primary-500 hover:bg-primary-200 hover:cursor-pointer`}
+										rounded-md border border-neutral-700 ${
+											activeStyle === 1
+												? "bg-primary-100"
+												: ""
+										}
+										hover:border-primary-500 hover:bg-primary-200 hover:cursor-pointer`}
 							onClick={() => setActiveStyle(1)}
 						>
-							Terrain
+							Atlas
 						</div>
 						<div
 							className={`flex flex-wrap justify-center content-center p-2 text-center
@@ -116,6 +119,16 @@ export default function AdminMap() {
 							}
 							hover:border-primary-500 hover:bg-primary-200 hover:cursor-pointer`}
 							onClick={() => setActiveStyle(2)}
+						>
+							Terrain
+						</div>
+						<div
+							className={`flex flex-wrap justify-center content-center p-2 text-center
+							rounded-md border border-neutral-700 ${
+								activeStyle === 3 ? "bg-primary-100" : ""
+							}
+							hover:border-primary-500 hover:bg-primary-200 hover:cursor-pointer`}
+							onClick={() => setActiveStyle(3)}
 						>
 							Lines
 						</div>
@@ -127,16 +140,16 @@ export default function AdminMap() {
 							Active Bin
 						</h3>
 						<div className="flex h-fit w-fit bg-neutral-0 shadow-lg p-3 rounded-md border border-primary-500">
-							<div className="flex flex-col w-96 h-fit p-4 gap-2 text-gunmetal w-full">
+							<div className="flex flex-col h-fit p-4 gap-2 text-gunmetal w-full">
 								<div>
 									<span className="font-bold">ID:</span>{" "}
-									{activeBin?.custom_id}
+									{activeBin?._id}
 								</div>
 								<div>
 									<span className="font-bold">
-										Custom ID:
+										Name:
 									</span>{" "}
-									{activeBin?._id}
+									{activeBin?.name}
 								</div>
 								<div>
 									<span className="font-bold">

@@ -45,6 +45,12 @@ const chart_1 = __importDefault(require("../../../components/map/chart"));
 function AdminMap() {
     const token = (0, react_redux_1.useSelector)((state) => state.auth.token);
     const collapse = (0, react_redux_1.useSelector)((state) => state.sidebar.collapse);
+    const [activeStyle, setActiveStyle] = (0, react_1.useState)(0);
+    const [activeBin, setActiveBin] = (0, react_1.useState)(null);
+    const [mapPosition, setMapPosition] = (0, react_1.useState)({
+        lat: 34.0,
+        lng: 36.0,
+    });
     const [binsList, setBinList] = (0, react_1.useState)([]);
     const getBins = () => __awaiter(this, void 0, void 0, function* () {
         try {
@@ -63,12 +69,6 @@ function AdminMap() {
     (0, react_1.useEffect)(() => {
         getBins();
     }, []);
-    const [activeStyle, setActiveStyle] = (0, react_1.useState)(0);
-    const [mapPosition, setMapPosition] = (0, react_1.useState)({
-        lat: 34.0,
-        lng: 36.0,
-    });
-    const [activeBin, setActiveBin] = (0, react_1.useState)(null);
     return (react_1.default.createElement("div", { className: "flex h-screen w-full" },
         react_1.default.createElement(sidebar_1.default, { items: [
                 "Dashboard",
@@ -93,25 +93,30 @@ function AdminMap() {
 										rounded-md border border-neutral-700 ${activeStyle === 0
                             ? "bg-primary-100"
                             : ""}
-										hover:border-primary-500 hover:bg-primary-200 hover:cursor-pointer`, onClick: () => setActiveStyle(0) }, "Atlas"),
+										hover:border-primary-500 hover:bg-primary-200 hover:cursor-pointer`, onClick: () => setActiveStyle(0) }, "Default"),
                     react_1.default.createElement("div", { className: `flex flex-wrap justify-center content-center p-2 text-center
-							rounded-md border border-neutral-700 ${activeStyle === 1 ? "bg-primary-100" : ""}
-							hover:border-primary-500 hover:bg-primary-200 hover:cursor-pointer`, onClick: () => setActiveStyle(1) }, "Terrain"),
+										rounded-md border border-neutral-700 ${activeStyle === 1
+                            ? "bg-primary-100"
+                            : ""}
+										hover:border-primary-500 hover:bg-primary-200 hover:cursor-pointer`, onClick: () => setActiveStyle(1) }, "Atlas"),
                     react_1.default.createElement("div", { className: `flex flex-wrap justify-center content-center p-2 text-center
 							rounded-md border border-neutral-700 ${activeStyle === 2 ? "bg-primary-100" : ""}
-							hover:border-primary-500 hover:bg-primary-200 hover:cursor-pointer`, onClick: () => setActiveStyle(2) }, "Lines"))),
+							hover:border-primary-500 hover:bg-primary-200 hover:cursor-pointer`, onClick: () => setActiveStyle(2) }, "Terrain"),
+                    react_1.default.createElement("div", { className: `flex flex-wrap justify-center content-center p-2 text-center
+							rounded-md border border-neutral-700 ${activeStyle === 3 ? "bg-primary-100" : ""}
+							hover:border-primary-500 hover:bg-primary-200 hover:cursor-pointer`, onClick: () => setActiveStyle(3) }, "Lines"))),
             activeBin ? (react_1.default.createElement("div", { className: "absolute bottom-5 left-5 z-20 w-11/12" },
                 react_1.default.createElement("h3", { className: "m-1 font-semibold text-gunmetal" }, "Active Bin"),
                 react_1.default.createElement("div", { className: "flex h-fit w-fit bg-neutral-0 shadow-lg p-3 rounded-md border border-primary-500" },
-                    react_1.default.createElement("div", { className: "flex flex-col w-96 h-fit p-4 gap-2 text-gunmetal w-full" },
+                    react_1.default.createElement("div", { className: "flex flex-col h-fit p-4 gap-2 text-gunmetal w-full" },
                         react_1.default.createElement("div", null,
                             react_1.default.createElement("span", { className: "font-bold" }, "ID:"),
                             " ", activeBin === null || activeBin === void 0 ? void 0 :
-                            activeBin.custom_id),
-                        react_1.default.createElement("div", null,
-                            react_1.default.createElement("span", { className: "font-bold" }, "Custom ID:"),
-                            " ", activeBin === null || activeBin === void 0 ? void 0 :
                             activeBin._id),
+                        react_1.default.createElement("div", null,
+                            react_1.default.createElement("span", { className: "font-bold" }, "Name:"),
+                            " ", activeBin === null || activeBin === void 0 ? void 0 :
+                            activeBin.name),
                         react_1.default.createElement("div", null,
                             react_1.default.createElement("span", { className: "font-bold" }, "Waste Type:"),
                             " ", activeBin === null || activeBin === void 0 ? void 0 :
