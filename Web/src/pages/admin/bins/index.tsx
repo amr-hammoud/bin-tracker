@@ -221,9 +221,9 @@ export default function AdminBins() {
 
 		return binsList.filter((bin) => {
 			const id = bin._id.toLowerCase();
-			const custom_id = bin.name.toLowerCase();
+			const name = bin.name.toLowerCase();
 
-			return custom_id.includes(lowerCaseQuery) || id.includes(lowerCaseQuery);
+			return name.includes(lowerCaseQuery) || id.includes(lowerCaseQuery);
 		});
 	};
 
@@ -273,7 +273,7 @@ export default function AdminBins() {
 				<div className="flex flex-col flex-wrap justify-center content-center w-96">
 					<div className="flex gap-5">
 						<Input
-							label="Custom ID"
+							label="Name"
 							placeholder="id"
 							value={binData.name}
 							onChange={(e) => {
@@ -416,7 +416,7 @@ export default function AdminBins() {
 						<div className="flex flex-wrap content-center w-1/2">
 							<Input
 								label="Search"
-								placeholder="Search by id/custom id"
+								placeholder="Search by id/name"
 								onChange={(e) => filterObjects(e.target.value)}
 							/>
 						</div>
@@ -444,11 +444,9 @@ export default function AdminBins() {
 					<ListHeader
 						items={[
 							"ID",
-							"Custom ID",
+							"Name",
 							"Waste Type",
 							"Last pickup time",
-							"Latitude",
-							"Longitude",
 							"Actions",
 						]}
 					/>
@@ -464,8 +462,6 @@ export default function AdminBins() {
 									bin.name,
 									bin.waste_type,
 									bin.last_pickup_time,
-									bin.latitude,
-									bin.longitude,
 								]}
 								object={bin}
 								customIcon={<MdLocationPin />}

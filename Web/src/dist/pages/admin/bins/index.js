@@ -198,8 +198,8 @@ function AdminBins() {
         const lowerCaseQuery = query.toLowerCase();
         return binsList.filter((bin) => {
             const id = bin._id.toLowerCase();
-            const custom_id = bin.name.toLowerCase();
-            return custom_id.includes(lowerCaseQuery) || id.includes(lowerCaseQuery);
+            const name = bin.name.toLowerCase();
+            return name.includes(lowerCaseQuery) || id.includes(lowerCaseQuery);
         });
     };
     const filterByWasteType = (binsList, type) => {
@@ -230,7 +230,7 @@ function AdminBins() {
             react_1.default.createElement("div", { className: "text-xl" }, "Create/Edit User"),
             react_1.default.createElement("div", { className: "flex flex-col flex-wrap justify-center content-center w-96" },
                 react_1.default.createElement("div", { className: "flex gap-5" },
-                    react_1.default.createElement(input_1.default, { label: "Custom ID", placeholder: "id", value: binData.name, onChange: (e) => {
+                    react_1.default.createElement(input_1.default, { label: "Name", placeholder: "id", value: binData.name, onChange: (e) => {
                             setBinData(Object.assign(Object.assign({}, binData), { name: e.target.value }));
                         }, required: true })),
                 react_1.default.createElement("div", { className: "flex gap-5" },
@@ -263,7 +263,7 @@ function AdminBins() {
             react_1.default.createElement("div", { className: "p-10 pb-2" },
                 react_1.default.createElement("div", { className: "flex content-center justify-center py-2 px-5 gap-5 rounded-lg bg-primary-200" },
                     react_1.default.createElement("div", { className: "flex flex-wrap content-center w-1/2" },
-                        react_1.default.createElement(input_1.default, { label: "Search", placeholder: "Search by id/custom id", onChange: (e) => filterObjects(e.target.value) })),
+                        react_1.default.createElement(input_1.default, { label: "Search", placeholder: "Search by id/name", onChange: (e) => filterObjects(e.target.value) })),
                     react_1.default.createElement("div", { className: "flex flex-wrap content-center w-1/2" },
                         react_1.default.createElement(select_1.default, { label: "Filter by waste type", value: filters.selectedFilter, options: {
                                 All: "All",
@@ -274,11 +274,9 @@ function AdminBins() {
             react_1.default.createElement("div", { className: "p-10 pt-3" },
                 react_1.default.createElement(listheader_1.default, { items: [
                         "ID",
-                        "Custom ID",
+                        "Name",
                         "Waste Type",
                         "Last pickup time",
-                        "Latitude",
-                        "Longitude",
                         "Actions",
                     ] }),
                 filterByWasteType(filterBySearch(binsList, filters.searchQuery), filters.selectedFilter).map((bin, index) => {
@@ -287,8 +285,6 @@ function AdminBins() {
                             bin.name,
                             bin.waste_type,
                             bin.last_pickup_time,
-                            bin.latitude,
-                            bin.longitude,
                         ], object: bin, customIcon: react_1.default.createElement(md_1.MdLocationPin, null), customIconAction: (object) => showLocation(object), onEdit: (data) => activateEditModal(data), onDelete: (id) => activateDeleteModal(id) }));
                     //TODO: Add location icon to listItem
                 })))));
