@@ -43,6 +43,8 @@ const main_1 = __importDefault(require("../../../components/map/main"));
 const request_1 = require("../../../configs/request");
 const react_router_dom_1 = require("react-router-dom");
 const linechart_1 = __importDefault(require("../../../components/map/linechart"));
+const ri_1 = require("react-icons/ri");
+const button_1 = __importDefault(require("../../../components/base/button"));
 function AdminMap() {
     const token = (0, react_redux_1.useSelector)((state) => state.auth.token);
     const collapse = (0, react_redux_1.useSelector)((state) => state.sidebar.collapse);
@@ -149,26 +151,33 @@ function AdminMap() {
 							rounded-md border border-neutral-700 ${activeStyle === 3 ? "bg-primary-100" : ""}
 							hover:border-primary-500 hover:bg-primary-200 hover:cursor-pointer`, onClick: () => setActiveStyle(3) }, "Lines"))),
             activeBin ? (react_1.default.createElement("div", { className: "absolute bottom-5 left-5 z-20 w-11/12" },
-                react_1.default.createElement("h3", { className: "m-1 font-semibold text-gunmetal" }, "Active Bin"),
-                react_1.default.createElement("div", { className: "flex h-fit w-fit bg-neutral-0 shadow-lg p-3 rounded-md border border-primary-500" },
-                    react_1.default.createElement("div", { className: "flex flex-col h-fit p-4 gap-2 text-gunmetal w-fit mr-3" },
+                react_1.default.createElement("div", { className: "flex flex-col h-fit w-fit bg-neutral-0 shadow-lg rounded-md border border-primary-500" },
+                    react_1.default.createElement("div", { className: "flex justify-between pt-5 pl-5 pr-10" },
+                        react_1.default.createElement("div", { className: "flex gap-2 m-1 font-semibold text-gunmetal" },
+                            react_1.default.createElement("div", { className: "flex flex-wrap content-center text-primary-500 font-semibold text-lg" },
+                                react_1.default.createElement(ri_1.RiDeleteBin6Line, null)),
+                            react_1.default.createElement("div", { className: "flex flex-wrap content-center text-primary-500 font-semibold text-lg" }, "Active Bin")),
                         react_1.default.createElement("div", null,
-                            react_1.default.createElement("span", { className: "font-bold" }, "ID:"),
-                            " ", activeBin === null || activeBin === void 0 ? void 0 :
-                            activeBin._id),
-                        react_1.default.createElement("div", null,
-                            react_1.default.createElement("span", { className: "font-bold" }, "Name:"),
-                            " ", activeBin === null || activeBin === void 0 ? void 0 :
-                            activeBin.name),
-                        react_1.default.createElement("div", null,
-                            react_1.default.createElement("span", { className: "font-bold" }, "Waste Type:"),
-                            " ", activeBin === null || activeBin === void 0 ? void 0 :
-                            activeBin.waste_type),
-                        react_1.default.createElement("div", null,
-                            react_1.default.createElement("span", { className: "font-bold" }, "Coordinates:"),
-                            " ",
-                            `${activeBin === null || activeBin === void 0 ? void 0 : activeBin.latitude}, ${activeBin === null || activeBin === void 0 ? void 0 : activeBin.longitude}`)),
-                    react_1.default.createElement("div", { className: " h-52 w-96 z-30 bg-neutral-0" },
-                        react_1.default.createElement(linechart_1.default, { data: activeBin.data }))))) : (""))));
+                            react_1.default.createElement(button_1.default, { label: "Close", onClick: () => setActiveBin(null) }))),
+                    react_1.default.createElement("div", { className: "flex  p-3 " },
+                        react_1.default.createElement("div", { className: "flex flex-col h-fit p-4 gap-2 text-gunmetal w-fit mr-3" },
+                            react_1.default.createElement("div", null,
+                                react_1.default.createElement("span", { className: "font-bold" }, "ID:"),
+                                " ", activeBin === null || activeBin === void 0 ? void 0 :
+                                activeBin._id),
+                            react_1.default.createElement("div", null,
+                                react_1.default.createElement("span", { className: "font-bold" }, "Name:"),
+                                " ", activeBin === null || activeBin === void 0 ? void 0 :
+                                activeBin.name),
+                            react_1.default.createElement("div", null,
+                                react_1.default.createElement("span", { className: "font-bold" }, "Waste Type:"),
+                                " ", activeBin === null || activeBin === void 0 ? void 0 :
+                                activeBin.waste_type),
+                            react_1.default.createElement("div", null,
+                                react_1.default.createElement("span", { className: "font-bold" }, "Coordinates:"),
+                                " ",
+                                `${activeBin === null || activeBin === void 0 ? void 0 : activeBin.latitude}, ${activeBin === null || activeBin === void 0 ? void 0 : activeBin.longitude}`)),
+                        react_1.default.createElement("div", { className: " h-52 w-96 z-30 bg-neutral-0" },
+                            react_1.default.createElement(linechart_1.default, { data: activeBin.data })))))) : (""))));
 }
 exports.default = AdminMap;
