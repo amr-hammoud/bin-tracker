@@ -11,7 +11,7 @@ const dataSchema = new mongoose.Schema(
 
 const userSchema = new mongoose.Schema(
 	{
-		custom_id: {
+		name: {
 			type: String,
 			trim: true,
 			index: true,
