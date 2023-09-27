@@ -39,7 +39,7 @@ interface BinRecord {
 
 interface Bin {
 	_id: string;
-	custom_id: string;
+	name: string;
 	longitude: string;
 	latitude: string;
 	group_id: string;

@@ -158,7 +158,7 @@ function AdminBins() {
     });
     const activateEditModal = (data) => {
         const bin = JSON.parse(data);
-        setBinData(Object.assign(Object.assign({}, binData), { _id: bin._id, custom_id: bin.custom_id, longitude: bin.longitude, latitude: bin.latitude, group_id: bin.group_id, last_pickup_time: bin.last_pickup_time, waste_type: bin.waste_type, data: bin.data }));
+        setBinData(Object.assign(Object.assign({}, binData), { _id: bin._id, custom_id: bin.name, longitude: bin.longitude, latitude: bin.latitude, group_id: bin.group_id, last_pickup_time: bin.last_pickup_time, waste_type: bin.waste_type, data: bin.data }));
         setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: true, type: "edit" }));
     };
     const updateBin = () => __awaiter(this, void 0, void 0, function* () {
@@ -197,7 +197,7 @@ function AdminBins() {
         const lowerCaseQuery = query.toLowerCase();
         return binsList.filter((bin) => {
             const id = bin._id.toLowerCase();
-            const custom_id = bin.custom_id.toLowerCase();
+            const custom_id = bin.name.toLowerCase();
             return custom_id.includes(lowerCaseQuery) || id.includes(lowerCaseQuery);
         });
     };
@@ -282,7 +282,7 @@ function AdminBins() {
                 filterByWasteType(filterBySearch(binsList, filters.searchQuery), filters.selectedFilter).map((bin, index) => {
                     return (react_1.default.createElement(listItem_1.default, { key: index, items: [
                             bin._id,
-                            bin.custom_id,
+                            bin.name,
                             bin.waste_type,
                             bin.latitude,
                             bin.longitude,

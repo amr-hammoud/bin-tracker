@@ -165,7 +165,7 @@ export default function AdminBins() {
 		setBinData({
 			...binData,
 			_id: bin._id,
-			custom_id: bin.custom_id,
+			custom_id: bin.name,
 			longitude: bin.longitude,
 			latitude: bin.latitude,
 			group_id: bin.group_id,
@@ -220,7 +220,7 @@ export default function AdminBins() {
 
 		return binsList.filter((bin) => {
 			const id = bin._id.toLowerCase();
-			const custom_id = bin.custom_id.toLowerCase();
+			const custom_id = bin.name.toLowerCase();
 
 			return custom_id.includes(lowerCaseQuery) || id.includes(lowerCaseQuery);
 		});
@@ -459,7 +459,7 @@ export default function AdminBins() {
 								key={index}
 								items={[
 									bin._id,
-									bin.custom_id,
+									bin.name,
 									bin.waste_type,
 									bin.latitude,
 									bin.longitude,
