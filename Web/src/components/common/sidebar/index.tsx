@@ -37,7 +37,7 @@ export default function Sidebar(props: SidebarProps) {
 	
 
 	return (
-		<div className="flex flex-col flex-wrap fixed shadow-md bg-neutral-50 h-screen w-fit p-4 z-50 select-none">
+		<div className="flex flex-col fixed shadow-md bg-neutral-50 h-screen w-fit p-4 z-50 select-none">
 			<div
 				className="flex justify-center w-fill mt-2 mb-8 text-xl rounded-md p-2
 							hover:bg-primary-400 hover:text-neutral-0 hover:cursor-pointer"
@@ -71,7 +71,7 @@ export default function Sidebar(props: SidebarProps) {
 			</div>
 			<div
 				className={`flex flex-wrap content-center ${collapse ? "justify-center w-full" : ""}  font-poppins
-				mt-12 gap-3 p-2 rounded-xl font-medium text-gunmetal
+				mt-7 gap-3 p-2 rounded-xl font-medium text-gunmetal
 				hover:bg-red-200 hover:cursor-pointer`}
 				onClick={() => handleLogout()}
 			>
