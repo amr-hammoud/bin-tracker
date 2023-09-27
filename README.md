@@ -12,19 +12,18 @@
 
 - As an admin, I want to view the bins on an interactive map.
 - As an admin, I want to view real-time and historical data on bins fill levels to generate reports and make decisions based on data.
-- As a user, I want to have a real-time route suggestion on a map for me to follow and reduce unnecessary trips.
+- As a user, I want to have a route suggestion on a map for me to follow and reduce unnecessary trips.
 - As a super admin, I want to manage user accounts so that they can access the website.
 - As an admin, I want to manage the bins, so that their data stays accurate.
 - As an admin, I want to manage the trucks so that I can track their details on my dashboard.
 - As an admin, I want to communicate with users using text messages so that we maintain live support.
-- As a user, I want to view my truck details so that I keep track of its maintenance schedule.
 
 <!-- Prototyping -->
 <img src="./readme/title3.svg"/>
 
 > we designed Bin Tracker using wireframes and mockups, iterating on the design until we reached the ideal layout for easy navigation and a seamless user experience.
 
-### Wireframes (Web - Admin)
+### Wireframes
 
 | Bins Map screen  | Dashboard screen |  Bin Management screen |
 | ---| ---| ---|
@@ -34,11 +33,6 @@
 | ---| ---| ---|
 | ![User Management](./readme/wireframes/web/trucks_crud.png)| ![Bin Management](./readme/wireframes/web/chats.png)| ![Truck Management](./readme/wireframes/web/announcements.png)|
 
-### Wireframes (Mobile - User)
-
-| Map screen  | Truck screen |  Chats screen |
-| ---| ---| ---|
-| ![Map](./readme/wireframes/mobile/map.png)| ![Truck](./readme/wireframes/mobile/truck.png)| ![Chats](./readme/wireframes/mobile/chats.png)|
 
 ### Mockups
 
@@ -83,9 +77,6 @@
 	- ["React Redux Library"](https://react-redux.js.org/) for state management.
 	- ["Express.js Framework"](https://expressjs.com/) on [Node.js](https://nodejs.org/en) runtime environment for the backend server.
 	- ["MongoDB"](https://www.mongodb.com/) for the database. It is an open source NoSQL database management system.
-2) Flutter Framework for the app
-	- This project uses the [Flutter app development framework](https://flutter.dev/) for the mobile application. Flutter is a cross-platform hybrid app development platform which allows us to use a single codebase for apps on mobile, desktop, and the web.
-	- To send push notifications, the app uses [Firebase](https://firebase.google.com/) which is a backend-as-a-service from google that offers tons of features.
 	- The app uses the font ["Poppins"](https://fonts.google.com/specimen/Poppins) as its main font, and the design of the app adheres to the material design guidelines.
 
 
@@ -94,7 +85,6 @@
 
 > To set up Bin Tracker locally, follow these steps:
 
-## Web App
 ### Prerequisites (Windows)
 
 - Node.js & npm
@@ -151,24 +141,10 @@
 	```
 
 6) Now the web app should be running, you can login to the app using:
-	1) For the super admin:
+	<!-- 1) For the super admin:
 		- username: super_admin
 		- password: password
 	
 	2) For the admin:
 		- username: admin
-		- password: password
-
-
-## Mobile App
-
-### Prerequisites
-In Order to use the app you need to
-1) Have the web app setup and running
-2) Create an account for the driver using the super admin account
-
-### Installation
-#### On Android Phones:
-1) Download the ".apk" file from this link (will be added soon)
-2) Install the ".apk" file
-3) Make sure to have
+		- password: password -->

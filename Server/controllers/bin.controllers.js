@@ -1,11 +1,12 @@
 const Bin = require("../models/bin.model");
+const axios = require("axios");
 
 const getBin = async (req, res) => {
 	if (req.params.id) {
 		const bin = await Bin.findById(req.params.id);
 		res.status(200).send(bin);
 	} else {
-		const bins = await Bin.find({group_id: req.user.group_id});
+		const bins = await Bin.find({ group_id: req.user.group_id });
 		res.status(200).send(bins);
 	}
 };
@@ -100,10 +101,41 @@ const deleteBinRecord = async (req, res) => {
 	}
 };
 
+const calculateOptimalRoute = async (req, res) => {
+	const { bins } = req.body;
+
+	try {
+
+		if (bins.length === 0) {
+			return res
+				.status(400)
+				.send(
+					"No bins with fill level above 90% and recent last_pickup_time found."
+				);
+		}
+
+		const waypoints = bins
+			.map((bin) => `${bin.longitude},${bin.latitude}`)
+			.join(";");
+
+		const osrmApiUrl = `http://localhost:5000/route/v1/driving/${waypoints}?steps=true&alternatives=false`;
+
+		const osrmResponse = await axios.get(osrmApiUrl);
+
+		const routeData = osrmResponse.data;
+
+		return res.status(200).send(routeData);
+	} catch (error) {
+		console.error("Error calculating optimal route:", error);
+		return res.status(500).send("Internal server error");
+	}
+};
+
 module.exports = {
 	getBin,
 	createOrUpdateBin,
 	deleteBin,
 	addBinRecord,
 	deleteBinRecord,
+	calculateOptimalRoute,
 };

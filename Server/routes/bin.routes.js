@@ -3,6 +3,7 @@ const router = express.Router();
 const binController = require("../controllers/bin.controllers");
 const authMiddleware = require("../middlewares/auth.middleware");
 
+router.post("/best-route", authMiddleware, binController.calculateOptimalRoute)
 router.get("/:id?", authMiddleware, binController.getBin)
 router.post("/:id?", authMiddleware, binController.createOrUpdateBin)
 router.delete("/:id", authMiddleware, binController.deleteBin)
