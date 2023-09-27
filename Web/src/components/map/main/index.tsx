@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
 	MapContainer,
+	MapContainerProps,
 	Marker,
 	Polyline,
 	TileLayer,
@@ -50,13 +51,11 @@ const mapTileLayers = [
 ];
 
 export default function MapComponent(props: MapProps) {
-	
 	const [decodedRoute, setDecodedRoute] = useState<[number, number][]>([]);
 
 	useEffect(() => {
-
 		const decodedGeometry = decodeOSRMGeometry(
-			props.osrmResponse? props.osrmResponse.routes[0].geometry : ""
+			props.osrmResponse ? props.osrmResponse.routes[0].geometry : ""
 		);
 
 		setDecodedRoute(decodedGeometry);
@@ -69,11 +68,31 @@ export default function MapComponent(props: MapProps) {
 			.map((coord: [number, number]) => [coord[1], coord[0]]);
 	}
 
+	const mapRef = useRef<any | null>(null);
+
+	useEffect(() => {
+		let selectedBinCoordinates: LatLngLiteral;
+		props.activeBin
+			? (selectedBinCoordinates = {
+					lat: parseFloat(props.activeBin?.latitude),
+					lng: parseFloat(props.activeBin?.longitude),
+			  })
+			: console.log("");
+
+		mapRef.current
+			? mapRef.current.flyTo(
+					[props.activeBin?.latitude, props.activeBin?.longitude],
+					17
+			  )
+			: console.log("");
+	}, [props.activeBin]);
+
 	return (
 		<MapContainer
 			center={props.center}
 			zoom={props.zoom}
 			style={{ height: "100%", width: "100%" }}
+			ref={mapRef}
 		>
 			<TileLayer
 				url={

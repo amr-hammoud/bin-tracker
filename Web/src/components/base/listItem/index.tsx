@@ -7,7 +7,7 @@ interface ListItemProps {
 	items: Array<string | undefined | null>;
 	object?: Object;
 	customIcon?: React.ReactNode;
-	customIconAction?: () => void;
+	customIconAction?: (object: any) => void;
 	onEdit?: (data: any) => void;
 	onDelete?: (id: string) => void;
 }
@@ -38,7 +38,7 @@ export default function ListItem(props: ListItemProps) {
 					className="flex flex-wrap justify-between content-center opacity-70
                                 hover:cursor-pointer hover:opacity-100"
 					onClick={() =>
-						props.customIconAction ? props.customIconAction() : ""
+						props.customIconAction ? props.customIconAction(object) : ""
 					}
 				>
 					{AdditionalIcon}

@@ -61,7 +61,21 @@ function MapComponent(props) {
             .decode(encodedGeometry)
             .map((coord) => [coord[1], coord[0]]);
     }
-    return (react_1.default.createElement(react_leaflet_1.MapContainer, { center: props.center, zoom: props.zoom, style: { height: "100%", width: "100%" } },
+    const mapRef = (0, react_1.useRef)(null);
+    (0, react_1.useEffect)(() => {
+        var _a, _b, _c, _d;
+        let selectedBinCoordinates;
+        props.activeBin
+            ? (selectedBinCoordinates = {
+                lat: parseFloat((_a = props.activeBin) === null || _a === void 0 ? void 0 : _a.latitude),
+                lng: parseFloat((_b = props.activeBin) === null || _b === void 0 ? void 0 : _b.longitude),
+            })
+            : console.log("");
+        mapRef.current
+            ? mapRef.current.flyTo([(_c = props.activeBin) === null || _c === void 0 ? void 0 : _c.latitude, (_d = props.activeBin) === null || _d === void 0 ? void 0 : _d.longitude], 17)
+            : console.log("");
+    }, [props.activeBin]);
+    return (react_1.default.createElement(react_leaflet_1.MapContainer, { center: props.center, zoom: props.zoom, style: { height: "100%", width: "100%" }, ref: mapRef },
         react_1.default.createElement(react_leaflet_1.TileLayer, { url: props.layerStyle
                 ? mapTileLayers[props.layerStyle]
                 : mapTileLayers[0] }),
