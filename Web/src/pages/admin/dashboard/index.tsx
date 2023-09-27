@@ -6,6 +6,7 @@ import Sidebar from "../../../components/common/sidebar";
 import Navbar from "../../../components/common/navbar";
 import { sendRequest } from "../../../configs/request";
 import BarChart from "../../../components/dashboard/barchart";
+import PieChart from "../../../components/dashboard/piechart";
 
 export default function AdminDashboard() {
 	const user: User | null = useSelector(
@@ -116,6 +117,22 @@ export default function AdminDashboard() {
 									</div>
 								</div>
 							</div>
+							<div className="flex flex-col w-full h-96 gap-2 z-10">
+								<PieChart
+									data={[
+										{
+											id: "admins",
+											label: "Admins",
+											value: stats.admins_count,
+										},
+										{
+											id: "drivers",
+											label: "Drivers",
+											value: stats.drivers_count,
+										},
+									]}
+								/>
+							</div>
 						</div>
 						<div className="flex flex-col w-full h-full gap-2">
 							<div className="flex flex-col w-full h-full gap-2">
@@ -152,16 +169,35 @@ export default function AdminDashboard() {
 									</div>
 								</div>
 							</div>
+							<div className="flex flex-col w-full h-96 gap-2 z-10">
+								<PieChart
+									data={[
+										{
+											id: "general",
+											label: "General",
+											value: stats.general_bins_count,
+										},
+										{
+											id: "recyclables",
+											label: "Recyclables",
+											value: stats.recyclables_bins_count,
+										},
+										{
+											id: "hazardous",
+											label: "Hazardous",
+											value: stats.hazardous_bins_count,
+										},
+									]}
+								/>
+							</div>
 						</div>
 						<div className="flex flex-col w-full h-full gap-2">
-							<div className="flex flex-col w-full h-full gap-2">
-								<div className="flex flex-col flex-wrap justify-center content-center h-full w-full bg-primary-100 hover:bg-primary-200 p-3 text-center rounded">
-									<div className=" text-xl">
-										Trucks&nbsp;Count
-									</div>
-									<div className="mt-5 font-bold text-4xl">
-										{stats?.trucks_count}
-									</div>
+							<div className="flex flex-col flex-wrap justify-center content-center h-full w-full bg-primary-100 hover:bg-primary-200 p-3 text-center rounded">
+								<div className=" text-xl">
+									Trucks&nbsp;Count
+								</div>
+								<div className="mt-5 font-bold text-4xl">
+									{stats?.trucks_count}
 								</div>
 							</div>
 						</div>
@@ -172,23 +208,31 @@ export default function AdminDashboard() {
 							data={[
 								{
 									date: "2023-09-20T21:00:00.000Z",
-									count: 1,
+									count: 3,
 								},
 								{
 									date: "2023-09-21T21:00:00.000Z",
-									count: 1,
+									count: 6,
 								},
 								{
 									date: "2023-09-22T21:00:00.000Z",
-									count: 1,
+									count: 5,
 								},
 								{
 									date: "2023-09-23T21:00:00.000Z",
-									count: 1,
+									count: 7,
 								},
 								{
 									date: "2023-09-24T21:00:00.000Z",
-									count: 2,
+									count: 8,
+								},
+								{
+									date: "2023-09-25T21:00:00.000Z",
+									count: 6,
+								},
+								{
+									date: "2023-09-26T21:00:00.000Z",
+									count: 9,
 								},
 							]}
 						/>
