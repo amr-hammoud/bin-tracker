@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import {
 	MapContainer,
-	MapContainerProps,
 	Marker,
 	Polyline,
 	TileLayer,
@@ -71,20 +70,24 @@ export default function MapComponent(props: MapProps) {
 	const mapRef = useRef<any | null>(null);
 
 	useEffect(() => {
-		let selectedBinCoordinates: LatLngLiteral;
-		props.activeBin
-			? (selectedBinCoordinates = {
-					lat: parseFloat(props.activeBin?.latitude),
-					lng: parseFloat(props.activeBin?.longitude),
-			  })
-			: console.log("");
+		try {
+			let selectedBinCoordinates: LatLngLiteral;
+			props.activeBin && props.activeBin !== null
+				? (selectedBinCoordinates = {
+						lat: parseFloat(props.activeBin?.latitude),
+						lng: parseFloat(props.activeBin?.longitude),
+				  })
+				: console.log("");
 
-		mapRef.current
-			? mapRef.current.flyTo(
-					[props.activeBin?.latitude, props.activeBin?.longitude],
-					17
-			  )
-			: console.log("");
+			mapRef.current
+				? mapRef.current.flyTo(
+						[props.activeBin?.latitude, props.activeBin?.longitude],
+						17
+				  )
+				: console.log("");
+		} catch (error) {
+			console.log(error);
+		}
 	}, [props.activeBin]);
 
 	return (
@@ -94,13 +97,13 @@ export default function MapComponent(props: MapProps) {
 			style={{ height: "100%", width: "100%" }}
 			ref={mapRef}
 		>
-			<TileLayer
-				url={
-					props.layerStyle
-						? mapTileLayers[props.layerStyle]
-						: mapTileLayers[0]
-				}
-			/>
+				<TileLayer
+					url={
+						props.layerStyle
+							? mapTileLayers[props.layerStyle]
+							: mapTileLayers[0]
+					}
+				/>
 			{props.bins.map((bin, index) => {
 				return (
 					<Marker
