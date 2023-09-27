@@ -1,72 +1,39 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PieChart = void 0;
-const react_1 = __importStar(require("react"));
-const d3 = __importStar(require("d3"));
+const pie_1 = require("@nivo/pie");
+const react_1 = __importDefault(require("react"));
 const PieChart = ({ data }) => {
-    const chartRef = (0, react_1.useRef)(null);
-    (0, react_1.useEffect)(() => {
-        if (!chartRef.current)
-            return;
-        const width = chartRef.current.clientWidth;
-        const height = chartRef.current.clientHeight;
-        const pie = d3
-            .pie()
-            .value((d) => d.value);
-        const arc = d3
-            .arc()
-            .innerRadius(0)
-            .outerRadius(Math.min(width, height) / 2 - 1);
-        const colorScale = d3
-            .scaleOrdinal()
-            .domain(data.map((d) => d.name))
-            .range(d3.schemeCategory10);
-        const svg = d3.select(chartRef.current);
-        const g = svg
-            .append("g")
-            .attr("transform", `translate(${width / 2},${height / 2})`);
-        const arcs = pie(data);
-        const path = g
-            .selectAll("path")
-            .data(arcs)
-            .enter()
-            .append("path")
-            .attr("d", arc)
-            .attr("fill", (d) => colorScale(d.data.name));
-        g.selectAll("text")
-            .data(arcs)
-            .enter()
-            .append("text")
-            .attr("transform", (d) => `translate(${arc.centroid(d)})`)
-            .attr("text-anchor", "middle")
-            .text((d) => d.data.value);
-        return () => {
-            svg.selectAll("*").remove();
-        };
-    }, [data]);
-    return react_1.default.createElement("svg", { ref: chartRef });
+    return (react_1.default.createElement("div", { style: { height: "100%", width: "100%" } },
+        react_1.default.createElement(pie_1.ResponsivePie, { data: data, margin: { top: 40, right: 80, bottom: 80, left: 80 }, innerRadius: 0.5, padAngle: 0.7, cornerRadius: 3, activeOuterRadiusOffset: 8, borderWidth: 1, enableArcLinkLabels: false, borderColor: {
+                from: "color",
+                modifiers: [["darker", 0.2]],
+            }, legends: [
+                {
+                    anchor: "bottom",
+                    direction: "row",
+                    justify: false,
+                    translateX: 0,
+                    translateY: 56,
+                    itemsSpacing: 0,
+                    itemWidth: 100,
+                    itemHeight: 18,
+                    itemTextColor: "#999",
+                    itemDirection: "left-to-right",
+                    itemOpacity: 1,
+                    symbolSize: 18,
+                    symbolShape: "circle",
+                    effects: [
+                        {
+                            on: "hover",
+                            style: {
+                                itemTextColor: "#000",
+                            },
+                        },
+                    ],
+                },
+            ] })));
 };
-exports.PieChart = PieChart;
+exports.default = PieChart;
