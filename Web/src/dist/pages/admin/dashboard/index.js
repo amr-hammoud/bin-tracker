@@ -40,6 +40,7 @@ const react_redux_1 = require("react-redux");
 const sidebar_1 = __importDefault(require("../../../components/common/sidebar"));
 const navbar_1 = __importDefault(require("../../../components/common/navbar"));
 const request_1 = require("../../../configs/request");
+const piechart_1 = require("../../../components/dashboard/piechart");
 function AdminDashboard() {
     const user = (0, react_redux_1.useSelector)((state) => state.auth.user);
     const token = (0, react_redux_1.useSelector)((state) => state.auth.token);
@@ -103,7 +104,18 @@ function AdminDashboard() {
                                     react_1.default.createElement("div", { className: "mt-5 font-bold text-4xl" }, stats === null || stats === void 0 ? void 0 : stats.admins_count)),
                                 react_1.default.createElement("div", { className: "flex flex-col flex-wrap justify-center content-center w-full h-full bg-neutral-50 hover:bg-neutral-100 p-3 text-center rounded" },
                                     react_1.default.createElement("div", { className: " text-xl" }, "Drivers"),
-                                    react_1.default.createElement("div", { className: "mt-5 font-bold text-4xl" }, stats === null || stats === void 0 ? void 0 : stats.drivers_count))))),
+                                    react_1.default.createElement("div", { className: "mt-5 font-bold text-4xl" }, stats === null || stats === void 0 ? void 0 : stats.drivers_count))),
+                            react_1.default.createElement("div", { className: "flex justify-center bg-neutral-50 p-2" },
+                                react_1.default.createElement(piechart_1.PieChart, { data: [
+                                        {
+                                            name: "Admin",
+                                            value: stats.admins_count,
+                                        },
+                                        {
+                                            name: "Driver",
+                                            value: stats.drivers_count,
+                                        },
+                                    ] })))),
                     react_1.default.createElement("div", { className: "flex flex-col w-full h-full gap-2" },
                         react_1.default.createElement("div", { className: "flex flex-col w-full h-full gap-2" },
                             react_1.default.createElement("div", { className: "flex flex-col flex-wrap justify-center content-center h-full w-full bg-primary-100 hover:bg-primary-200 p-3 text-center rounded" },
@@ -118,7 +130,22 @@ function AdminDashboard() {
                                     react_1.default.createElement("div", { className: "mt-5 font-bold text-4xl" }, stats === null || stats === void 0 ? void 0 : stats.recyclables_bins_count)),
                                 react_1.default.createElement("div", { className: "flex flex-col flex-wrap justify-center content-center w-full h-full bg-neutral-50 hover:bg-neutral-100 p-3 text-center rounded" },
                                     react_1.default.createElement("div", { className: " text-xl" }, "Hazardous"),
-                                    react_1.default.createElement("div", { className: "mt-5 font-bold text-4xl" }, stats === null || stats === void 0 ? void 0 : stats.hazardous_bins_count))))),
+                                    react_1.default.createElement("div", { className: "mt-5 font-bold text-4xl" }, stats === null || stats === void 0 ? void 0 : stats.hazardous_bins_count))),
+                            react_1.default.createElement("div", { className: "flex justify-center bg-neutral-50 p-2" },
+                                react_1.default.createElement(piechart_1.PieChart, { data: [
+                                        {
+                                            name: "General",
+                                            value: stats.general_bins_count,
+                                        },
+                                        {
+                                            name: "Recyclables",
+                                            value: stats.recyclables_bins_count,
+                                        },
+                                        {
+                                            name: "Hazardous",
+                                            value: stats.hazardous_bins_count,
+                                        },
+                                    ] })))),
                     react_1.default.createElement("div", { className: "flex flex-col w-full h-full gap-2" },
                         react_1.default.createElement("div", { className: "flex flex-col w-full h-full gap-2" },
                             react_1.default.createElement("div", { className: "flex flex-col flex-wrap justify-center content-center h-full w-full bg-primary-100 hover:bg-primary-200 p-3 text-center rounded" },
