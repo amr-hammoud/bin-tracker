@@ -9,6 +9,15 @@ const dataSchema = new mongoose.Schema(
 	}
 );
 
+const collectionHistorySchema = new mongoose.Schema(
+	{
+		collected: Boolean
+	},
+	{
+		timestamps: true,
+	}
+);
+
 const userSchema = new mongoose.Schema(
 	{
 		name: {
@@ -40,6 +49,7 @@ const userSchema = new mongoose.Schema(
 			trim: true,
 		},
 		data: [dataSchema],
+		collection_history: [collectionHistorySchema],
 	},
 	{
 		timestamps: true,

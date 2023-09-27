@@ -35,7 +35,7 @@ const getAnalytics = async (req, res) => {
             },
             {
                 $match: {
-                    "data.updatedAt": { $ne: null },
+                    "data.collection_history": { $ne: null },
                 },
             },
             {
