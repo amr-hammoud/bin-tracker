@@ -5,8 +5,7 @@ import { Token, User } from "../../../store/interfaces";
 import Sidebar from "../../../components/common/sidebar";
 import Navbar from "../../../components/common/navbar";
 import { sendRequest } from "../../../configs/request";
-import { PieChart } from "../../../components/dashboard/piechart";
-import DashboardBarChart from "../../../components/dashboard/barchart";
+import BarChart from "../../../components/dashboard/barchart";
 
 export default function AdminDashboard() {
 	const user: User | null = useSelector(
@@ -116,20 +115,6 @@ export default function AdminDashboard() {
 										</div>
 									</div>
 								</div>
-								<div className="flex justify-center bg-neutral-50 p-2">
-									<PieChart
-										data={[
-											{
-												name: "Admin",
-												value: stats.admins_count,
-											},
-											{
-												name: "Driver",
-												value: stats.drivers_count,
-											},
-										]}
-									/>
-								</div>
 							</div>
 						</div>
 						<div className="flex flex-col w-full h-full gap-2">
@@ -166,38 +151,6 @@ export default function AdminDashboard() {
 										</div>
 									</div>
 								</div>
-								<div className="flex justify-center bg-neutral-50 p-2">
-									<PieChart
-										data={[
-											{
-												name: "General",
-												value: stats.general_bins_count,
-											},
-											{
-												name: "Recyclables",
-												value: stats.recyclables_bins_count,
-											},
-											{
-												name: "Hazardous",
-												value: stats.hazardous_bins_count,
-											},
-										]}
-									/>
-								</div>
-								<div className="flex flex-wrap h-fit w-full justify-center content-center p-1  bg-neutral-50">
-									<DashboardBarChart
-										data={
-											stats.collected_bins_per_day
-												? stats.collected_bins_per_day
-												: [
-														{
-															date: new Date().toISOString(),
-															count: 0,
-														},
-												]
-										}
-									/>
-								</div>
 							</div>
 						</div>
 						<div className="flex flex-col w-full h-full gap-2">
@@ -212,6 +165,33 @@ export default function AdminDashboard() {
 								</div>
 							</div>
 						</div>
+					</div>
+					<div className="flex flex-col justify-center w-full h-96 bg-neutral-50 p-5 mt-5">
+						<div>Bins Collected Per day (Last week)</div>
+						<BarChart
+							data={[
+								{
+									date: "2023-09-20T21:00:00.000Z",
+									count: 1,
+								},
+								{
+									date: "2023-09-21T21:00:00.000Z",
+									count: 1,
+								},
+								{
+									date: "2023-09-22T21:00:00.000Z",
+									count: 1,
+								},
+								{
+									date: "2023-09-23T21:00:00.000Z",
+									count: 1,
+								},
+								{
+									date: "2023-09-24T21:00:00.000Z",
+									count: 2,
+								},
+							]}
+						/>
 					</div>
 				</div>
 			</div>
