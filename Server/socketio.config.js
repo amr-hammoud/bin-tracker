@@ -13,6 +13,13 @@ function initializeSocketIo(server) {
 	io.on("connection", (socket) => {
 		console.log(`Socket ${socket.id} connected`);
 
+		socket.on("join_announcements_channel", (group) => {
+			socket.join(group.group);
+			socket.emit(
+				"joined_announcements_channel",
+				`joined the group ${group.group}`
+			);
+		});
 
 		socket.on("disconnect", () => {
 			console.log(`Socket ${socket.id} disconnected`);
