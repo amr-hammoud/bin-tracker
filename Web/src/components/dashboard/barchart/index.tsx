@@ -39,6 +39,11 @@ const BarChart: React.FC<{ data: { date: string; count: number }[] }> = ({
 					legendPosition: "middle",
 					legendOffset: 32,
 				}}
+				tooltip={({ value }) => (
+					<div className="p-2 bg-neutral-50 shadow-md rounded-lg border border-primary-500">
+						Count: {value}
+					</div>
+				)}
 			/>
 		</div>
 	);

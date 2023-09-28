@@ -26,6 +26,8 @@ const BarChart = ({ data, }) => {
                 legend: "Date",
                 legendPosition: "middle",
                 legendOffset: 32,
-            } })));
+            }, tooltip: ({ value }) => (react_1.default.createElement("div", { className: "p-2 bg-neutral-50 shadow-md rounded-lg border border-primary-500" },
+                "Count: ",
+                value)) })));
 };
 exports.default = BarChart;
