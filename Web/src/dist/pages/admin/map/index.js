@@ -45,6 +45,7 @@ const react_router_dom_1 = require("react-router-dom");
 const linechart_1 = __importDefault(require("../../../components/map/linechart"));
 const ri_1 = require("react-icons/ri");
 const button_1 = __importDefault(require("../../../components/base/button"));
+const rangeInput_1 = __importDefault(require("../../../components/map/rangeInput"));
 function AdminMap() {
     const token = (0, react_redux_1.useSelector)((state) => state.auth.token);
     const collapse = (0, react_redux_1.useSelector)((state) => state.sidebar.collapse);
@@ -114,6 +115,20 @@ function AdminMap() {
             console.error("Error calculating optimal route:", error);
         }
     });
+    const [filterValues, setFilterValues] = (0, react_1.useState)([0, 100]);
+    const [filteredBins, setFilteredBins] = (0, react_1.useState)([]);
+    const filterBinsByFillLevel = (bins, minFillLevel, maxFillLevel) => {
+        return bins.filter((bin) => {
+            const lastRecord = bin.data.length > 0
+                ? parseFloat(bin.data[bin.data.length - 1].record)
+                : 0;
+            return lastRecord >= minFillLevel && lastRecord <= maxFillLevel;
+        });
+    };
+    (0, react_1.useEffect)(() => {
+        const filteredBins = filterBinsByFillLevel(binsList, filterValues[0], filterValues[1]);
+        setFilteredBins(filteredBins);
+    }, [filterValues]);
     return (react_1.default.createElement("div", { className: "flex h-screen w-full" },
         react_1.default.createElement(sidebar_1.default, { items: [
                 "Dashboard",
@@ -128,28 +143,33 @@ function AdminMap() {
         react_1.default.createElement("div", { className: `flex flex-col w-full relative ${collapse ? "ml-20" : "ml-52"}` },
             react_1.default.createElement(navbar_1.default, { label: "Map", buttonLabel: "Suggest Route", buttonAction: () => prepareAndSendToAPI() }),
             react_1.default.createElement("div", { className: `w-full h-full z-10` },
-                react_1.default.createElement(main_1.default, { center: mapPosition, zoom: 8, layerStyle: activeStyle, bins: binsList, positionSetter: () => setMapPosition, activeBin: activeBin, activeBinSetter: setActiveBin, onbinClick: (e) => {
+                react_1.default.createElement(main_1.default, { center: mapPosition, zoom: 8, layerStyle: activeStyle, bins: filteredBins, positionSetter: () => setMapPosition, activeBin: activeBin, activeBinSetter: setActiveBin, onbinClick: (e) => {
                         console.log(e);
                     }, osrmResponse: routeSuggestion })),
-            react_1.default.createElement("div", { className: "absolute flex content-center gap-2 top-16 right-5 z-20" },
-                react_1.default.createElement("h3", { className: "flex flex-wrap content-center m-1 font-semibold text-gunmetal" }, "Map Style"),
-                react_1.default.createElement("div", { className: "flex w-fit h-10 bg-neutral-0 shadow-lg p-2 gap-2 text-gunmetal rounded-md border border-primary-500" },
-                    react_1.default.createElement("div", { className: `flex flex-wrap justify-center content-center p-2 text-center
+            react_1.default.createElement("div", { className: "absolute flex flex-col content-center gap-2 top-16 right-5 z-20" },
+                react_1.default.createElement("div", { className: "flex content-center gap-2" },
+                    react_1.default.createElement("h3", { className: "flex flex-wrap content-center m-1 font-semibold text-gunmetal" }, "Style"),
+                    react_1.default.createElement("div", { className: "flex h-10 w-80 justify-around bg-neutral-0 shadow-lg p-2 gap-2 text-gunmetal rounded-md border border-primary-500" },
+                        react_1.default.createElement("div", { className: `flex flex-wrap justify-center content-center p-2 text-center
 										rounded-md border border-neutral-700 ${activeStyle === 0
-                            ? "bg-primary-100"
-                            : ""}
+                                ? "bg-primary-100"
+                                : ""}
 										hover:border-primary-500 hover:bg-primary-200 hover:cursor-pointer`, onClick: () => setActiveStyle(0) }, "Default"),
-                    react_1.default.createElement("div", { className: `flex flex-wrap justify-center content-center p-2 text-center
+                        react_1.default.createElement("div", { className: `flex flex-wrap justify-center content-center p-2 text-center
 										rounded-md border border-neutral-700 ${activeStyle === 1
-                            ? "bg-primary-100"
-                            : ""}
+                                ? "bg-primary-100"
+                                : ""}
 										hover:border-primary-500 hover:bg-primary-200 hover:cursor-pointer`, onClick: () => setActiveStyle(1) }, "Atlas"),
-                    react_1.default.createElement("div", { className: `flex flex-wrap justify-center content-center p-2 text-center
+                        react_1.default.createElement("div", { className: `flex flex-wrap justify-center content-center p-2 text-center
 							rounded-md border border-neutral-700 ${activeStyle === 2 ? "bg-primary-100" : ""}
 							hover:border-primary-500 hover:bg-primary-200 hover:cursor-pointer`, onClick: () => setActiveStyle(2) }, "Terrain"),
-                    react_1.default.createElement("div", { className: `flex flex-wrap justify-center content-center p-2 text-center
+                        react_1.default.createElement("div", { className: `flex flex-wrap justify-center content-center p-2 text-center
 							rounded-md border border-neutral-700 ${activeStyle === 3 ? "bg-primary-100" : ""}
 							hover:border-primary-500 hover:bg-primary-200 hover:cursor-pointer`, onClick: () => setActiveStyle(3) }, "Lines"))),
+                react_1.default.createElement("div", { className: "flex content-center gap-2" },
+                    react_1.default.createElement("h3", { className: "flex flex-wrap content-center m-1 font-semibold text-gunmetal" }, "Filter"),
+                    react_1.default.createElement("div", { className: "flex h-fit w-80 bg-neutral-0 shadow-lg p-2 gap-2 text-gunmetal rounded-md border border-primary-500" },
+                        react_1.default.createElement(rangeInput_1.default, { values: filterValues, setter: (values) => setFilterValues(values) })))),
             activeBin ? (react_1.default.createElement("div", { className: "absolute bottom-5 left-5 z-20 w-fit" },
                 react_1.default.createElement("div", { className: "flex flex-col h-fit w-fit bg-neutral-0 shadow-lg rounded-md border border-primary-500" },
                     react_1.default.createElement("div", { className: "flex justify-between pt-5 pl-5 pr-10" },

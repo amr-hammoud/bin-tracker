@@ -11,6 +11,7 @@ import { useParams } from "react-router-dom";
 import LineChart from "../../../components/map/linechart";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import Button from "../../../components/base/button";
+import RangeSlider from "../../../components/map/rangeInput";
 
 export default function AdminMap() {
 	const token: Token | null = useSelector(
@@ -102,6 +103,32 @@ export default function AdminMap() {
 		}
 	};
 
+	const [filterValues, setFilterValues] = useState<number[]>([0, 100]);
+	const [filteredBins, setFilteredBins] = useState<Bin[]>([]);
+
+	const filterBinsByFillLevel = (
+		bins: Bin[],
+		minFillLevel: number,
+		maxFillLevel: number
+	) => {
+		return bins.filter((bin) => {
+			const lastRecord =
+				bin.data.length > 0
+					? parseFloat(bin.data[bin.data.length - 1].record)
+					: 0;
+			return lastRecord >= minFillLevel && lastRecord <= maxFillLevel;
+		});
+	};
+
+	useEffect(() => {
+		const filteredBins = filterBinsByFillLevel(
+			binsList,
+			filterValues[0],
+			filterValues[1]
+		);
+		setFilteredBins(filteredBins);
+	}, [filterValues]);
+
 	return (
 		<div className="flex h-screen w-full">
 			<Sidebar
@@ -132,7 +159,7 @@ export default function AdminMap() {
 						center={mapPosition}
 						zoom={8}
 						layerStyle={activeStyle}
-						bins={binsList}
+						bins={filteredBins}
 						positionSetter={() => setMapPosition}
 						activeBin={activeBin}
 						activeBinSetter={setActiveBin}
@@ -142,54 +169,69 @@ export default function AdminMap() {
 						osrmResponse={routeSuggestion}
 					/>
 				</div>
-				<div className="absolute flex content-center gap-2 top-16 right-5 z-20">
-					<h3 className="flex flex-wrap content-center m-1 font-semibold text-gunmetal">
-						Map Style
-					</h3>
-					<div className="flex w-fit h-10 bg-neutral-0 shadow-lg p-2 gap-2 text-gunmetal rounded-md border border-primary-500">
-						<div
-							className={`flex flex-wrap justify-center content-center p-2 text-center
+				<div className="absolute flex flex-col content-center gap-2 top-16 right-5 z-20">
+					<div className="flex content-center gap-2">
+						<h3 className="flex flex-wrap content-center m-1 font-semibold text-gunmetal">
+							Style
+						</h3>
+						<div className="flex h-10 w-80 justify-around bg-neutral-0 shadow-lg p-2 gap-2 text-gunmetal rounded-md border border-primary-500">
+							<div
+								className={`flex flex-wrap justify-center content-center p-2 text-center
 										rounded-md border border-neutral-700 ${
 											activeStyle === 0
 												? "bg-primary-100"
 												: ""
 										}
 										hover:border-primary-500 hover:bg-primary-200 hover:cursor-pointer`}
-							onClick={() => setActiveStyle(0)}
-						>
-							Default
-						</div>
-						<div
-							className={`flex flex-wrap justify-center content-center p-2 text-center
+								onClick={() => setActiveStyle(0)}
+							>
+								Default
+							</div>
+							<div
+								className={`flex flex-wrap justify-center content-center p-2 text-center
 										rounded-md border border-neutral-700 ${
 											activeStyle === 1
 												? "bg-primary-100"
 												: ""
 										}
 										hover:border-primary-500 hover:bg-primary-200 hover:cursor-pointer`}
-							onClick={() => setActiveStyle(1)}
-						>
-							Atlas
-						</div>
-						<div
-							className={`flex flex-wrap justify-center content-center p-2 text-center
+								onClick={() => setActiveStyle(1)}
+							>
+								Atlas
+							</div>
+							<div
+								className={`flex flex-wrap justify-center content-center p-2 text-center
 							rounded-md border border-neutral-700 ${
 								activeStyle === 2 ? "bg-primary-100" : ""
 							}
 							hover:border-primary-500 hover:bg-primary-200 hover:cursor-pointer`}
-							onClick={() => setActiveStyle(2)}
-						>
-							Terrain
-						</div>
-						<div
-							className={`flex flex-wrap justify-center content-center p-2 text-center
+								onClick={() => setActiveStyle(2)}
+							>
+								Terrain
+							</div>
+							<div
+								className={`flex flex-wrap justify-center content-center p-2 text-center
 							rounded-md border border-neutral-700 ${
 								activeStyle === 3 ? "bg-primary-100" : ""
 							}
 							hover:border-primary-500 hover:bg-primary-200 hover:cursor-pointer`}
-							onClick={() => setActiveStyle(3)}
-						>
-							Lines
+								onClick={() => setActiveStyle(3)}
+							>
+								Lines
+							</div>
+						</div>
+					</div>
+					<div className="flex content-center gap-2">
+						<h3 className="flex flex-wrap content-center m-1 font-semibold text-gunmetal">
+							Filter
+						</h3>
+						<div className="flex h-fit w-80 bg-neutral-0 shadow-lg p-2 gap-2 text-gunmetal rounded-md border border-primary-500">
+							<RangeSlider
+								values={filterValues}
+								setter={(values: number[]) =>
+									setFilterValues(values)
+								}
+							/>
 						</div>
 					</div>
 				</div>
@@ -199,14 +241,17 @@ export default function AdminMap() {
 							<div className="flex justify-between pt-5 pl-5 pr-10">
 								<div className="flex gap-2 m-1 font-semibold text-gunmetal">
 									<div className="flex flex-wrap content-center text-primary-500 font-semibold text-lg">
-									<RiDeleteBin6Line />
+										<RiDeleteBin6Line />
 									</div>
 									<div className="flex flex-wrap content-center text-primary-500 font-semibold text-lg">
-									Active Bin
+										Active Bin
 									</div>
 								</div>
 								<div>
-									<Button label="Close" onClick={() => setActiveBin(null)}/>
+									<Button
+										label="Close"
+										onClick={() => setActiveBin(null)}
+									/>
 								</div>
 							</div>
 
