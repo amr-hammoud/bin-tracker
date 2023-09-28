@@ -66,6 +66,9 @@ function AdminMap() {
         id && bins.length > 0 ? setActiveBin(bins[0]) : setActiveBin(null);
     };
     const [binsList, setBinList] = (0, react_1.useState)([]);
+    (0, react_1.useEffect)(() => {
+        getBins();
+    }, []);
     const getBins = () => __awaiter(this, void 0, void 0, function* () {
         try {
             const response = yield (0, request_1.sendRequest)({
@@ -81,9 +84,6 @@ function AdminMap() {
             console.error(err);
         }
     });
-    (0, react_1.useEffect)(() => {
-        getBins();
-    }, []);
     const [routeSuggestion, setRouteSuggestion] = (0, react_1.useState)();
     const formatBins = (binsList) => {
         return binsList.map((bin) => ({
@@ -127,8 +127,13 @@ function AdminMap() {
     };
     (0, react_1.useEffect)(() => {
         const filteredBins = filterBinsByFillLevel(binsList, filterValues[0], filterValues[1]);
+        setActiveBin(null);
         setFilteredBins(filteredBins);
     }, [filterValues]);
+    (0, react_1.useEffect)(() => {
+        const filteredBins = filterBinsByFillLevel(binsList, filterValues[0], filterValues[1]);
+        setFilteredBins(filteredBins);
+    }, [binsList]);
     return (react_1.default.createElement("div", { className: "flex h-screen w-full" },
         react_1.default.createElement(sidebar_1.default, { items: [
                 "Dashboard",

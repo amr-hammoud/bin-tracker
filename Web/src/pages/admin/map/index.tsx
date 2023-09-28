@@ -44,6 +44,10 @@ export default function AdminMap() {
 
 	const [binsList, setBinList] = useState<Bin[]>([]);
 
+	useEffect(() => {
+		getBins();
+	}, []);
+
 	const getBins = async () => {
 		try {
 			const response = await sendRequest({
@@ -58,10 +62,6 @@ export default function AdminMap() {
 			console.error(err);
 		}
 	};
-
-	useEffect(() => {
-		getBins();
-	}, []);
 
 	const [routeSuggestion, setRouteSuggestion] = useState();
 
@@ -126,8 +126,18 @@ export default function AdminMap() {
 			filterValues[0],
 			filterValues[1]
 		);
+		setActiveBin(null);
 		setFilteredBins(filteredBins);
 	}, [filterValues]);
+
+	useEffect(() => {
+		const filteredBins = filterBinsByFillLevel(
+			binsList,
+			filterValues[0],
+			filterValues[1]
+		);
+		setFilteredBins(filteredBins);
+	}, [binsList]);
 
 	return (
 		<div className="flex h-screen w-full">
