@@ -20,6 +20,7 @@
     "@types/react-dom": "^18.2.7",
     "@types/react-leaflet": "^3.0.0",
     "@types/react-modal": "^3.16.0",
+    "animate.css": "^4.1.1",
     "axios": "^1.5.0",
     "concurrently": "^8.2.1",
     "d3": "^7.8.5",

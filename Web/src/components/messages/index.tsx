@@ -1,7 +1,6 @@
 import React from "react";
 import { Message } from "../../store/interfaces";
 import { format, parseISO } from "date-fns";
-import { utcToZonedTime } from "date-fns-tz";
 
 interface MessageProps {
 	message: Message;
@@ -16,8 +15,8 @@ export default function MessageComponent(props: MessageProps) {
 		<div
 			className={`flex ${
 				props.message.sender_id._id === props.user_id
-					? "justify-end"
-					: "justify-start"
+					? "justify-end animate__animated animate__slideInRight"
+					: "justify-start animate__animated animate__slideInLeft"
 			} w-full`}
 		>
 			<div className="my-1 mx-1">

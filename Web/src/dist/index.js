@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importDefault(require("react"));
 const react_dom_1 = __importDefault(require("react-dom"));
 require("./index.css");
+require("animate.css");
 const App_1 = __importDefault(require("./App"));
 react_dom_1.default.render(react_1.default.createElement(react_1.default.StrictMode, null,
     react_1.default.createElement(App_1.default, null)), document.getElementById('root'));

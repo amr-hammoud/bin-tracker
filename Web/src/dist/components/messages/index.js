@@ -9,8 +9,8 @@ function MessageComponent(props) {
     const updatedAtDate = (0, date_fns_1.parseISO)(props.message.updatedAt);
     const formattedTime = (0, date_fns_1.format)(updatedAtDate, "hh:mm a");
     return (react_1.default.createElement("div", { className: `flex ${props.message.sender_id._id === props.user_id
-            ? "justify-end"
-            : "justify-start"} w-full` },
+            ? "justify-end animate__animated animate__slideInRight"
+            : "justify-start animate__animated animate__slideInLeft"} w-full` },
         react_1.default.createElement("div", { className: "my-1 mx-1" },
             react_1.default.createElement("div", { className: "text-sm text-gunmetal mb-1" }, props.message.sender_id.username),
             react_1.default.createElement("div", { className: `flex text-sm p-2 rounded-md shadow-lg
