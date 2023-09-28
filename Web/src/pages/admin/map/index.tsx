@@ -194,7 +194,7 @@ export default function AdminMap() {
 					</div>
 				</div>
 				{activeBin ? (
-					<div className="absolute bottom-5 left-5 z-20 w-11/12">
+					<div className="absolute bottom-5 left-5 z-20 w-fit">
 						<div className="flex flex-col h-fit w-fit bg-neutral-0 shadow-lg rounded-md border border-primary-500">
 							<div className="flex justify-between pt-5 pl-5 pr-10">
 								<div className="flex gap-2 m-1 font-semibold text-gunmetal">

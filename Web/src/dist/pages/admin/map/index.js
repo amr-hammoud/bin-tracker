@@ -150,7 +150,7 @@ function AdminMap() {
                     react_1.default.createElement("div", { className: `flex flex-wrap justify-center content-center p-2 text-center
 							rounded-md border border-neutral-700 ${activeStyle === 3 ? "bg-primary-100" : ""}
 							hover:border-primary-500 hover:bg-primary-200 hover:cursor-pointer`, onClick: () => setActiveStyle(3) }, "Lines"))),
-            activeBin ? (react_1.default.createElement("div", { className: "absolute bottom-5 left-5 z-20 w-11/12" },
+            activeBin ? (react_1.default.createElement("div", { className: "absolute bottom-5 left-5 z-20 w-fit" },
                 react_1.default.createElement("div", { className: "flex flex-col h-fit w-fit bg-neutral-0 shadow-lg rounded-md border border-primary-500" },
                     react_1.default.createElement("div", { className: "flex justify-between pt-5 pl-5 pr-10" },
                         react_1.default.createElement("div", { className: "flex gap-2 m-1 font-semibold text-gunmetal" },
