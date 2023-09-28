@@ -4,7 +4,7 @@ const groupController = require("../controllers/group.controllers");
 const superadminMiddleware = require("../middlewares/superadmin.middleware");
 
 router.get("/", superadminMiddleware, groupController.getAllGroups)
-router.post("/", superadminMiddleware, groupController.createGroup)
+router.post("/:id?", superadminMiddleware, groupController.createOrUpdateGroup)
 router.delete("/:id", superadminMiddleware, groupController.deleteGroup)
 
 module.exports = router;
