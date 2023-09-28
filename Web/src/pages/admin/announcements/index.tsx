@@ -1,7 +1,4 @@
-import React, {
-	useState,
-	useEffect,
-} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { User2, Token, Message } from "../../../store/interfaces";
@@ -12,9 +9,12 @@ import { sendRequest } from "../../../configs/request";
 import { format, parseISO } from "date-fns";
 import { IoSend } from "react-icons/io5";
 import { Toaster, toast } from "react-hot-toast";
+import io from "socket.io-client";
 interface GroupedAnnouncements {
 	[date: string]: Message[];
 }
+
+const socket = io("http://localhost:8000");
 
 export default function AdminAnnouncements() {
 	const token: Token | null = useSelector(
@@ -28,6 +28,8 @@ export default function AdminAnnouncements() {
 	const collapse: boolean = useSelector(
 		(state: RootState) => state.sidebar.collapse
 	);
+
+	const messagesBottom = useRef<HTMLDivElement | null>(null);
 
 	const [announcements, setAnnouncements] = useState<Message[]>([]);
 	const [groupedAnnouncements, setGroupedAnnouncements] =
@@ -44,7 +46,6 @@ export default function AdminAnnouncements() {
 			});
 			if (response.status === 200) {
 				setAnnouncements(response.data);
-				console.log(response);
 			}
 		} catch (err: any) {
 			console.error(err);
@@ -53,7 +54,22 @@ export default function AdminAnnouncements() {
 
 	useEffect(() => {
 		getMessages();
+		socket.emit("join_announcements_channel", { group: user.group_id });
+		scrollToBottom();
 	}, []);
+
+	useEffect(() => {
+		try {
+			socket.on("receive_message", (message) => {
+				setAnnouncements((announcements) => [
+					...announcements,
+					message,
+				]);
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	}, [socket]);
 
 	useEffect(() => {
 		const grouped: GroupedAnnouncements = {};
@@ -67,6 +83,7 @@ export default function AdminAnnouncements() {
 			grouped[formattedDate].push(message);
 		});
 		setGroupedAnnouncements(grouped);
+		scrollToBottom()
 	}, [announcements]);
 
 	const handleTextareaChange = (text: string) => {
@@ -83,6 +100,7 @@ export default function AdminAnnouncements() {
 			e.preventDefault();
 		}
 	};
+	
 
 	const sendMessage = async () => {
 		try {
@@ -95,7 +113,7 @@ export default function AdminAnnouncements() {
 
 			if (response.status === 200) {
 				setMessageText("");
-
+				scrollToBottom()
 			} else {
 				toast.error("Couldn't Send, Try Again", { duration: 4000 });
 			}
@@ -105,7 +123,13 @@ export default function AdminAnnouncements() {
 		}
 	};
 
-	const handleMessage = () => {};
+	const scrollToBottom = () => {
+		const container = messagesBottom.current;
+
+		if (container) {
+			container.scrollTop = container.scrollHeight + 500;
+		}
+	};
 
 	return (
 		<div className="flex">
@@ -123,7 +147,7 @@ export default function AdminAnnouncements() {
 				selected="Announcements"
 			/>
 			<div
-				className={`flex flex-col w-full relative ${
+				className={`flex flex-col w-full h-screen relative ${
 					collapse ? "ml-20" : "ml-52"
 				}`}
 			>
@@ -131,7 +155,10 @@ export default function AdminAnnouncements() {
 				<div>
 					<Toaster />
 				</div>
-				<div className="p-5 bg-neutral-100 h-full">
+				<div
+					className="p-5 bg-neutral-100 h-full overflow-auto pb-20"
+					ref={messagesBottom}
+				>
 					{Object.keys(groupedAnnouncements).map((date) => (
 						<div key={date}>
 							<div className=" flex justify-center w-full mt-5 mb-2">
@@ -151,7 +178,7 @@ export default function AdminAnnouncements() {
 						</div>
 					))}
 				</div>
-				<div className="sticky bottom-3 left-5 w-full flex flex-wrap flex-col justify-center content-center font-poppins h-fit my-1 text-gunmetal">
+				<div className="absolute bottom-5 left-5 w-11/12 flex flex-wrap flex-col justify-center content-center font-poppins h-fit my-1 text-gunmetal">
 					<textarea
 						className={`rounded-xl text-base w-11/12
 									bg-neutral-0 border-primary-400 shadow-lg
@@ -169,7 +196,7 @@ export default function AdminAnnouncements() {
 					<div
 						className="absolute right-16  rounded-full p-2 text-md bg-primary-500 text-neutral-0
 									hover:bg-primary-700 hover:cursor-pointer"
-						onClick={() => handleMessage()}
+						onClick={() => sendMessage()}
 					>
 						<IoSend />
 					</div>
