@@ -101,30 +101,65 @@ const deleteBinRecord = async (req, res) => {
 	}
 };
 
+const calculateProximity = (bin1, bin2) => {
+	const lat1 = bin1.latitude;
+	const lon1 = bin1.longitude;
+	const lat2 = bin2.latitude;
+	const lon2 = bin2.longitude;
+
+	const earthRadius = 6371;
+
+	const lat1Rad = (lat1 * Math.PI) / 180;
+	const lon1Rad = (lon1 * Math.PI) / 180;
+	const lat2Rad = (lat2 * Math.PI) / 180;
+	const lon2Rad = (lon2 * Math.PI) / 180;
+
+	const dLat = lat2Rad - lat1Rad;
+	const dLon = lon2Rad - lon1Rad;
+
+	const a =
+		Math.sin(dLat / 2) ** 2 +
+		Math.cos(lat1Rad) * Math.cos(lat2Rad) * Math.sin(dLon / 2) ** 2;
+
+	const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+	const distance = earthRadius * c;
+
+	return distance;
+};
+
 const calculateOptimalRoute = async (req, res) => {
 	const { bins } = req.body;
 
-	try {
+	const FillLevelWeight = 0.6;
+	const ProximityWeight = 0.4;
 
+	try {
 		if (bins.length === 0) {
-			return res
-				.status(400)
-				.send(
-					"No bins with fill level above 90% and recent last_pickup_time found."
-				);
+			return res.status(400).send("No bins sent");
 		}
 
-		const waypoints = bins
-			.map((bin) => `${bin.longitude},${bin.latitude}`)
+		const depot = { latitude: 33.890211, longitude: 35.484557 };
+		bins.forEach((bin) => {
+			const proximity = calculateProximity(depot, bin);
+			bin.score =
+				FillLevelWeight * bin.fill_level + ProximityWeight * proximity;
+		});
+
+		const sortedBins = bins.sort((a, b) => b.score - a.score);
+
+		const waypointString = sortedBins
+			.map((waypoint) => `${waypoint.longitude},${waypoint.latitude}`)
 			.join(";");
 
-		const osrmApiUrl = `http://localhost:5000/route/v1/driving/${waypoints}?steps=true&alternatives=false`;
+		const osrmApiUrl = `http://localhost:5000/route/v1/driving/${waypointString}?steps=true&alternatives=false`;
 
-		const osrmResponse = await axios.get(osrmApiUrl);
+		const response = await axios.get(osrmApiUrl);
 
-		const routeData = osrmResponse.data;
+		const routeData = response.data;
+		const route = routeData.routes[0];
 
-		return res.status(200).send(routeData);
+		return res.status(200).send(route);
 	} catch (error) {
 		console.error("Error calculating optimal route:", error);
 		return res.status(500).send("Internal server error");
