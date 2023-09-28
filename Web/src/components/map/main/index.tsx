@@ -27,7 +27,7 @@ interface MapProps {
 	positionSetter: (position: LatLngLiteral) => void;
 	activeBinSetter: (bin: Bin | null) => void;
 	onbinClick: (e: any) => void;
-	osrmResponse?: RouteResponse;
+	routeString?: string;
 }
 
 const icon = new L.Icon({
@@ -54,12 +54,11 @@ export default function MapComponent(props: MapProps) {
 
 	useEffect(() => {
 		const decodedGeometry = decodeOSRMGeometry(
-			props.osrmResponse ? props.osrmResponse.routes[0].geometry : ""
+			props.routeString ? props.routeString : ""
 		);
 
 		setDecodedRoute(decodedGeometry);
-		console.log(decodedRoute);
-	}, [props.osrmResponse]);
+	}, [props.routeString]);
 
 	function decodeOSRMGeometry(encodedGeometry: string): [number, number][] {
 		return polyline

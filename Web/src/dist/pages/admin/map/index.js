@@ -46,6 +46,7 @@ const linechart_1 = __importDefault(require("../../../components/map/linechart")
 const ri_1 = require("react-icons/ri");
 const button_1 = __importDefault(require("../../../components/base/button"));
 const rangeInput_1 = __importDefault(require("../../../components/map/rangeInput"));
+const react_hot_toast_1 = __importStar(require("react-hot-toast"));
 function AdminMap() {
     const token = (0, react_redux_1.useSelector)((state) => state.auth.token);
     const collapse = (0, react_redux_1.useSelector)((state) => state.sidebar.collapse);
@@ -84,7 +85,7 @@ function AdminMap() {
             console.error(err);
         }
     });
-    const [routeSuggestion, setRouteSuggestion] = (0, react_1.useState)();
+    const [suggestedRoute, setSuggestedRoute] = (0, react_1.useState)("");
     const formatBins = (binsList) => {
         return binsList.map((bin) => ({
             latitude: bin.latitude,
@@ -95,21 +96,39 @@ function AdminMap() {
     };
     const prepareAndSendToAPI = () => __awaiter(this, void 0, void 0, function* () {
         try {
-            const filteredBins = binsList.filter((bin) => bin.data.some((record) => record.record >= 90));
+            setSuggestedRoute("");
             if (filteredBins.length === 0) {
-                console.log("No bins with fill level above 90% found.");
+                react_hot_toast_1.default.error("No Bins Selected, Modify the filter", {
+                    duration: 4000,
+                });
                 return;
             }
-            const bins = formatBins(binsList);
+            const bins = formatBins(filteredBins);
+            (0, react_hot_toast_1.default)("Processing", {
+                icon: "⚙️",
+                duration: 500,
+            });
             const osrmResponse = yield (0, request_1.sendRequest)({
                 method: "POST",
                 route: "bins/best-route",
                 body: { bins: bins },
                 token,
             });
-            const routeData = osrmResponse.data;
-            setRouteSuggestion(routeData);
-            console.log("Optimal route data:", routeData);
+            if (osrmResponse.status === 200) {
+                setTimeout(() => {
+                    react_hot_toast_1.default.success("Route Suggestion Complete", {
+                        duration: 1500,
+                    });
+                    setSuggestedRoute(osrmResponse.data.geometry);
+                }, 500);
+            }
+            else {
+                setTimeout(() => {
+                    react_hot_toast_1.default.error("Something wrong happened,\nroute suggestion not complete", {
+                        duration: 4000,
+                    });
+                }, 500);
+            }
         }
         catch (error) {
             console.error("Error calculating optimal route:", error);
@@ -146,11 +165,13 @@ function AdminMap() {
                 "Account",
             ], selected: "Map" }),
         react_1.default.createElement("div", { className: `flex flex-col w-full relative ${collapse ? "ml-20" : "ml-52"}` },
-            react_1.default.createElement(navbar_1.default, { label: "Map", buttonLabel: "Suggest Route", buttonAction: () => prepareAndSendToAPI() }),
+            react_1.default.createElement(navbar_1.default, { label: "Map" }),
+            react_1.default.createElement("div", null,
+                react_1.default.createElement(react_hot_toast_1.Toaster, null)),
             react_1.default.createElement("div", { className: `w-full h-full z-10` },
                 react_1.default.createElement(main_1.default, { center: mapPosition, zoom: 8, layerStyle: activeStyle, bins: filteredBins, positionSetter: () => setMapPosition, activeBin: activeBin, activeBinSetter: setActiveBin, onbinClick: (e) => {
                         console.log(e);
-                    }, osrmResponse: routeSuggestion })),
+                    }, routeString: suggestedRoute })),
             react_1.default.createElement("div", { className: "absolute flex flex-col content-center gap-2 top-16 right-5 z-20" },
                 react_1.default.createElement("div", { className: "flex content-center gap-2" },
                     react_1.default.createElement("h3", { className: "flex flex-wrap content-center m-1 font-semibold text-gunmetal" }, "Style"),
@@ -174,7 +195,13 @@ function AdminMap() {
                 react_1.default.createElement("div", { className: "flex content-center gap-2" },
                     react_1.default.createElement("h3", { className: "flex flex-wrap content-center m-1 font-semibold text-gunmetal" }, "Filter"),
                     react_1.default.createElement("div", { className: "flex h-fit w-80 bg-neutral-0 shadow-lg p-2 gap-2 text-gunmetal rounded-md border border-primary-500" },
-                        react_1.default.createElement(rangeInput_1.default, { values: filterValues, setter: (values) => setFilterValues(values) })))),
+                        react_1.default.createElement(rangeInput_1.default, { values: filterValues, setter: (values) => setFilterValues(values) }))),
+                react_1.default.createElement("div", { className: "flex content-center gap-2" },
+                    react_1.default.createElement("h3", { className: "flex flex-wrap content-center m-1 font-semibold text-gunmetal" }, "Route"),
+                    react_1.default.createElement("div", null,
+                        react_1.default.createElement(button_1.default, { label: "Suggest Route", onClick: () => prepareAndSendToAPI() })),
+                    react_1.default.createElement("div", null,
+                        react_1.default.createElement(button_1.default, { label: "Clear Route", onClick: () => setSuggestedRoute("") })))),
             activeBin ? (react_1.default.createElement("div", { className: "absolute bottom-5 left-5 z-20 w-fit" },
                 react_1.default.createElement("div", { className: "flex flex-col h-fit w-fit bg-neutral-0 shadow-lg rounded-md border border-primary-500" },
                     react_1.default.createElement("div", { className: "flex justify-between pt-5 pl-5 pr-10" },

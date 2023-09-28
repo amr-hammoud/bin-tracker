@@ -12,6 +12,7 @@ import LineChart from "../../../components/map/linechart";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import Button from "../../../components/base/button";
 import RangeSlider from "../../../components/map/rangeInput";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function AdminMap() {
 	const token: Token | null = useSelector(
@@ -63,7 +64,7 @@ export default function AdminMap() {
 		}
 	};
 
-	const [routeSuggestion, setRouteSuggestion] = useState();
+	const [suggestedRoute, setSuggestedRoute] = useState("");
 
 	const formatBins = (binsList: Bin[]) => {
 		return binsList.map((bin) => ({
@@ -77,17 +78,18 @@ export default function AdminMap() {
 
 	const prepareAndSendToAPI = async () => {
 		try {
-			const filteredBins = binsList.filter((bin: Bin) =>
-				bin.data.some((record: any) => record.record >= 90)
-			);
-
+			setSuggestedRoute("")
 			if (filteredBins.length === 0) {
-				console.log("No bins with fill level above 90% found.");
+				toast.error("No Bins Selected, Modify the filter", {
+					duration: 4000,
+				});
 				return;
 			}
-
-			const bins = formatBins(binsList);
-
+			const bins = formatBins(filteredBins);
+			toast("Processing", {
+				icon: "⚙️",
+				duration: 500,
+			});
 			const osrmResponse = await sendRequest({
 				method: "POST",
 				route: "bins/best-route",
@@ -95,9 +97,23 @@ export default function AdminMap() {
 				token,
 			});
 
-			const routeData = osrmResponse.data;
-			setRouteSuggestion(routeData);
-			console.log("Optimal route data:", routeData);
+			if (osrmResponse.status === 200) {
+				setTimeout(() => {
+					toast.success("Route Suggestion Complete", {
+						duration: 1500,
+					});
+					setSuggestedRoute(osrmResponse.data.geometry);
+				}, 500);
+			} else {
+				setTimeout(() => {
+					toast.error(
+						"Something wrong happened,\nroute suggestion not complete",
+						{
+							duration: 4000,
+						}
+					);
+				}, 500);
+			}
 		} catch (error) {
 			console.error("Error calculating optimal route:", error);
 		}
@@ -161,9 +177,10 @@ export default function AdminMap() {
 			>
 				<Navbar
 					label="Map"
-					buttonLabel="Suggest Route"
-					buttonAction={() => prepareAndSendToAPI()}
 				/>
+				<div>
+					<Toaster />
+				</div>
 				<div className={`w-full h-full z-10`}>
 					<MapComponent
 						center={mapPosition}
@@ -176,7 +193,7 @@ export default function AdminMap() {
 						onbinClick={(e) => {
 							console.log(e);
 						}}
-						osrmResponse={routeSuggestion}
+						routeString={suggestedRoute}
 					/>
 				</div>
 				<div className="absolute flex flex-col content-center gap-2 top-16 right-5 z-20">
@@ -242,6 +259,17 @@ export default function AdminMap() {
 									setFilterValues(values)
 								}
 							/>
+						</div>
+					</div>
+					<div className="flex content-center gap-2">
+						<h3 className="flex flex-wrap content-center m-1 font-semibold text-gunmetal">
+							Route
+						</h3>
+						<div>
+							<Button label="Suggest Route" onClick={() => prepareAndSendToAPI()}/>
+						</div>
+						<div>
+							<Button label="Clear Route" onClick={() => setSuggestedRoute("")}/>
 						</div>
 					</div>
 				</div>

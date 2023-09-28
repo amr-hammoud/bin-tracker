@@ -52,10 +52,9 @@ const mapTileLayers = [
 function MapComponent(props) {
     const [decodedRoute, setDecodedRoute] = (0, react_1.useState)([]);
     (0, react_1.useEffect)(() => {
-        const decodedGeometry = decodeOSRMGeometry(props.osrmResponse ? props.osrmResponse.routes[0].geometry : "");
+        const decodedGeometry = decodeOSRMGeometry(props.routeString ? props.routeString : "");
         setDecodedRoute(decodedGeometry);
-        console.log(decodedRoute);
-    }, [props.osrmResponse]);
+    }, [props.routeString]);
     function decodeOSRMGeometry(encodedGeometry) {
         return polyline_1.default
             .decode(encodedGeometry)
