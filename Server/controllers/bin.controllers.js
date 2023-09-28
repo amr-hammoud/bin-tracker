@@ -49,26 +49,34 @@ const deleteBin = async (req, res) => {
 };
 
 const addBinRecord = async (req, res) => {
-	const new_bin_record = req.body;
+	const record_data = req.body;
+	console.log(record_data);
 
-	if (new_bin_record.record != null) {
+	if (record_data.record != null) {
 		try {
 			const id = req.params.id;
 
 			const bin_instance = await Bin.findById(id);
 
 			if (!bin_instance) {
-				return res.status(404).send("Bin not found");
+				return res.status(404).send("Bin not found\nCheck id in ENDPOINT");
 			}
+
+			// if (record_data.latitude !== '0.0' && record_data.longitude !== '0.0') {
+			// 	bin_instance.latitude = record_data.latitude;
+			// 	bin_instance.longitude = record_data.longitude;
+			// }
 
 			bin_instance.data.push({
 				timestamp: new Date(),
-				record: new_bin_record.record,
+				record: record_data.record,
 			});
 
 			await bin_instance.save();
 
-			return res.send(bin_instance);
+			const response_string = ` | Record Added Successfully\n | Record: ${record_data.record}\n | Latitude: ${record_data.latitude}\n | Longitude: ${record_data.longitude}`;
+
+			return res.send(response_string);
 		} catch (error) {
 			console.error("Error adding bin record:", error);
 			return res.status(500).send("Internal server error");
