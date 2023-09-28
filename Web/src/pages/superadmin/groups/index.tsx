@@ -128,6 +128,43 @@ export default function SuperAdminGroups() {
 		}
 	};
 
+	const activateEditModal = (data: any) => {
+		const group = JSON.parse(data);
+		setGroupData({
+			...groupData,
+			_id: group._id,
+			name: group.name,
+		});
+
+		setCreateModalState({ ...createModalState, open: true, type: "edit" });
+	};
+
+	const updateGroup = async () => {
+		const { _id, ...restData } = groupData;
+
+		try {
+			const response = await sendRequest({
+				method: "POST",
+				route: `groups/${groupData._id}`,
+				body: restData,
+				token,
+			});
+
+			if (response.status === 200) {
+				setCreateModalState({ ...createModalState, open: false });
+				getGroups();
+				toast.success("Group updated successfully", { duration: 2500 });
+			} else {
+				setCreateModalState({ ...createModalState, open: false });
+				toast.error("Couldn't Update, Try Again", { duration: 4000 });
+			}
+		} catch (err: any) {
+			console.error(err);
+			setCreateModalState({ ...createModalState, open: false });
+			toast.error("Couldn't Update, Try Again", { duration: 2500 });
+		}
+	};
+
 	const [filters, setfilters] = useState<{
 		searchQuery: string;
 	}>({
@@ -216,7 +253,7 @@ export default function SuperAdminGroups() {
 								label="Update"
 								bgColor="bg-primary-500"
 								hoverColor="hover:bg-primary-700"
-								// onClick={() => updateGroup()}
+								onClick={() => updateGroup()}
 							/>
 						) : (
 							<Button
@@ -293,6 +330,7 @@ export default function SuperAdminGroups() {
 									group.members.length.toString(),
 								]}
 								object={group}
+								onEdit={(data) => activateEditModal(data)}
 								onDelete={(id) => activateDeleteModal(id)}
 							/>
 						);

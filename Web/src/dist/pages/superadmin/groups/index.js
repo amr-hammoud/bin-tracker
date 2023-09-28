@@ -147,6 +147,36 @@ function SuperAdminGroups() {
             react_hot_toast_1.toast.error("Couldn't Create, Try Again", { duration: 2500 });
         }
     });
+    const activateEditModal = (data) => {
+        const group = JSON.parse(data);
+        setGroupData(Object.assign(Object.assign({}, groupData), { _id: group._id, name: group.name }));
+        setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: true, type: "edit" }));
+    };
+    const updateGroup = () => __awaiter(this, void 0, void 0, function* () {
+        const { _id } = groupData, restData = __rest(groupData, ["_id"]);
+        try {
+            const response = yield (0, request_1.sendRequest)({
+                method: "POST",
+                route: `groups/${groupData._id}`,
+                body: restData,
+                token,
+            });
+            if (response.status === 200) {
+                setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false }));
+                getGroups();
+                react_hot_toast_1.toast.success("Group updated successfully", { duration: 2500 });
+            }
+            else {
+                setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false }));
+                react_hot_toast_1.toast.error("Couldn't Update, Try Again", { duration: 4000 });
+            }
+        }
+        catch (err) {
+            console.error(err);
+            setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false }));
+            react_hot_toast_1.toast.error("Couldn't Update, Try Again", { duration: 2500 });
+        }
+    });
     const [filters, setfilters] = (0, react_1.useState)({
         searchQuery: "",
     });
@@ -178,7 +208,7 @@ function SuperAdminGroups() {
                             }, required: true }))),
                 react_1.default.createElement("div", { className: "flex w-full justify-center gap-10 mt-5" },
                     react_1.default.createElement(button_1.default, { label: "Cancel", color: "text-gunmetal", bgColor: "bg-neutral-100", hoverColor: "hover:bg-neutral-600", onClick: () => setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false })) }),
-                    createModalState.type === "edit" ? (react_1.default.createElement(button_1.default, { label: "Update", bgColor: "bg-primary-500", hoverColor: "hover:bg-primary-700" })) : (react_1.default.createElement(button_1.default, { label: "Create", bgColor: "bg-primary-500", hoverColor: "hover:bg-primary-700", onClick: () => createGroup() })))),
+                    createModalState.type === "edit" ? (react_1.default.createElement(button_1.default, { label: "Update", bgColor: "bg-primary-500", hoverColor: "hover:bg-primary-700", onClick: () => updateGroup() })) : (react_1.default.createElement(button_1.default, { label: "Create", bgColor: "bg-primary-500", hoverColor: "hover:bg-primary-700", onClick: () => createGroup() })))),
             react_1.default.createElement(modal_1.default, { showModal: deleteModalState.open, onRequestClose: () => setdeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: !deleteModalState.open })) },
                 react_1.default.createElement("div", { className: "text-xl" }, "Are you sure you want to delete?"),
                 react_1.default.createElement("div", { className: "flex w-full justify-center gap-10 mt-5" },
@@ -201,7 +231,7 @@ function SuperAdminGroups() {
                             group.name,
                             group.admins.length.toString(),
                             group.members.length.toString(),
-                        ], object: group, onDelete: (id) => activateDeleteModal(id) }));
+                        ], object: group, onEdit: (data) => activateEditModal(data), onDelete: (id) => activateDeleteModal(id) }));
                 })))));
 }
 exports.default = SuperAdminGroups;
