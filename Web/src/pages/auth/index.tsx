@@ -27,9 +27,11 @@ export default function AuthPage() {
 
 	useEffect(() => {
 		if (user?.user_type === "1") {
+			navigate("/sadmin/dashboard");
+		} else if (user?.user_type === "2") {
 			navigate("/admin/dashboard");
-		} else if (user?.user_type) {
-			navigate("/dashboard");
+		} else if (user?.user_type === "3") {
+			navigate("/map");
 		}
 	}, [user]);
 
@@ -48,9 +50,11 @@ export default function AuthPage() {
 				dispatch(setToken(response?.data?.token));
 				dispatch(setUser(response?.data?.user));
 				if (response.data.user.user_type === "1") {
-					navigate("/admin/dashboard");
+					navigate("/sadmin/dashboard");
 				} else if (response.data.user.user_type === "2") {
-					navigate("/dashboard");
+					navigate("/admin/dashboard");
+				} else if (response.data.user.user_type === "3") {
+					navigate("/map");
 				}
 			}
 		} catch (err: any) {

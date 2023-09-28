@@ -18,6 +18,9 @@ import AdminAnnouncements from "./pages/admin/announcements";
 import AdminChats from "./pages/admin/chats";
 import AdminAccount from "./pages/admin/account";
 import LandingPage from "./pages/landing";
+import E401Page from "./pages/other/e401";
+import E404Page from "./pages/other/e404";
+import ProtectedRoute from "./middlewares/auth.middleware";
 
 function App() {
 	const persistor = persistStore(store);
@@ -30,62 +33,136 @@ function App() {
 						<Routes>
 							<Route path="/" element={<LandingPage />} />
 							<Route path="/login" element={<AuthPage />} />
+
+							<Route
+								path="/sadmin/dashboard"
+								element={
+									<ProtectedRoute
+										path="/admin/dashboard"
+										element={<SuperAdminDashboard />}
+										roles={["1"]}
+									/>
+								}
+							/>
+
+							<Route
+								path="/sadmin/users"
+								element={
+									<ProtectedRoute
+										path="/sadmin/users"
+										element={<SuperAdminUsers />}
+										roles={["1"]}
+									/>
+								}
+							/>
+
+							<Route
+								path="/sadmin/groups"
+								element={
+									<ProtectedRoute
+										path="/sadmin/groups"
+										element={<SuperAdminGroups />}
+										roles={["1"]}
+									/>
+								}
+							/>
+
+							<Route
+								path="/sadmin/account"
+								element={
+									<ProtectedRoute
+										path="/sadmin/account"
+										element={<SuperAdminAccount />}
+										roles={["1"]}
+									/>
+								}
+							/>
+
 							<Route
 								path="/admin/dashboard"
-								element={<SuperAdminDashboard />}
+								element={
+									<ProtectedRoute
+										path="/sadmin/account"
+										element={<AdminDashboard />}
+										roles={["2"]}
+									/>
+								}
+							/>
+							<Route
+								path="/admin/bins"
+								element={
+									<ProtectedRoute
+										path="/sadmin/account"
+										element={<AdminBins />}
+										roles={["2"]}
+									/>
+								}
+							/>
+							<Route
+								path="/admin/map/:id?"
+								element={
+									<ProtectedRoute
+										path="/sadmin/account"
+										element={<AdminMap />}
+										roles={["2"]}
+									/>
+								}
 							/>
 							<Route
 								path="/admin/users"
-								element={<SuperAdminUsers />}
+								element={
+									<ProtectedRoute
+										path="/sadmin/account"
+										element={<AdminUsers />}
+										roles={["2"]}
+									/>
+								}
 							/>
 							<Route
-								path="/admin/groups"
-								element={<SuperAdminGroups />}
+								path="/admin/trucks"
+								element={
+									<ProtectedRoute
+										path="/sadmin/account"
+										element={<AdminTrucks />}
+										roles={["2"]}
+									/>
+								}
+							/>
+							<Route
+								path="/admin/announcements"
+								element={
+									<ProtectedRoute
+										path="/sadmin/account"
+										element={<AdminAnnouncements />}
+										roles={["2"]}
+									/>
+								}
+							/>
+							<Route
+								path="/admin/chats"
+								element={
+									<ProtectedRoute
+										path="/sadmin/account"
+										element={<AdminChats />}
+										roles={["2"]}
+									/>
+								}
 							/>
 							<Route
 								path="/admin/account"
-								element={<SuperAdminAccount />}
+								element={
+									<ProtectedRoute
+										path="/sadmin/account"
+										element={<AdminAccount />}
+										roles={["2"]}
+									/>
+								}
 							/>
-							<Route
-								path="/dashboard"
-								element={<AdminDashboard />}
-							/>
-							<Route
-								path="/bins"
-								element={<AdminBins />}
-							/>
-							<Route
-								path="/map/:id?"
-								element={<AdminMap />}
-							/>
-							<Route
-								path="/users"
-								element={<AdminUsers />}
-							/>
-							<Route
-								path="/trucks"
-								element={<AdminTrucks />}
-							/>
-							<Route
-								path="/announcements"
-								element={<AdminAnnouncements />}
-							/>
-							<Route
-								path="/chats"
-								element={<AdminChats />}
-							/>
-							<Route
-								path="/account"
-								element={<AdminAccount />}
-							/>
-							<Route
-								path="/privacy-policy"
-								element={""}
-							/>
-							<Route
-								path="/terms"
-								element={""}
-							/>
+							<Route path="/privacy-policy" element={""} />
+							<Route path="/terms" element={""} />
+							<Route path="/e401" element={<E401Page />} />
+							<Route path="*" element={<E404Page />} />
+							
 						</Routes>
 					</BrowserRouter>
 				</div>

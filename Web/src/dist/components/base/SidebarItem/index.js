@@ -25,7 +25,7 @@ function SidebarItem(props) {
     const Icon = iconMap[props.label] || "";
     const clickHandler = () => {
         props.onSelected(props.label);
-        navigate(base_location === "admin"
+        navigate(base_location === "sadmin" || base_location === "admin"
             ? `/${base_location}/${props.label.toLowerCase()}`
             : `/${props.label.toLowerCase()}`, { replace: true });
     };

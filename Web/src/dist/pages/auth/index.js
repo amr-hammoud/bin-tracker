@@ -57,10 +57,13 @@ function AuthPage() {
     const user = (0, react_redux_2.useSelector)((state) => state.auth.user);
     (0, react_1.useEffect)(() => {
         if ((user === null || user === void 0 ? void 0 : user.user_type) === "1") {
+            navigate("/sadmin/dashboard");
+        }
+        else if ((user === null || user === void 0 ? void 0 : user.user_type) === "2") {
             navigate("/admin/dashboard");
         }
-        else if (user === null || user === void 0 ? void 0 : user.user_type) {
-            navigate("/dashboard");
+        else if ((user === null || user === void 0 ? void 0 : user.user_type) === "3") {
+            navigate("/map");
         }
     }, [user]);
     const dispatch = (0, react_redux_1.useDispatch)();
@@ -78,10 +81,13 @@ function AuthPage() {
                 dispatch((0, authSlice_1.setToken)((_a = response === null || response === void 0 ? void 0 : response.data) === null || _a === void 0 ? void 0 : _a.token));
                 dispatch((0, authSlice_1.setUser)((_b = response === null || response === void 0 ? void 0 : response.data) === null || _b === void 0 ? void 0 : _b.user));
                 if (response.data.user.user_type === "1") {
-                    navigate("/admin/dashboard");
+                    navigate("/sadmin/dashboard");
                 }
                 else if (response.data.user.user_type === "2") {
-                    navigate("/dashboard");
+                    navigate("/admin/dashboard");
+                }
+                else if (response.data.user.user_type === "3") {
+                    navigate("/map");
                 }
             }
         }
