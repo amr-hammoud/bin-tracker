@@ -4,7 +4,7 @@ interface User {
 	last_name: string;
 	username: string;
 	email?: string;
-	user_type: string;
+	user_type: "1" | "2" | "3";
 	createdAt?: string;
 	updatedAt?: string;
 	__v?: number;
@@ -18,7 +18,7 @@ interface User2 {
 	last_name: string;
 	username: string;
 	email?: string;
-	user_type: string;
+	user_type: "1" | "2" | "3";
 	createdAt?: string;
 	updatedAt?: string;
 	__v?: number;
