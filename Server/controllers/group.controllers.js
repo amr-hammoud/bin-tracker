@@ -1,23 +1,33 @@
 const Group = require("../models/group.model");
 
-const createGroup = async (req, res) => {
-	const new_group = req.body;
+const createOrUpdateGroup = async (req, res) => {
+	const group_data = req.body;
+	const group_id = req.params.id;
 
-	if (
-		new_group.name != null
-	) {
+	try {
+		let group;
 
-		const group = new Group({
-			...req.body
-		});
+		if (group_id) {
+			group = await Group.findById(group_id);
 
-		group.save();
+			if (!group) {
+				return res.status(404).send("Group not found");
+			}
+		} else {
+			group = new Group();
+		}
 
-		res.send(group);
-	} else {
-		res.send(
-			"group name is required"
-		);
+		for (const key in group_data) {
+			if (group_data.hasOwnProperty(key)) {
+				group[key] = group_data[key];
+			}
+		}
+		await group.save();
+
+		return res.send(group);
+	} catch (error) {
+		console.error("Error creating/updating group:", error);
+		return res.status(500).send("Internal server error");
 	}
 };
 
@@ -32,4 +42,4 @@ const deleteGroup = async (req, res) => {
 	res.status(200).send("Group deleted successfully")
 }
 
-module.exports = { createGroup, getAllGroups, deleteGroup };
+module.exports = { createOrUpdateGroup, getAllGroups, deleteGroup };
