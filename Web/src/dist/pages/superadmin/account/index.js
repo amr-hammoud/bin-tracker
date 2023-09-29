@@ -31,6 +31,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -45,6 +56,7 @@ const profile_jpg_1 = __importDefault(require("../../../assets/images/profile.jp
 const md_1 = require("react-icons/md");
 const button_1 = __importDefault(require("../../../components/base/button"));
 const request_1 = require("../../../configs/request");
+const authSlice_1 = require("../../../store/authSlice");
 function SuperAdminAccount() {
     const user = (0, react_redux_1.useSelector)((state) => state.auth.user);
     const token = (0, react_redux_1.useSelector)((state) => state.auth.token);
@@ -63,9 +75,10 @@ function SuperAdminAccount() {
         last_name: (user === null || user === void 0 ? void 0 : user.last_name) ? user === null || user === void 0 ? void 0 : user.last_name : "",
         email: (user === null || user === void 0 ? void 0 : user.email) ? user === null || user === void 0 ? void 0 : user.email : "",
         username: (user === null || user === void 0 ? void 0 : user.username) ? user === null || user === void 0 ? void 0 : user.username : "",
-        password: ""
+        password: "",
     });
-    const getUser = () => __awaiter(this, void 0, void 0, function* () {
+    const dispatch = (0, react_redux_1.useDispatch)();
+    const getProfile = () => __awaiter(this, void 0, void 0, function* () {
         try {
             const response = yield (0, request_1.sendRequest)({
                 route: `users/${user === null || user === void 0 ? void 0 : user._id}`,
@@ -74,6 +87,8 @@ function SuperAdminAccount() {
             if (response.status === 200) {
                 console.log(response);
                 setProfileDetails(response.data);
+                setDisabledInputs(Object.assign(Object.assign({}, disabledInputs), { first_name: true, last_name: true, email: true, username: true, password: true, button: true }));
+                dispatch((0, authSlice_1.setUser)(response === null || response === void 0 ? void 0 : response.data));
             }
         }
         catch (err) {
@@ -81,7 +96,7 @@ function SuperAdminAccount() {
         }
     });
     (0, react_1.useEffect)(() => {
-        getUser();
+        getProfile();
     }, []);
     const handleButtonAvailability = (key, value) => {
         const userValue = user ? user[key] : "";
@@ -101,15 +116,19 @@ function SuperAdminAccount() {
         }
     }, [user === null || user === void 0 ? void 0 : user.user_type]);
     const updateProfile = () => __awaiter(this, void 0, void 0, function* () {
+        const { _id } = profileDetails, restData = __rest(profileDetails, ["_id"]);
         try {
             const response = yield (0, request_1.sendRequest)({
-                method: "POST",
-                route: `groups/${user === null || user === void 0 ? void 0 : user._id}`,
-                body: profileDetails,
+                method: "PUT",
+                route: `users/profile`,
+                body: restData,
                 token,
             });
             if (response.status === 200) {
-                react_hot_toast_1.default.success("Profile updated successfully", { duration: 2500 });
+                react_hot_toast_1.default.success("Profile updated successfully", {
+                    duration: 2500,
+                });
+                getProfile();
             }
             else {
                 react_hot_toast_1.default.error("Couldn't Update, Try Again", { duration: 4000 });

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { Token, User, User_Password } from "../../../store/interfaces";
 import Sidebar from "../../../components/common/sidebar";
@@ -10,6 +10,7 @@ import profile from "../../../assets/images/profile.jpg";
 import { MdOutlineEdit } from "react-icons/md";
 import Button from "../../../components/base/button";
 import { sendRequest } from "../../../configs/request";
+import { setUser } from "../../../store/authSlice";
 
 export default function SuperAdminAccount() {
 	const user: User | null = useSelector(
@@ -38,10 +39,12 @@ export default function SuperAdminAccount() {
 		last_name: user?.last_name ? user?.last_name : "",
 		email: user?.email ? user?.email : "",
 		username: user?.username ? user?.username : "",
-		password: ""
+		password: "",
 	});
 
-	const getUser = async () => {
+	const dispatch = useDispatch();
+
+	const getProfile = async () => {
 		try {
 			const response = await sendRequest({
 				route: `users/${user?._id}`,
@@ -50,8 +53,19 @@ export default function SuperAdminAccount() {
 
 			if (response.status === 200) {
 				console.log(response);
-				
+
 				setProfileDetails(response.data);
+				setDisabledInputs({
+					...disabledInputs,
+					first_name: true,
+					last_name: true,
+					email: true,
+					username: true,
+					password: true,
+					button: true,
+				});
+				
+				dispatch(setUser(response?.data));
 			}
 		} catch (err: any) {
 			console.error(err);
@@ -59,8 +73,8 @@ export default function SuperAdminAccount() {
 	};
 
 	useEffect(() => {
-		getUser()
-	},[])
+		getProfile();
+	}, []);
 
 	const handleButtonAvailability = (key: string, value: string) => {
 		const userValue = user ? user[key as keyof User] : "";
@@ -85,16 +99,22 @@ export default function SuperAdminAccount() {
 	}, [user?.user_type]);
 
 	const updateProfile = async () => {
+		const { _id, ...restData } = profileDetails;
+
 		try {
+			
 			const response = await sendRequest({
-				method: "POST",
-				route: `groups/${user?._id}`,
-				body: profileDetails,
+				method: "PUT",
+				route: `users/profile`,
+				body: restData,
 				token,
 			});
 
 			if (response.status === 200) {
-				toast.success("Profile updated successfully", { duration: 2500 });
+				toast.success("Profile updated successfully", {
+					duration: 2500,
+				});
+				getProfile();
 			} else {
 				toast.error("Couldn't Update, Try Again", { duration: 4000 });
 			}
