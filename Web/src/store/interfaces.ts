@@ -11,6 +11,20 @@ interface User {
 	device_id?: string;
 	group_id?: Group;
 }
+interface User_Password {
+	_id: string;
+	first_name: string;
+	last_name: string;
+	username: string;
+	email?: string;
+	password?: string;
+	user_type?: "1" | "2" | "3";
+	createdAt?: string;
+	updatedAt?: string;
+	__v?: number;
+	device_id?: string;
+	group_id?: Group;
+}
 
 interface User2 {
 	_id: string;
@@ -78,4 +92,4 @@ interface Message {
 	updatedAt: string;
 }
 
-export { User, User2, Token, Bin, BinRecord, Group, Truck, Generic, Message };
+export { User, User2, User_Password, Token, Bin, BinRecord, Group, Truck, Generic, Message };
