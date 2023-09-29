@@ -10,7 +10,7 @@ import { MdClose, MdMail, MdCall, MdSend } from "react-icons/md";
 import { PiListBold } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 import aboutImage from "../../assets/images/about-section.svg";
-import app from "../../assets/images/app.png";
+import map from "../../assets/images/map.png";
 import bins from "../../assets/images/bins.png";
 import dashboard from "../../assets/images/dashboard.png";
 import Input from "../../components/base/input";
@@ -32,7 +32,7 @@ export default function LandingPage() {
 		inquiry: "",
 	});
 
-	const [emailSubscribe, setEmailSubscribe] = useState("")
+	const [emailSubscribe, setEmailSubscribe] = useState("");
 
 	return (
 		<div className="text-gunmetal">
@@ -176,7 +176,7 @@ export default function LandingPage() {
                                 text-neutral-0 bg-primary-500 hover:bg-primary-700
                                   hover:cursor-pointer"
 						>
-							Get Started
+							<a href="#contact">Get Started</a>
 						</div>
 					</div>
 				</div>
@@ -194,11 +194,10 @@ export default function LandingPage() {
 						A leading smart waste management system
 					</div>
 					<div className=" text-xl text-[#555555]">
-						Lorem ipsum, dolor sit amet consectetur adipisicing
-						elit. Labore, placeat nulla magnam iure autem earum
-						iusto incidunt nihil veritatis pariatur perspiciatis
-						porro commodi perferendis sit iste blanditiis, eius
-						corporis fuga!
+						Our Bin Tracker services revolutionize waste management
+						through cutting-edge IoT technology and AI analysis. Say
+						goodbye to overflowing bins and inefficient collection
+						routes.
 					</div>
 					<div className="flex flex-wrap lg:flex-nowrap justify-center md:justify-center lg:justify-between gap-10">
 						<div className="flex flex-col gap-2 bg-neutral-0 shadow-lg rounded-xl w-full lg:w-1/3">
@@ -208,10 +207,10 @@ export default function LandingPage() {
 									Smart Bins
 								</div>
 								<div className="font-medium">
-									Lorem ipsum dolor sit amet consectetur
-									adipisicing elit. Quod, iusto ex? Sequi
-									placeat amet doloremque obcaecati facere eum
-									tenetur distinctio!
+									Our smart bins are equipped with advanced
+									sensors that monitor fill levels in
+									real-time. They reduce waste overflow, and
+									save costs.
 								</div>
 							</div>
 						</div>
@@ -222,24 +221,24 @@ export default function LandingPage() {
 									Customized Dashboard
 								</div>
 								<div className="font-medium">
-									Lorem ipsum dolor sit amet consectetur
-									adipisicing elit. Quod, iusto ex? Sequi
-									placeat amet doloremque obcaecati facere eum
-									tenetur distinctio!
+									Access a user-friendly dashboard to
+									visualize bin data. Monitor collection
+									status, historical trends, and receive
+									suggestions.
 								</div>
 							</div>
 						</div>
 						<div className="flex flex-col gap-2 bg-neutral-0 shadow-lg rounded-xl w-full lg:w-1/3">
-							<img src={app} alt="app" />
+							<img src={map} alt="map" />
 							<div className="flex flex-col w-full gap-1 px-5 py-3 pb-7 rounded-xl">
 								<div className="font-semibold text-xl">
-									Mobile App
+									Interactive Map
 								</div>
 								<div className="font-medium">
-									Lorem ipsum dolor sit amet consectetur
-									adipisicing elit. Quod, iusto ex? Sequi
-									placeat amet doloremque obcaecati facere eum
-									tenetur distinctio!
+									Track your bins on a real-time interactive
+									map. Know exactly where your bins are
+									located, their fill levels, and optimize
+									collection routes effortlessly.
 								</div>
 							</div>
 						</div>
@@ -259,22 +258,23 @@ export default function LandingPage() {
 						A leading smart waste management system
 					</div>
 					<div className=" text-xl">
-						Lorem ipsum, dolor sit amet consectetur adipisicing
-						elit. Labore, placeat nulla magnam iure autem earum
-						iusto incidunt nihil veritatis pariatur perspiciatis
-						porro commodi perferendis sit iste blanditiis, eius
-						corporis fuga!
+						At Bin Tracker, we're on a mission to transform
+						traditional waste management into a smart, data-driven
+						solution. Our commitment to innovation and
+						sustainability drives us forward.
 					</div>
 					<div className="flex gap-10">
 						<div className="flex flex-wrap content-center text-9xl w-44 font-bold text-primary-500">
 							01
 						</div>
 						<div className=" w-2/5 text-xl text-justify">
-							Lorem ipsum dolor sit amet consectetur adipiscing
-							elit Ut et massa mi. Aliquam in hendrerit urna.
-							Pellentesque sit amet sapien fringilla, mattis
-							ligula consectetur, ultrices mauris. Maecenas vitae
-							mattis tellus.
+							Bin Tracker was born out of a desire to address the
+							challenges of modern waste management. Traditional
+							methods often lead to inefficient collection,
+							increased operational costs, and environmental
+							impact. With our IoT-based system, we've harnessed
+							the power of technology to create a smarter, more
+							sustainable way to manage waste.
 						</div>
 					</div>
 					<div className="flex gap-10">
@@ -282,11 +282,13 @@ export default function LandingPage() {
 							02
 						</div>
 						<div className=" w-2/5 text-xl text-justify">
-							Lorem ipsum dolor sit amet consectetur adipiscing
-							elit Ut et massa mi. Aliquam in hendrerit urna.
-							Pellentesque sit amet sapien fringilla, mattis
-							ligula consectetur, ultrices mauris. Maecenas vitae
-							mattis tellus.
+							Our team is passionate about sustainability and
+							innovation. We're dedicated to pushing the
+							boundaries of what's possible in waste management.
+							Whether you're a municipality looking to optimize
+							your collection routes or a business aiming to
+							reduce its ecological footprint, Bin Tracker is your
+							partner in achieving these goals.
 						</div>
 					</div>
 				</div>
@@ -427,9 +429,12 @@ export default function LandingPage() {
 				<div className="flex flex-wrap md:flex-nowrap w-4/5 my-28 gap-6">
 					<div className="flex flex-col gap-3 w-full md:w-1/3">
 						<div>
-							Lorem ipsum dolor sit amet consectetur adipiscing
-							elit Ut et massa mi. Aliquam in hendrerit urna.
-							Pellentesque sit amet.
+							At Bin Tracker, our mission is to make waste
+							management smarter and more efficient. Through the
+							integration of IoT technology and AI analysis, we're
+							committed to helping communities and businesses
+							reduce waste, cut costs, and build a cleaner,
+							sustainable future.
 						</div>
 						<a
 							href="mailto:info@bintracker.com"
@@ -556,7 +561,12 @@ export default function LandingPage() {
 							<div className="text-lg font-bold">Subscribe</div>
 							<div>Stay updated with the latest news</div>
 							<div className="flex gap-5">
-								<Input placeholder="Email" onChange={(e) => {setEmailSubscribe(e.target.value)}}/>
+								<Input
+									placeholder="Email"
+									onChange={(e) => {
+										setEmailSubscribe(e.target.value);
+									}}
+								/>
 								<div className="flex flex-wrap justify-center content-center">
 									<div className="bg-primary-500 w-fit p-3 rounded-full hover:cursor-pointer hover:bg-primary-700">
 										<MdSend />
@@ -568,7 +578,8 @@ export default function LandingPage() {
 				</div>
 			</div>
 			<div className="text-center py-3 w-full bg-primary-500 text-neutral-0">
-				&copy; 2023 Bin Tracker, All Rights Reserved.
+				Bin Tracker - Revolutionizing Waste Management with IoT and AI.
+				&copy; 2023. All rights reserved
 			</div>
 		</div>
 	);

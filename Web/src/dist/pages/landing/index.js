@@ -33,7 +33,7 @@ const md_1 = require("react-icons/md");
 const pi_1 = require("react-icons/pi");
 const react_router_dom_1 = require("react-router-dom");
 const about_section_svg_1 = __importDefault(require("../../assets/images/about-section.svg"));
-const app_png_1 = __importDefault(require("../../assets/images/app.png"));
+const map_png_1 = __importDefault(require("../../assets/images/map.png"));
 const bins_png_1 = __importDefault(require("../../assets/images/bins.png"));
 const dashboard_png_1 = __importDefault(require("../../assets/images/dashboard.png"));
 const input_1 = __importDefault(require("../../components/base/input"));
@@ -98,39 +98,40 @@ function LandingPage() {
                     react_1.default.createElement("br", null),
                     "Smart Waste Management"),
                 react_1.default.createElement("div", { className: "flex justify-center content-center" },
-                    react_1.default.createElement("div", { className: "flex content-center flex-wrap px-5 md:px-7 py-2 lg:py-3 lg:px-10 rounded-md font-semibold\r\n                                text-neutral-0 bg-primary-500 hover:bg-primary-700\r\n                                  hover:cursor-pointer" }, "Get Started")))),
+                    react_1.default.createElement("div", { className: "flex content-center flex-wrap px-5 md:px-7 py-2 lg:py-3 lg:px-10 rounded-md font-semibold\r\n                                text-neutral-0 bg-primary-500 hover:bg-primary-700\r\n                                  hover:cursor-pointer" },
+                        react_1.default.createElement("a", { href: "#contact" }, "Get Started"))))),
         react_1.default.createElement("div", { className: "flex flex-wrap justify-center content-center w-full bg-neutral-100", id: "services" },
             react_1.default.createElement("div", { className: "flex flex-col w-4/5 my-28 gap-6" },
                 react_1.default.createElement("div", { className: " text-4xl font-bold text-primary-500" }, "Services"),
                 react_1.default.createElement("div", { className: "text-2xl font-medium" }, "A leading smart waste management system"),
-                react_1.default.createElement("div", { className: " text-xl text-[#555555]" }, "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Labore, placeat nulla magnam iure autem earum iusto incidunt nihil veritatis pariatur perspiciatis porro commodi perferendis sit iste blanditiis, eius corporis fuga!"),
+                react_1.default.createElement("div", { className: " text-xl text-[#555555]" }, "Our Bin Tracker services revolutionize waste management through cutting-edge IoT technology and AI analysis. Say goodbye to overflowing bins and inefficient collection routes."),
                 react_1.default.createElement("div", { className: "flex flex-wrap lg:flex-nowrap justify-center md:justify-center lg:justify-between gap-10" },
                     react_1.default.createElement("div", { className: "flex flex-col gap-2 bg-neutral-0 shadow-lg rounded-xl w-full lg:w-1/3" },
                         react_1.default.createElement("img", { src: bins_png_1.default, alt: "smart bins" }),
                         react_1.default.createElement("div", { className: "flex flex-col w-full gap-1 px-5 py-3 pb-7 rounded-xl" },
                             react_1.default.createElement("div", { className: "font-semibold text-xl" }, "Smart Bins"),
-                            react_1.default.createElement("div", { className: "font-medium" }, "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod, iusto ex? Sequi placeat amet doloremque obcaecati facere eum tenetur distinctio!"))),
+                            react_1.default.createElement("div", { className: "font-medium" }, "Our smart bins are equipped with advanced sensors that monitor fill levels in real-time. They reduce waste overflow, and save costs."))),
                     react_1.default.createElement("div", { className: "flex flex-col gap-2 bg-neutral-0 shadow-lg rounded-xl w-full lg:w-1/3" },
                         react_1.default.createElement("img", { src: dashboard_png_1.default, alt: "dashboard" }),
                         react_1.default.createElement("div", { className: "flex flex-col w-full gap-1 px-5 py-3 pb-7 rounded-xl" },
                             react_1.default.createElement("div", { className: "font-semibold text-xl" }, "Customized Dashboard"),
-                            react_1.default.createElement("div", { className: "font-medium" }, "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod, iusto ex? Sequi placeat amet doloremque obcaecati facere eum tenetur distinctio!"))),
+                            react_1.default.createElement("div", { className: "font-medium" }, "Access a user-friendly dashboard to visualize bin data. Monitor collection status, historical trends, and receive suggestions."))),
                     react_1.default.createElement("div", { className: "flex flex-col gap-2 bg-neutral-0 shadow-lg rounded-xl w-full lg:w-1/3" },
-                        react_1.default.createElement("img", { src: app_png_1.default, alt: "app" }),
+                        react_1.default.createElement("img", { src: map_png_1.default, alt: "map" }),
                         react_1.default.createElement("div", { className: "flex flex-col w-full gap-1 px-5 py-3 pb-7 rounded-xl" },
-                            react_1.default.createElement("div", { className: "font-semibold text-xl" }, "Mobile App"),
-                            react_1.default.createElement("div", { className: "font-medium" }, "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod, iusto ex? Sequi placeat amet doloremque obcaecati facere eum tenetur distinctio!")))))),
+                            react_1.default.createElement("div", { className: "font-semibold text-xl" }, "Interactive Map"),
+                            react_1.default.createElement("div", { className: "font-medium" }, "Track your bins on a real-time interactive map. Know exactly where your bins are located, their fill levels, and optimize collection routes effortlessly.")))))),
         react_1.default.createElement("div", { className: "about-section relative flex flex-wrap justify-center w-full bg-neutral-0", id: "about" },
             react_1.default.createElement("div", { className: "flex flex-col w-4/5 my-28 gap-10" },
                 react_1.default.createElement("div", { className: " text-4xl font-bold text-primary-500" }, "About"),
                 react_1.default.createElement("div", { className: "text-2xl font-medium" }, "A leading smart waste management system"),
-                react_1.default.createElement("div", { className: " text-xl" }, "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Labore, placeat nulla magnam iure autem earum iusto incidunt nihil veritatis pariatur perspiciatis porro commodi perferendis sit iste blanditiis, eius corporis fuga!"),
+                react_1.default.createElement("div", { className: " text-xl" }, "At Bin Tracker, we're on a mission to transform traditional waste management into a smart, data-driven solution. Our commitment to innovation and sustainability drives us forward."),
                 react_1.default.createElement("div", { className: "flex gap-10" },
                     react_1.default.createElement("div", { className: "flex flex-wrap content-center text-9xl w-44 font-bold text-primary-500" }, "01"),
-                    react_1.default.createElement("div", { className: " w-2/5 text-xl text-justify" }, "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris. Maecenas vitae mattis tellus.")),
+                    react_1.default.createElement("div", { className: " w-2/5 text-xl text-justify" }, "Bin Tracker was born out of a desire to address the challenges of modern waste management. Traditional methods often lead to inefficient collection, increased operational costs, and environmental impact. With our IoT-based system, we've harnessed the power of technology to create a smarter, more sustainable way to manage waste.")),
                 react_1.default.createElement("div", { className: "flex gap-10" },
                     react_1.default.createElement("div", { className: "flex flex-wrap content-center text-9xl w-44 font-bold text-primary-500" }, "02"),
-                    react_1.default.createElement("div", { className: " w-2/5 text-xl text-justify" }, "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris. Maecenas vitae mattis tellus."))),
+                    react_1.default.createElement("div", { className: " w-2/5 text-xl text-justify" }, "Our team is passionate about sustainability and innovation. We're dedicated to pushing the boundaries of what's possible in waste management. Whether you're a municipality looking to optimize your collection routes or a business aiming to reduce its ecological footprint, Bin Tracker is your partner in achieving these goals."))),
             react_1.default.createElement("div", { className: "about-section-image-mobile flex justify-end md:hidden h-fit w-full" },
                 react_1.default.createElement("img", { src: about_section_svg_1.default, alt: "garbage truck track" })),
             react_1.default.createElement("div", { className: "about-section-image hidden md:block absolute bottom-0 right-0 h-fit w-full" },
@@ -179,7 +180,7 @@ function LandingPage() {
         react_1.default.createElement("div", { className: "z-10 flex flex-wrap justify-center content-center w-full bg-gunmetal text-neutral-0" },
             react_1.default.createElement("div", { className: "flex flex-wrap md:flex-nowrap w-4/5 my-28 gap-6" },
                 react_1.default.createElement("div", { className: "flex flex-col gap-3 w-full md:w-1/3" },
-                    react_1.default.createElement("div", null, "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet."),
+                    react_1.default.createElement("div", null, "At Bin Tracker, our mission is to make waste management smarter and more efficient. Through the integration of IoT technology and AI analysis, we're committed to helping communities and businesses reduce waste, cut costs, and build a cleaner, sustainable future."),
                     react_1.default.createElement("a", { href: "mailto:info@bintracker.com", className: "flex gap-3 flex-wrap content-center text-md hover:text-primary-500" },
                         react_1.default.createElement("div", { className: "flex gap-3 flex-wrap content-center" },
                             react_1.default.createElement(md_1.MdMail, null)),
@@ -225,10 +226,12 @@ function LandingPage() {
                         react_1.default.createElement("div", { className: "text-lg font-bold" }, "Subscribe"),
                         react_1.default.createElement("div", null, "Stay updated with the latest news"),
                         react_1.default.createElement("div", { className: "flex gap-5" },
-                            react_1.default.createElement(input_1.default, { placeholder: "Email", onChange: (e) => { setEmailSubscribe(e.target.value); } }),
+                            react_1.default.createElement(input_1.default, { placeholder: "Email", onChange: (e) => {
+                                    setEmailSubscribe(e.target.value);
+                                } }),
                             react_1.default.createElement("div", { className: "flex flex-wrap justify-center content-center" },
                                 react_1.default.createElement("div", { className: "bg-primary-500 w-fit p-3 rounded-full hover:cursor-pointer hover:bg-primary-700" },
                                     react_1.default.createElement(md_1.MdSend, null)))))))),
-        react_1.default.createElement("div", { className: "text-center py-3 w-full bg-primary-500 text-neutral-0" }, "\u00A9 2023 Bin Tracker, All Rights Reserved.")));
+        react_1.default.createElement("div", { className: "text-center py-3 w-full bg-primary-500 text-neutral-0" }, "Bin Tracker - Revolutionizing Waste Management with IoT and AI. \u00A9 2023. All rights reserved")));
 }
 exports.default = LandingPage;
