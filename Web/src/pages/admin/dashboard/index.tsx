@@ -90,7 +90,7 @@ export default function AdminDashboard() {
 				}`}
 			>
 				<Navbar label="Dashboard" />
-				<div className="p-5">
+				<div className="p-5 h-full">
 					<div className="flex w-full flex-wrap md:flex-nowrap justify-center gap-16 h-fit text-gunmetal">
 						<div className="flex flex-col w-full h-full gap-2">
 							<div className="flex flex-col w-full h-full gap-2">
@@ -102,7 +102,7 @@ export default function AdminDashboard() {
 										{stats?.users_count}
 									</div>
 								</div>
-								<div className="flex flex-wrap sm:flex-nowrap h-full gap-2">
+								{/* <div className="flex flex-wrap sm:flex-nowrap h-full gap-2">
 									<div className="flex flex-col flex-wrap justify-center content-center w-full h-full bg-neutral-50 hover:bg-neutral-100 p-3 text-center rounded">
 										<div className=" text-xl">Admins</div>
 										<div className="mt-5 font-bold text-4xl">
@@ -115,9 +115,9 @@ export default function AdminDashboard() {
 											{stats?.drivers_count}
 										</div>
 									</div>
-								</div>
+								</div> */}
 							</div>
-							<div className="flex flex-col w-full h-96 gap-2 z-10">
+							<div className="flex flex-col w-full h-72 gap-2 z-10 bg-neutral-100 rounded">
 								<PieChart
 									data={[
 										{
@@ -144,7 +144,7 @@ export default function AdminDashboard() {
 										{stats?.bins_count}
 									</div>
 								</div>
-								<div className="flex flex-wrap lg:flex-nowrap h-full gap-2">
+								{/* <div className="flex flex-wrap lg:flex-nowrap h-full gap-2">
 									<div className="flex flex-col flex-wrap justify-center content-center w-full h-full bg-neutral-50 hover:bg-neutral-100 p-3 text-center rounded">
 										<div className=" text-xl">General</div>
 										<div className="mt-5 font-bold text-4xl">
@@ -167,9 +167,9 @@ export default function AdminDashboard() {
 											{stats?.hazardous_bins_count}
 										</div>
 									</div>
-								</div>
+								</div> */}
 							</div>
-							<div className="flex flex-col w-full h-96 gap-2 z-10">
+							<div className="flex flex-col w-full h-72 gap-2 z-10 bg-neutral-100 rounded">
 								<PieChart
 									data={[
 										{
@@ -202,39 +202,10 @@ export default function AdminDashboard() {
 							</div>
 						</div>
 					</div>
-					<div className="flex flex-col justify-center w-full h-96 bg-neutral-50 p-5 mt-5">
+					<div className="flex flex-col justify-center w-full h-72 bg-neutral-50 p-5 mt-5">
 						<div>Bins Collected Per day (Last week)</div>
 						<BarChart
-							data={[
-								{
-									date: "2023-09-20T21:00:00.000Z",
-									count: 3,
-								},
-								{
-									date: "2023-09-21T21:00:00.000Z",
-									count: 6,
-								},
-								{
-									date: "2023-09-22T21:00:00.000Z",
-									count: 5,
-								},
-								{
-									date: "2023-09-23T21:00:00.000Z",
-									count: 7,
-								},
-								{
-									date: "2023-09-24T21:00:00.000Z",
-									count: 8,
-								},
-								{
-									date: "2023-09-25T21:00:00.000Z",
-									count: 6,
-								},
-								{
-									date: "2023-09-26T21:00:00.000Z",
-									count: 9,
-								},
-							]}
+							data={stats?.collected_bins_per_day}
 						/>
 					</div>
 				</div>

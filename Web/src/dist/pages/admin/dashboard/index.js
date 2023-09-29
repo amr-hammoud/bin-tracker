@@ -92,21 +92,14 @@ function AdminDashboard() {
             ], selected: "Dashboard" }),
         react_1.default.createElement("div", { className: `flex flex-col w-full ${collapse ? "ml-20" : "ml-52"}` },
             react_1.default.createElement(navbar_1.default, { label: "Dashboard" }),
-            react_1.default.createElement("div", { className: "p-5" },
+            react_1.default.createElement("div", { className: "p-5 h-full" },
                 react_1.default.createElement("div", { className: "flex w-full flex-wrap md:flex-nowrap justify-center gap-16 h-fit text-gunmetal" },
                     react_1.default.createElement("div", { className: "flex flex-col w-full h-full gap-2" },
                         react_1.default.createElement("div", { className: "flex flex-col w-full h-full gap-2" },
                             react_1.default.createElement("div", { className: "flex flex-col flex-wrap justify-center content-center h-full w-full bg-primary-100 hover:bg-primary-200 p-3 text-center rounded" },
                                 react_1.default.createElement("div", { className: " text-xl" }, "Users\u00A0Count"),
-                                react_1.default.createElement("div", { className: "mt-5 font-bold text-4xl" }, stats === null || stats === void 0 ? void 0 : stats.users_count)),
-                            react_1.default.createElement("div", { className: "flex flex-wrap sm:flex-nowrap h-full gap-2" },
-                                react_1.default.createElement("div", { className: "flex flex-col flex-wrap justify-center content-center w-full h-full bg-neutral-50 hover:bg-neutral-100 p-3 text-center rounded" },
-                                    react_1.default.createElement("div", { className: " text-xl" }, "Admins"),
-                                    react_1.default.createElement("div", { className: "mt-5 font-bold text-4xl" }, stats === null || stats === void 0 ? void 0 : stats.admins_count)),
-                                react_1.default.createElement("div", { className: "flex flex-col flex-wrap justify-center content-center w-full h-full bg-neutral-50 hover:bg-neutral-100 p-3 text-center rounded" },
-                                    react_1.default.createElement("div", { className: " text-xl" }, "Drivers"),
-                                    react_1.default.createElement("div", { className: "mt-5 font-bold text-4xl" }, stats === null || stats === void 0 ? void 0 : stats.drivers_count)))),
-                        react_1.default.createElement("div", { className: "flex flex-col w-full h-96 gap-2 z-10" },
+                                react_1.default.createElement("div", { className: "mt-5 font-bold text-4xl" }, stats === null || stats === void 0 ? void 0 : stats.users_count))),
+                        react_1.default.createElement("div", { className: "flex flex-col w-full h-72 gap-2 z-10 bg-neutral-100 rounded" },
                             react_1.default.createElement(piechart_1.default, { data: [
                                     {
                                         id: "admins",
@@ -123,18 +116,8 @@ function AdminDashboard() {
                         react_1.default.createElement("div", { className: "flex flex-col w-full h-full gap-2" },
                             react_1.default.createElement("div", { className: "flex flex-col flex-wrap justify-center content-center h-full w-full bg-primary-100 hover:bg-primary-200 p-3 text-center rounded" },
                                 react_1.default.createElement("div", { className: " text-xl" }, "Bins\u00A0Count"),
-                                react_1.default.createElement("div", { className: "mt-5 font-bold text-4xl" }, stats === null || stats === void 0 ? void 0 : stats.bins_count)),
-                            react_1.default.createElement("div", { className: "flex flex-wrap lg:flex-nowrap h-full gap-2" },
-                                react_1.default.createElement("div", { className: "flex flex-col flex-wrap justify-center content-center w-full h-full bg-neutral-50 hover:bg-neutral-100 p-3 text-center rounded" },
-                                    react_1.default.createElement("div", { className: " text-xl" }, "General"),
-                                    react_1.default.createElement("div", { className: "mt-5 font-bold text-4xl" }, stats === null || stats === void 0 ? void 0 : stats.general_bins_count)),
-                                react_1.default.createElement("div", { className: "flex flex-col flex-wrap justify-center content-center w-full h-full bg-neutral-50 hover:bg-neutral-100 p-3 text-center rounded" },
-                                    react_1.default.createElement("div", { className: " text-xl" }, "Recyclables"),
-                                    react_1.default.createElement("div", { className: "mt-5 font-bold text-4xl" }, stats === null || stats === void 0 ? void 0 : stats.recyclables_bins_count)),
-                                react_1.default.createElement("div", { className: "flex flex-col flex-wrap justify-center content-center w-full h-full bg-neutral-50 hover:bg-neutral-100 p-3 text-center rounded" },
-                                    react_1.default.createElement("div", { className: " text-xl" }, "Hazardous"),
-                                    react_1.default.createElement("div", { className: "mt-5 font-bold text-4xl" }, stats === null || stats === void 0 ? void 0 : stats.hazardous_bins_count)))),
-                        react_1.default.createElement("div", { className: "flex flex-col w-full h-96 gap-2 z-10" },
+                                react_1.default.createElement("div", { className: "mt-5 font-bold text-4xl" }, stats === null || stats === void 0 ? void 0 : stats.bins_count))),
+                        react_1.default.createElement("div", { className: "flex flex-col w-full h-72 gap-2 z-10 bg-neutral-100 rounded" },
                             react_1.default.createElement(piechart_1.default, { data: [
                                     {
                                         id: "general",
@@ -156,37 +139,8 @@ function AdminDashboard() {
                         react_1.default.createElement("div", { className: "flex flex-col flex-wrap justify-center content-center h-full w-full bg-primary-100 hover:bg-primary-200 p-3 text-center rounded" },
                             react_1.default.createElement("div", { className: " text-xl" }, "Trucks\u00A0Count"),
                             react_1.default.createElement("div", { className: "mt-5 font-bold text-4xl" }, stats === null || stats === void 0 ? void 0 : stats.trucks_count)))),
-                react_1.default.createElement("div", { className: "flex flex-col justify-center w-full h-96 bg-neutral-50 p-5 mt-5" },
+                react_1.default.createElement("div", { className: "flex flex-col justify-center w-full h-72 bg-neutral-50 p-5 mt-5" },
                     react_1.default.createElement("div", null, "Bins Collected Per day (Last week)"),
-                    react_1.default.createElement(barchart_1.default, { data: [
-                            {
-                                date: "2023-09-20T21:00:00.000Z",
-                                count: 3,
-                            },
-                            {
-                                date: "2023-09-21T21:00:00.000Z",
-                                count: 6,
-                            },
-                            {
-                                date: "2023-09-22T21:00:00.000Z",
-                                count: 5,
-                            },
-                            {
-                                date: "2023-09-23T21:00:00.000Z",
-                                count: 7,
-                            },
-                            {
-                                date: "2023-09-24T21:00:00.000Z",
-                                count: 8,
-                            },
-                            {
-                                date: "2023-09-25T21:00:00.000Z",
-                                count: 6,
-                            },
-                            {
-                                date: "2023-09-26T21:00:00.000Z",
-                                count: 9,
-                            },
-                        ] }))))));
+                    react_1.default.createElement(barchart_1.default, { data: stats === null || stats === void 0 ? void 0 : stats.collected_bins_per_day }))))));
 }
 exports.default = AdminDashboard;
