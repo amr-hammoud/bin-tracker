@@ -59,7 +59,9 @@ const addBinRecord = async (req, res) => {
 			const bin_instance = await Bin.findById(id);
 
 			if (!bin_instance) {
-				return res.status(404).send("Bin not found\nCheck id in ENDPOINT");
+				return res
+					.status(404)
+					.send("Bin not found\nCheck id in ENDPOINT");
 			}
 
 			// if (record_data.latitude !== '0.0' && record_data.longitude !== '0.0') {
@@ -106,6 +108,36 @@ const deleteBinRecord = async (req, res) => {
 	} catch (error) {
 		console.error("Error deleting bin record:", error);
 		return res.status(500).send("Internal server error");
+	}
+};
+
+const addPickupStamp = async (req, res) => {
+	const id = req.params.id;
+
+	if (id != null) {
+		try {
+			const bin_instance = await Bin.findById(id);
+
+			if (!bin_instance) {
+				return res
+					.status(404)
+					.send("Bin not found");
+			}
+
+			bin_instance.collection_history.push({
+				timestamp: new Date(),
+				collected: true,
+			});
+
+			await bin_instance.save();
+
+			return res.status(200).send(bin_instance.collection_history);
+		} catch (error) {
+			console.error("Error adding stamp:", error);
+			return res.status(500).send("Internal server error");
+		}
+	} else {
+		return res.status(400).send("id is required");
 	}
 };
 
@@ -180,5 +212,6 @@ module.exports = {
 	deleteBin,
 	addBinRecord,
 	deleteBinRecord,
+	addPickupStamp,
 	calculateOptimalRoute,
 };
