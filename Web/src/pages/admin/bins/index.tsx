@@ -263,9 +263,11 @@ export default function AdminBins() {
 			});
 			if (response.status === 200) {
 				getBins()
+				toast.success("Pickup Time Updated Successfully", {duration: 1000})
 			}
 		} catch (err: any) {
 			console.error(err);
+			toast.success("Failed to update pickup time", {duration: 1500})
 		}
 	};
 

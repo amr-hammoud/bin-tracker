@@ -229,10 +229,12 @@ function AdminBins() {
             });
             if (response.status === 200) {
                 getBins();
+                react_hot_toast_1.toast.success("Pickup Time Updated Successfully", { duration: 1000 });
             }
         }
         catch (err) {
             console.error(err);
+            react_hot_toast_1.toast.success("Failed to update pickup time", { duration: 1500 });
         }
     });
     return (react_1.default.createElement("div", { className: "flex" },
