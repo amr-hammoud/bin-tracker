@@ -7,13 +7,14 @@ interface ListItemProps {
 	items: Array<string | undefined | null>;
 	object?: Object;
 	customIcon?: React.ReactNode;
+	customIcon_2?: React.ReactNode;
 	customIconAction?: (object: any) => void;
+	customIconAction_2?: (object: any) => void;
 	onEdit?: (data: any) => void;
 	onDelete?: (id: string) => void;
 }
 
 export default function ListItem(props: ListItemProps) {
-	const AdditionalIcon = props.customIcon;
 
 	const object = props.object as Generic
 
@@ -38,10 +39,19 @@ export default function ListItem(props: ListItemProps) {
 					className="flex flex-wrap justify-between content-center opacity-70
                                 hover:cursor-pointer hover:opacity-100"
 					onClick={() =>
+						props.customIconAction_2 ? props.customIconAction_2(object) : ""
+					}
+				>
+					{props.customIcon_2}
+				</div>
+				<div
+					className="flex flex-wrap justify-between content-center opacity-70
+                                hover:cursor-pointer hover:opacity-100"
+					onClick={() =>
 						props.customIconAction ? props.customIconAction(object) : ""
 					}
 				>
-					{AdditionalIcon}
+					{props.customIcon}
 				</div>
 				{props.onEdit ? (
 					<div
