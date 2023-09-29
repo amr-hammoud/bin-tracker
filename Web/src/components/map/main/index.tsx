@@ -13,11 +13,6 @@ import selectedPin from "../../../assets/icons/selected-pin.svg";
 import { Bin } from "../../../store/interfaces";
 import polyline from "@mapbox/polyline";
 
-interface RouteResponse {
-	routes: {
-		geometry: string;
-	}[];
-}
 interface MapProps {
 	center: LatLngLiteral | undefined;
 	zoom: number;
