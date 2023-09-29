@@ -15,6 +15,7 @@ import Input from "../../../components/base/input";
 import ModalComponent from "../../../components/base/modal";
 import { useNavigate } from "react-router-dom";
 import LocationInput from "../../../components/map/locationInput";
+import { MdRestoreFromTrash } from "react-icons/md";
 
 export default function AdminBins() {
 	const token: Token | null = useSelector(
@@ -137,7 +138,7 @@ export default function AdminBins() {
 			([key, value]) => value !== null && value !== ""
 		);
 
-		const finalData = Object.fromEntries(filtered);		
+		const finalData = Object.fromEntries(filtered);
 		try {
 			const response = await sendRequest({
 				method: "POST",
@@ -252,6 +253,20 @@ export default function AdminBins() {
 			latitude: lat.toString(),
 			longitude: lng.toString(),
 		});
+	};
+
+	const addPickupStamp = async (object: any) => {
+		try {
+			const response = await sendRequest({
+				route: `bins/${object._id}/stamp`,
+				token,
+			});
+			if (response.status === 200) {
+				getBins()
+			}
+		} catch (err: any) {
+			console.error(err);
+		}
 	};
 
 	return (
@@ -441,9 +456,10 @@ export default function AdminBins() {
 						filterBySearch(binsList, filters.searchQuery),
 						filters.selectedFilter
 					).map((bin: Bin, index) => {
-						const updatedAt = bin.collection_history[
-							bin.collection_history.length - 1
-						]?.updatedAt;
+						const updatedAt =
+							bin.collection_history[
+								bin.collection_history.length - 1
+							]?.updatedAt;
 						const date = new Date(updatedAt);
 
 						const formattedDate = date.toLocaleString("en-US", {
@@ -472,6 +488,8 @@ export default function AdminBins() {
 								customIconAction={(object) =>
 									showLocation(object)
 								}
+								customIcon_2={<MdRestoreFromTrash />}
+								customIconAction_2={(object) => addPickupStamp(object)}
 								onEdit={(data) => activateEditModal(data)}
 								onDelete={(id) => activateDeleteModal(id)}
 							/>

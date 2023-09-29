@@ -61,6 +61,7 @@ const input_1 = __importDefault(require("../../../components/base/input"));
 const modal_1 = __importDefault(require("../../../components/base/modal"));
 const react_router_dom_1 = require("react-router-dom");
 const locationInput_1 = __importDefault(require("../../../components/map/locationInput"));
+const md_2 = require("react-icons/md");
 function AdminBins() {
     const token = (0, react_redux_1.useSelector)((state) => state.auth.token);
     const user = (0, react_redux_1.useSelector)((state) => state.auth.user);
@@ -220,6 +221,20 @@ function AdminBins() {
     const handleLocationChange = (lat, lng) => {
         setBinData(Object.assign(Object.assign({}, binData), { latitude: lat.toString(), longitude: lng.toString() }));
     };
+    const addPickupStamp = (object) => __awaiter(this, void 0, void 0, function* () {
+        try {
+            const response = yield (0, request_1.sendRequest)({
+                route: `bins/${object._id}/stamp`,
+                token,
+            });
+            if (response.status === 200) {
+                getBins();
+            }
+        }
+        catch (err) {
+            console.error(err);
+        }
+    });
     return (react_1.default.createElement("div", { className: "flex" },
         react_1.default.createElement(sidebar_1.default, { items: [
                 "Dashboard",
@@ -299,7 +314,7 @@ function AdminBins() {
                             bin.name,
                             bin.waste_type,
                             isValidDate(date) ? formattedDate : "-",
-                        ], object: bin, customIcon: react_1.default.createElement(md_1.MdLocationPin, null), customIconAction: (object) => showLocation(object), onEdit: (data) => activateEditModal(data), onDelete: (id) => activateDeleteModal(id) }));
+                        ], object: bin, customIcon: react_1.default.createElement(md_1.MdLocationPin, null), customIconAction: (object) => showLocation(object), customIcon_2: react_1.default.createElement(md_2.MdRestoreFromTrash, null), customIconAction_2: (object) => addPickupStamp(object), onEdit: (data) => activateEditModal(data), onDelete: (id) => activateDeleteModal(id) }));
                     //TODO: Add location icon to listItem
                 })))));
 }
