@@ -31,6 +31,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -65,7 +76,7 @@ function SuperAdminAccount() {
         username: (user === null || user === void 0 ? void 0 : user.username) ? user === null || user === void 0 ? void 0 : user.username : "",
         password: "",
     });
-    const getUser = () => __awaiter(this, void 0, void 0, function* () {
+    const getProfile = () => __awaiter(this, void 0, void 0, function* () {
         try {
             const response = yield (0, request_1.sendRequest)({
                 route: `users/${user === null || user === void 0 ? void 0 : user._id}`,
@@ -74,6 +85,7 @@ function SuperAdminAccount() {
             if (response.status === 200) {
                 console.log(response);
                 setProfileDetails(response.data);
+                setDisabledInputs(Object.assign(Object.assign({}, disabledInputs), { first_name: true, last_name: true, email: true, username: true, password: true, button: true }));
             }
         }
         catch (err) {
@@ -81,7 +93,7 @@ function SuperAdminAccount() {
         }
     });
     (0, react_1.useEffect)(() => {
-        getUser();
+        getProfile();
     }, []);
     const handleButtonAvailability = (key, value) => {
         const userValue = user ? user[key] : "";
@@ -101,17 +113,19 @@ function SuperAdminAccount() {
         }
     }, [user === null || user === void 0 ? void 0 : user.user_type]);
     const updateProfile = () => __awaiter(this, void 0, void 0, function* () {
+        const { _id } = profileDetails, restData = __rest(profileDetails, ["_id"]);
         try {
             const response = yield (0, request_1.sendRequest)({
-                method: "POST",
-                route: `groups/${user === null || user === void 0 ? void 0 : user._id}`,
-                body: profileDetails,
+                method: "PUT",
+                route: `users/profile`,
+                body: restData,
                 token,
             });
             if (response.status === 200) {
                 react_hot_toast_1.default.success("Profile updated successfully", {
                     duration: 2500,
                 });
+                getProfile();
             }
             else {
                 react_hot_toast_1.default.error("Couldn't Update, Try Again", { duration: 4000 });

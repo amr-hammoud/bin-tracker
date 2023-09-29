@@ -41,7 +41,7 @@ export default function SuperAdminAccount() {
 		password: "",
 	});
 
-	const getUser = async () => {
+	const getProfile = async () => {
 		try {
 			const response = await sendRequest({
 				route: `users/${user?._id}`,
@@ -52,6 +52,15 @@ export default function SuperAdminAccount() {
 				console.log(response);
 
 				setProfileDetails(response.data);
+				setDisabledInputs({
+					...disabledInputs,
+					first_name: true,
+					last_name: true,
+					email: true,
+					username: true,
+					password: true,
+					button: true,
+				});
 			}
 		} catch (err: any) {
 			console.error(err);
@@ -59,7 +68,7 @@ export default function SuperAdminAccount() {
 	};
 
 	useEffect(() => {
-		getUser();
+		getProfile();
 	}, []);
 
 	const handleButtonAvailability = (key: string, value: string) => {
@@ -85,11 +94,14 @@ export default function SuperAdminAccount() {
 	}, [user?.user_type]);
 
 	const updateProfile = async () => {
+		const { _id, ...restData } = profileDetails;
+
 		try {
+			
 			const response = await sendRequest({
-				method: "POST",
-				route: `groups/${user?._id}`,
-				body: profileDetails,
+				method: "PUT",
+				route: `users/profile`,
+				body: restData,
 				token,
 			});
 
@@ -97,6 +109,7 @@ export default function SuperAdminAccount() {
 				toast.success("Profile updated successfully", {
 					duration: 2500,
 				});
+				getProfile();
 			} else {
 				toast.error("Couldn't Update, Try Again", { duration: 4000 });
 			}
