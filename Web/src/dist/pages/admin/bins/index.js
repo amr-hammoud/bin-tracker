@@ -60,6 +60,7 @@ const select_1 = __importDefault(require("../../../components/base/select"));
 const input_1 = __importDefault(require("../../../components/base/input"));
 const modal_1 = __importDefault(require("../../../components/base/modal"));
 const react_router_dom_1 = require("react-router-dom");
+const locationInput_1 = __importDefault(require("../../../components/map/locationInput"));
 function AdminBins() {
     const token = (0, react_redux_1.useSelector)((state) => state.auth.token);
     const user = (0, react_redux_1.useSelector)((state) => state.auth.user);
@@ -118,15 +119,15 @@ function AdminBins() {
     const [binData, setBinData] = (0, react_1.useState)({
         _id: "",
         name: "",
-        longitude: "",
-        latitude: "",
+        latitude: "33.880166",
+        longitude: "35.851174",
         group_id: "",
         last_pickup_time: "",
         waste_type: "",
         data: [],
     });
     const activateCreateModal = () => {
-        setBinData(Object.assign(Object.assign({}, binData), { _id: "", name: "", longitude: "", latitude: "", group_id: user === null || user === void 0 ? void 0 : user.group_id, last_pickup_time: "", waste_type: "General", data: [] }));
+        setBinData(Object.assign(Object.assign({}, binData), { _id: "", name: "", latitude: "33.880166", longitude: "35.851174", group_id: user === null || user === void 0 ? void 0 : user.group_id, last_pickup_time: "", waste_type: "General", data: [] }));
         setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: true, type: "create" }));
     };
     const createBin = () => __awaiter(this, void 0, void 0, function* () {
@@ -134,6 +135,7 @@ function AdminBins() {
         const asArray = Object.entries(restData);
         const filtered = asArray.filter(([key, value]) => value !== null && value !== "");
         const finalData = Object.fromEntries(filtered);
+        console.log(finalData);
         try {
             const response = yield (0, request_1.sendRequest)({
                 method: "POST",
@@ -215,6 +217,9 @@ function AdminBins() {
     const showLocation = (object) => {
         navigate(`/map/${object._id}`, { replace: true });
     };
+    const handleLocationChange = (lat, lng) => {
+        setBinData(Object.assign(Object.assign({}, binData), { latitude: lat.toString(), longitude: lng.toString() }));
+    };
     return (react_1.default.createElement("div", { className: "flex" },
         react_1.default.createElement(sidebar_1.default, { items: [
                 "Dashboard",
@@ -230,19 +235,19 @@ function AdminBins() {
             react_1.default.createElement("div", { className: "text-xl" }, "Create/Edit User"),
             react_1.default.createElement("div", { className: "flex flex-col flex-wrap justify-center content-center w-96" },
                 react_1.default.createElement("div", { className: "flex gap-5" },
-                    react_1.default.createElement(input_1.default, { label: "Name", placeholder: "id", value: binData.name, onChange: (e) => {
+                    react_1.default.createElement(input_1.default, { label: "Name", placeholder: "name", value: binData.name, onChange: (e) => {
                             setBinData(Object.assign(Object.assign({}, binData), { name: e.target.value }));
+                            console.log(e.target.value);
                         }, required: true })),
-                react_1.default.createElement("div", { className: "flex gap-5" },
-                    react_1.default.createElement(input_1.default, { label: "Latitude", placeholder: "latitude", value: binData.latitude, onChange: (e) => {
-                            setBinData(Object.assign(Object.assign({}, binData), { latitude: e.target.value }));
-                        }, required: true }),
-                    react_1.default.createElement(input_1.default, { label: "Longitude", placeholder: "longitude", value: binData.longitude, onChange: (e) => {
-                            setBinData(Object.assign(Object.assign({}, binData), { longitude: e.target.value }));
+                react_1.default.createElement("div", { className: "h-60 w-full my-5 z-10" },
+                    react_1.default.createElement("div", { className: "font-poppins text-sm text-gunmetal" },
+                        "Location",
+                        react_1.default.createElement("span", { className: " text-red-500" }, "*")),
+                    react_1.default.createElement(locationInput_1.default, { lat: binData.latitude, lng: binData.longitude, onLocationChange: handleLocationChange })),
+                react_1.default.createElement("div", { className: "z-20" },
+                    react_1.default.createElement(input_1.default, { label: "Last Pickup", type: "date", value: binData.last_pickup_time, onChange: (e) => {
+                            setBinData(Object.assign(Object.assign({}, binData), { last_pickup_time: e.target.value }));
                         }, required: true })),
-                react_1.default.createElement(input_1.default, { label: "Last Pickup", type: "date", value: binData.last_pickup_time, onChange: (e) => {
-                        setBinData(Object.assign(Object.assign({}, binData), { last_pickup_time: e.target.value }));
-                    }, required: true }),
                 react_1.default.createElement(select_1.default, { label: "Waste Type", required: true, value: binData.waste_type, options: {
                         General: "General",
                         Recyclables: "Recyclables",

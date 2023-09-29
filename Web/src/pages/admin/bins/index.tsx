@@ -14,6 +14,7 @@ import Select from "../../../components/base/select";
 import Input from "../../../components/base/input";
 import ModalComponent from "../../../components/base/modal";
 import { useNavigate } from "react-router-dom";
+import LocationInput from "../../../components/map/locationInput";
 
 export default function AdminBins() {
 	const token: Token | null = useSelector(
@@ -86,8 +87,8 @@ export default function AdminBins() {
 	const [binData, setBinData] = useState<{
 		_id: string;
 		name: string;
-		longitude: string | null;
-		latitude: string | null;
+		longitude: string;
+		latitude: string;
 		group_id: string | undefined;
 		last_pickup_time: string | undefined;
 		waste_type: string | undefined;
@@ -100,8 +101,8 @@ export default function AdminBins() {
 	}>({
 		_id: "",
 		name: "",
-		longitude: "",
-		latitude: "",
+		latitude: "33.880166",
+		longitude: "35.851174",
 		group_id: "",
 		last_pickup_time: "",
 		waste_type: "",
@@ -113,8 +114,8 @@ export default function AdminBins() {
 			...binData,
 			_id: "",
 			name: "",
-			longitude: "",
-			latitude: "",
+			latitude: "33.880166",
+			longitude: "35.851174",
 			group_id: user?.group_id,
 			last_pickup_time: "",
 			waste_type: "General",
@@ -138,6 +139,8 @@ export default function AdminBins() {
 
 		const finalData = Object.fromEntries(filtered);
 
+		console.log(finalData);
+		
 		try {
 			const response = await sendRequest({
 				method: "POST",
@@ -239,9 +242,17 @@ export default function AdminBins() {
 		setfilters({ ...filters, searchQuery: query });
 	};
 
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 	const showLocation = (object: any) => {
-		navigate(`/map/${object._id}`, {replace: true})
+		navigate(`/map/${object._id}`, { replace: true });
+	};
+
+	const handleLocationChange = (lat: number, lng: number) => {
+		setBinData({
+			...binData,
+			latitude: lat.toString(),
+			longitude: lng.toString(),
+		});
 	};
 
 	return (
@@ -274,55 +285,42 @@ export default function AdminBins() {
 					<div className="flex gap-5">
 						<Input
 							label="Name"
-							placeholder="id"
+							placeholder="name"
 							value={binData.name}
 							onChange={(e) => {
 								setBinData({
 									...binData,
 									name: e.target.value,
+								}); console.log(e.target.value);
+								
+							}}
+							required
+						/>
+					</div>
+					<div className="h-60 w-full my-5 z-10">
+						<div className="font-poppins text-sm text-gunmetal">
+							Location<span className=" text-red-500">*</span>
+						</div>
+						<LocationInput
+							lat={binData.latitude}
+							lng={binData.longitude}
+							onLocationChange={handleLocationChange}
+						/>
+					</div>
+					<div className="z-20">
+						<Input
+							label="Last Pickup"
+							type="date"
+							value={binData.last_pickup_time}
+							onChange={(e) => {
+								setBinData({
+									...binData,
+									last_pickup_time: e.target.value,
 								});
 							}}
 							required
 						/>
 					</div>
-					<div className="flex gap-5">
-						<Input
-							label="Latitude"
-							placeholder="latitude"
-							value={binData.latitude}
-							onChange={(e) => {
-								setBinData({
-									...binData,
-									latitude: e.target.value,
-								});
-							}}
-							required
-						/>
-						<Input
-							label="Longitude"
-							placeholder="longitude"
-							value={binData.longitude}
-							onChange={(e) => {
-								setBinData({
-									...binData,
-									longitude: e.target.value,
-								});
-							}}
-							required
-						/>
-					</div>
-					<Input
-						label="Last Pickup"
-						type="date"
-						value={binData.last_pickup_time}
-						onChange={(e) => {
-							setBinData({
-								...binData,
-								last_pickup_time: e.target.value,
-							});
-						}}
-						required
-					/>
 					<Select
 						label="Waste Type"
 						required
@@ -402,7 +400,11 @@ export default function AdminBins() {
 					/>
 				</div>
 			</ModalComponent>
-			<div className={`flex flex-col w-full ${collapse ? "ml-20" : "ml-52"}`}>
+			<div
+				className={`flex flex-col w-full ${
+					collapse ? "ml-20" : "ml-52"
+				}`}
+			>
 				<Navbar
 					label="Bins"
 					buttonLabel="+ Create Bin"
@@ -465,7 +467,9 @@ export default function AdminBins() {
 								]}
 								object={bin}
 								customIcon={<MdLocationPin />}
-								customIconAction={(object) => showLocation(object)}
+								customIconAction={(object) =>
+									showLocation(object)
+								}
 								onEdit={(data) => activateEditModal(data)}
 								onDelete={(id) => activateDeleteModal(id)}
 							/>
