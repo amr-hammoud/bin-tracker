@@ -44,6 +44,9 @@ const getAnalytics = async (req, res) => {
 		const trucks = await Trucks.find(filter);
 		response.trucks_count = trucks.length;
 
+		const sevenDaysAgo = new Date();
+		sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
 		const collectedBinsPerDay = await Bins.aggregate([
 			{
 				$match: {
@@ -51,19 +54,20 @@ const getAnalytics = async (req, res) => {
 				},
 			},
 			{
-				$unwind: "$data",
+				$unwind: "$collection_history",
 			},
 			{
 				$match: {
-					"data.collection_history": { $ne: null },
+					"collection_history.updatedAt": { $ne: null },
+					"collection_history.updatedAt": { $gte: sevenDaysAgo },
 				},
 			},
 			{
 				$group: {
 					_id: {
-						year: { $year: "$data.updatedAt" },
-						month: { $month: "$data.updatedAt" },
-						day: { $dayOfMonth: "$data.updatedAt" },
+						year: { $year: "$collection_history.updatedAt" },
+						month: { $month: "$collection_history.updatedAt" },
+						day: { $dayOfMonth: "$collection_history.updatedAt" },
 					},
 					count: { $sum: 1 },
 				},
