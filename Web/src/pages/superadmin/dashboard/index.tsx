@@ -9,9 +9,6 @@ import BarChart from "../../../components/dashboard/barchart";
 import PieChart from "../../../components/dashboard/piechart";
 
 export default function SuperAdminDashboard() {
-	const user: User | null = useSelector(
-		(state: RootState) => state.auth.user
-	);
 
 	const token: Token | null = useSelector(
 		(state: RootState) => state.auth.token

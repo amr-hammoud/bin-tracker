@@ -43,7 +43,6 @@ const request_1 = require("../../../configs/request");
 const barchart_1 = __importDefault(require("../../../components/dashboard/barchart"));
 const piechart_1 = __importDefault(require("../../../components/dashboard/piechart"));
 function SuperAdminDashboard() {
-    const user = (0, react_redux_1.useSelector)((state) => state.auth.user);
     const token = (0, react_redux_1.useSelector)((state) => state.auth.token);
     const collapse = (0, react_redux_1.useSelector)((state) => state.sidebar.collapse);
     const [stats, setStats] = (0, react_1.useState)({
