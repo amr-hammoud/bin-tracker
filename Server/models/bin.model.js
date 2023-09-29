@@ -40,10 +40,6 @@ const userSchema = new mongoose.Schema(
 			trim: true,
 			required: true,
 		},
-		last_pickup_time: {
-			type: String,
-			trim: true,
-		},
 		waste_type: {
 			type: String,
 			trim: true,
