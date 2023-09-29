@@ -2,12 +2,47 @@ const User = require("../models/user.model");
 const Group = require("../models/group.model");
 
 const getUser = async (req, res) => {
-	if (req.params.id) {
-		const user = await User.findById(req.params.id).populate("group_id");
-		res.status(200).send(user);
-	} else {
-		const users = await User.find().populate("group_id");
-		res.status(200).send(users);
+	const user_type = req.user.user_type;
+	if (user_type === "1") {
+		if (req.params.id) {
+			const user = await User.findById(req.params.id).populate(
+				"group_id"
+			);
+			res.status(200).send(user);
+		} else {
+			const users = await User.find().populate("group_id");
+			res.status(200).send(users);
+		}
+	} else if (user_type === "2") {
+		if (req.params.id) {
+			const users = await User.find({ group_id: req.user.group_id });
+			const userList = users.filter((user) => {
+				return user._id.equals(req.user._id);
+			});
+			if (userList.length > 0) {
+				const user = userList[0];
+				res.status(200).send(user);
+			} else {
+				res.status(200).send(users);
+			}
+		} else {
+			res.status(422).send("ID Required");
+		}
+	} else if (user_type === "3") {
+		if (req.params.id) {
+			const users = await User.find({ group_id: req.user.group_id });
+			const userList = users.filter((user) => {
+				return user._id.equals(req.user._id);
+			});
+			if (userList.length > 0) {
+				const user = userList[0];
+				res.status(200).send(user);
+			} else {
+				res.status(404).send("User Not Found");
+			}
+		} else {
+			res.status(422).send("ID Required");
+		}
 	}
 };
 
@@ -150,4 +185,10 @@ const deleteUser = async (req, res) => {
 	}
 };
 
-module.exports = { getUser, updateUser, deleteUser, getGroupUser, getGroupDrivers };
+module.exports = {
+	getUser,
+	updateUser,
+	deleteUser,
+	getGroupUser,
+	getGroupDrivers,
+};
