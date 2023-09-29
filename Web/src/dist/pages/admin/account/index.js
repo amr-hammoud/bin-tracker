@@ -56,6 +56,7 @@ const profile_jpg_1 = __importDefault(require("../../../assets/images/profile.jp
 const md_1 = require("react-icons/md");
 const button_1 = __importDefault(require("../../../components/base/button"));
 const request_1 = require("../../../configs/request");
+const authSlice_1 = require("../../../store/authSlice");
 function SuperAdminAccount() {
     const user = (0, react_redux_1.useSelector)((state) => state.auth.user);
     const token = (0, react_redux_1.useSelector)((state) => state.auth.token);
@@ -76,6 +77,7 @@ function SuperAdminAccount() {
         username: (user === null || user === void 0 ? void 0 : user.username) ? user === null || user === void 0 ? void 0 : user.username : "",
         password: "",
     });
+    const dispatch = (0, react_redux_1.useDispatch)();
     const getProfile = () => __awaiter(this, void 0, void 0, function* () {
         try {
             const response = yield (0, request_1.sendRequest)({
@@ -86,6 +88,7 @@ function SuperAdminAccount() {
                 console.log(response);
                 setProfileDetails(response.data);
                 setDisabledInputs(Object.assign(Object.assign({}, disabledInputs), { first_name: true, last_name: true, email: true, username: true, password: true, button: true }));
+                dispatch((0, authSlice_1.setUser)(response === null || response === void 0 ? void 0 : response.data));
             }
         }
         catch (err) {

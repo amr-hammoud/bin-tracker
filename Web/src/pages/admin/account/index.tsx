@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { Token, User, User_Password } from "../../../store/interfaces";
 import Sidebar from "../../../components/common/sidebar";
@@ -10,6 +10,7 @@ import profile from "../../../assets/images/profile.jpg";
 import { MdOutlineEdit } from "react-icons/md";
 import Button from "../../../components/base/button";
 import { sendRequest } from "../../../configs/request";
+import { setUser } from "../../../store/authSlice";
 
 export default function SuperAdminAccount() {
 	const user: User | null = useSelector(
@@ -41,6 +42,8 @@ export default function SuperAdminAccount() {
 		password: "",
 	});
 
+	const dispatch = useDispatch();
+
 	const getProfile = async () => {
 		try {
 			const response = await sendRequest({
@@ -61,6 +64,8 @@ export default function SuperAdminAccount() {
 					password: true,
 					button: true,
 				});
+				
+				dispatch(setUser(response?.data));
 			}
 		} catch (err: any) {
 			console.error(err);
