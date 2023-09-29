@@ -169,36 +169,36 @@ function SuperAdminAccount() {
                 react_1.default.createElement("hr", { className: "my-10" }),
                 react_1.default.createElement("div", { className: "flex flex-col w-4/5 gap-6" },
                     react_1.default.createElement("div", { className: "flex flex-wrap md:flex-nowrap gap-5 w-full" },
-                        react_1.default.createElement("div", { className: " w-full md:w-1/3" },
+                        react_1.default.createElement("div", { className: " w-full md:w-80" },
                             react_1.default.createElement(editarea_1.default, { label: "First Name", value: profileDetails.first_name, disabled: disabledInputs.first_name, enabler: () => {
                                     setDisabledInputs(Object.assign(Object.assign({}, disabledInputs), { first_name: false }));
                                 }, onChange: (e) => {
                                     setProfileDetails(Object.assign(Object.assign({}, profileDetails), { first_name: e.target.value }));
                                     handleButtonAvailability("first_name", e.target.value);
                                 } })),
-                        react_1.default.createElement("div", { className: " w-full md:w-1/3" },
+                        react_1.default.createElement("div", { className: " w-full md:w-80" },
                             react_1.default.createElement(editarea_1.default, { label: "Last Name", disabled: disabledInputs.last_name, value: profileDetails.last_name, enabler: () => {
                                     setDisabledInputs(Object.assign(Object.assign({}, disabledInputs), { last_name: false }));
                                 }, onChange: (e) => {
                                     setProfileDetails(Object.assign(Object.assign({}, profileDetails), { last_name: e.target.value }));
                                     handleButtonAvailability("last_name", e.target.value);
+                                } })),
+                        react_1.default.createElement("div", { className: " w-full md:w-80" },
+                            react_1.default.createElement(editarea_1.default, { label: "username", disabled: disabledInputs.username, value: profileDetails.username, enabler: () => {
+                                    setDisabledInputs(Object.assign(Object.assign({}, disabledInputs), { username: false }));
+                                }, onChange: (e) => {
+                                    setProfileDetails(Object.assign(Object.assign({}, profileDetails), { username: e.target.value }));
+                                    handleButtonAvailability("username", e.target.value);
                                 } }))),
                     react_1.default.createElement("div", { className: "flex flex-wrap md:flex-nowrap gap-5 w-full" },
-                        react_1.default.createElement("div", { className: " w-full md:w-1/3" },
+                        react_1.default.createElement("div", { className: " w-full md:w-80" },
                             react_1.default.createElement(editarea_1.default, { label: "Email", disabled: disabledInputs.email, value: profileDetails.email, enabler: () => {
                                     setDisabledInputs(Object.assign(Object.assign({}, disabledInputs), { email: false }));
                                 }, onChange: (e) => {
                                     setProfileDetails(Object.assign(Object.assign({}, profileDetails), { email: e.target.value }));
                                     handleButtonAvailability("email", e.target.value);
                                 } })),
-                        react_1.default.createElement("div", { className: " w-full md:w-1/3" },
-                            react_1.default.createElement(editarea_1.default, { label: "username", disabled: disabledInputs.username, value: profileDetails.username, enabler: () => {
-                                    setDisabledInputs(Object.assign(Object.assign({}, disabledInputs), { username: false }));
-                                }, onChange: (e) => {
-                                    setProfileDetails(Object.assign(Object.assign({}, profileDetails), { username: e.target.value }));
-                                    handleButtonAvailability("username", e.target.value);
-                                } })),
-                        react_1.default.createElement("div", { className: " w-full md:w-1/3" },
+                        react_1.default.createElement("div", { className: " w-full md:w-80" },
                             react_1.default.createElement(editarea_1.default, { label: "password", disabled: disabledInputs.password, placeholder: "********", value: profileDetails.password, enabler: () => {
                                     setDisabledInputs(Object.assign(Object.assign({}, disabledInputs), { password: false }));
                                 }, onChange: (e) => {
