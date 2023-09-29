@@ -64,7 +64,7 @@ export default function SuperAdminAccount() {
 					password: true,
 					button: true,
 				});
-				
+
 				dispatch(setUser(response?.data));
 			}
 		} catch (err: any) {
@@ -102,7 +102,6 @@ export default function SuperAdminAccount() {
 		const { _id, ...restData } = profileDetails;
 
 		try {
-			
 			const response = await sendRequest({
 				method: "PUT",
 				route: `users/profile`,
@@ -164,7 +163,7 @@ export default function SuperAdminAccount() {
 					<hr className="my-10" />
 					<div className="flex flex-col w-4/5 gap-6">
 						<div className="flex flex-wrap md:flex-nowrap gap-5 w-full">
-							<div className=" w-full md:w-1/3">
+							<div className=" w-full md:w-80">
 								<EditArea
 									label="First Name"
 									value={profileDetails.first_name}
@@ -187,7 +186,7 @@ export default function SuperAdminAccount() {
 									}}
 								/>
 							</div>
-							<div className=" w-full md:w-1/3">
+							<div className=" w-full md:w-80">
 								<EditArea
 									label="Last Name"
 									disabled={disabledInputs.last_name}
@@ -210,32 +209,7 @@ export default function SuperAdminAccount() {
 									}}
 								/>
 							</div>
-						</div>
-						<div className="flex flex-wrap md:flex-nowrap gap-5 w-full">
-							<div className=" w-full md:w-1/3">
-								<EditArea
-									label="Email"
-									disabled={disabledInputs.email}
-									value={profileDetails.email}
-									enabler={() => {
-										setDisabledInputs({
-											...disabledInputs,
-											email: false,
-										});
-									}}
-									onChange={(e) => {
-										setProfileDetails({
-											...profileDetails,
-											email: e.target.value,
-										});
-										handleButtonAvailability(
-											"email",
-											e.target.value
-										);
-									}}
-								/>
-							</div>
-							<div className=" w-full md:w-1/3">
+							<div className=" w-full md:w-80">
 								<EditArea
 									label="username"
 									disabled={disabledInputs.username}
@@ -258,7 +232,32 @@ export default function SuperAdminAccount() {
 									}}
 								/>
 							</div>
-							<div className=" w-full md:w-1/3">
+						</div>
+						<div className="flex flex-wrap md:flex-nowrap gap-5 w-full">
+							<div className=" w-full md:w-80">
+								<EditArea
+									label="Email"
+									disabled={disabledInputs.email}
+									value={profileDetails.email}
+									enabler={() => {
+										setDisabledInputs({
+											...disabledInputs,
+											email: false,
+										});
+									}}
+									onChange={(e) => {
+										setProfileDetails({
+											...profileDetails,
+											email: e.target.value,
+										});
+										handleButtonAvailability(
+											"email",
+											e.target.value
+										);
+									}}
+								/>
+							</div>
+							<div className=" w-full md:w-80">
 								<EditArea
 									label="password"
 									disabled={disabledInputs.password}
