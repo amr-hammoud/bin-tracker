@@ -137,10 +137,7 @@ export default function AdminBins() {
 			([key, value]) => value !== null && value !== ""
 		);
 
-		const finalData = Object.fromEntries(filtered);
-
-		console.log(finalData);
-		
+		const finalData = Object.fromEntries(filtered);		
 		try {
 			const response = await sendRequest({
 				method: "POST",
@@ -173,7 +170,9 @@ export default function AdminBins() {
 			longitude: bin.longitude,
 			latitude: bin.latitude,
 			group_id: bin.group_id,
-			last_pickup_time: bin.last_pickup_time,
+			last_pickup_time:
+				bin.collection_history[bin.collection_history.length - 1]
+					?.updatedAt,
 			waste_type: bin.waste_type,
 			data: bin.data,
 		});
@@ -291,8 +290,8 @@ export default function AdminBins() {
 								setBinData({
 									...binData,
 									name: e.target.value,
-								}); console.log(e.target.value);
-								
+								});
+								console.log(e.target.value);
 							}}
 							required
 						/>
@@ -305,20 +304,6 @@ export default function AdminBins() {
 							lat={binData.latitude}
 							lng={binData.longitude}
 							onLocationChange={handleLocationChange}
-						/>
-					</div>
-					<div className="z-20">
-						<Input
-							label="Last Pickup"
-							type="date"
-							value={binData.last_pickup_time}
-							onChange={(e) => {
-								setBinData({
-									...binData,
-									last_pickup_time: e.target.value,
-								});
-							}}
-							required
 						/>
 					</div>
 					<Select
@@ -456,6 +441,23 @@ export default function AdminBins() {
 						filterBySearch(binsList, filters.searchQuery),
 						filters.selectedFilter
 					).map((bin: Bin, index) => {
+						const updatedAt = bin.collection_history[
+							bin.collection_history.length - 1
+						]?.updatedAt;
+						const date = new Date(updatedAt);
+
+						const formattedDate = date.toLocaleString("en-US", {
+							day: "2-digit",
+							month: "long",
+							hour: "numeric",
+							minute: "numeric",
+							hour12: true,
+						});
+
+						function isValidDate(date: Date): boolean {
+							return isFinite(date.getTime());
+						}
+
 						return (
 							<ListItem
 								key={index}
@@ -463,7 +465,7 @@ export default function AdminBins() {
 									bin._id,
 									bin.name,
 									bin.waste_type,
-									bin.last_pickup_time,
+									isValidDate(date) ? formattedDate : "-",
 								]}
 								object={bin}
 								customIcon={<MdLocationPin />}

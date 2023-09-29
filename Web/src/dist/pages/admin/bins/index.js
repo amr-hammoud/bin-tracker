@@ -135,7 +135,6 @@ function AdminBins() {
         const asArray = Object.entries(restData);
         const filtered = asArray.filter(([key, value]) => value !== null && value !== "");
         const finalData = Object.fromEntries(filtered);
-        console.log(finalData);
         try {
             const response = yield (0, request_1.sendRequest)({
                 method: "POST",
@@ -160,8 +159,9 @@ function AdminBins() {
         }
     });
     const activateEditModal = (data) => {
+        var _a;
         const bin = JSON.parse(data);
-        setBinData(Object.assign(Object.assign({}, binData), { _id: bin._id, name: bin.name, longitude: bin.longitude, latitude: bin.latitude, group_id: bin.group_id, last_pickup_time: bin.last_pickup_time, waste_type: bin.waste_type, data: bin.data }));
+        setBinData(Object.assign(Object.assign({}, binData), { _id: bin._id, name: bin.name, longitude: bin.longitude, latitude: bin.latitude, group_id: bin.group_id, last_pickup_time: (_a = bin.collection_history[bin.collection_history.length - 1]) === null || _a === void 0 ? void 0 : _a.updatedAt, waste_type: bin.waste_type, data: bin.data }));
         setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: true, type: "edit" }));
     };
     const updateBin = () => __awaiter(this, void 0, void 0, function* () {
@@ -244,10 +244,6 @@ function AdminBins() {
                         "Location",
                         react_1.default.createElement("span", { className: " text-red-500" }, "*")),
                     react_1.default.createElement(locationInput_1.default, { lat: binData.latitude, lng: binData.longitude, onLocationChange: handleLocationChange })),
-                react_1.default.createElement("div", { className: "z-20" },
-                    react_1.default.createElement(input_1.default, { label: "Last Pickup", type: "date", value: binData.last_pickup_time, onChange: (e) => {
-                            setBinData(Object.assign(Object.assign({}, binData), { last_pickup_time: e.target.value }));
-                        }, required: true })),
                 react_1.default.createElement(select_1.default, { label: "Waste Type", required: true, value: binData.waste_type, options: {
                         General: "General",
                         Recyclables: "Recyclables",
@@ -285,11 +281,24 @@ function AdminBins() {
                         "Actions",
                     ] }),
                 filterByWasteType(filterBySearch(binsList, filters.searchQuery), filters.selectedFilter).map((bin, index) => {
+                    var _a;
+                    const updatedAt = (_a = bin.collection_history[bin.collection_history.length - 1]) === null || _a === void 0 ? void 0 : _a.updatedAt;
+                    const date = new Date(updatedAt);
+                    const formattedDate = date.toLocaleString("en-US", {
+                        day: "2-digit",
+                        month: "long",
+                        hour: "numeric",
+                        minute: "numeric",
+                        hour12: true,
+                    });
+                    function isValidDate(date) {
+                        return isFinite(date.getTime());
+                    }
                     return (react_1.default.createElement(listItem_1.default, { key: index, items: [
                             bin._id,
                             bin.name,
                             bin.waste_type,
-                            bin.last_pickup_time,
+                            isValidDate(date) ? formattedDate : "-",
                         ], object: bin, customIcon: react_1.default.createElement(md_1.MdLocationPin, null), customIconAction: (object) => showLocation(object), onEdit: (data) => activateEditModal(data), onDelete: (id) => activateDeleteModal(id) }));
                     //TODO: Add location icon to listItem
                 })))));

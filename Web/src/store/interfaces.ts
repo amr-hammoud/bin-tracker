@@ -51,15 +51,22 @@ interface BinRecord {
 	updatedAt: string;
 }
 
+interface HistoryStamp {
+	_id: string;
+	collected: boolean;
+	createdAt: string;
+	updatedAt: string;
+}
+
 interface Bin {
 	_id: string;
 	name: string;
 	longitude: string;
 	latitude: string;
 	group_id: string;
-	last_pickup_time: string | undefined;
 	waste_type: string | undefined;
 	data: Array<BinRecord>;
+	collection_history: Array<HistoryStamp>;
 }
 
 interface Truck {

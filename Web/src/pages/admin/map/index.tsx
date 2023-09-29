@@ -72,7 +72,7 @@ export default function AdminMap() {
 			longitude: bin.longitude,
 			fill_level:
 				bin.data.length > 0 ? bin.data[bin.data.length - 1].record : 0,
-			last_pickup_time: bin.last_pickup_time,
+			last_pickup_time: bin.collection_history[bin.collection_history.length -1]?.updatedAt,
 		}));
 	};
 
@@ -102,6 +102,8 @@ export default function AdminMap() {
 					toast.success("Route Suggestion Complete", {
 						duration: 1500,
 					});
+					console.log(osrmResponse.data.geometry);
+					
 					setSuggestedRoute(osrmResponse.data.geometry);
 				}, 500);
 			} else {

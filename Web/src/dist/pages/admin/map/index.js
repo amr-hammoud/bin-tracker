@@ -87,12 +87,15 @@ function AdminMap() {
     });
     const [suggestedRoute, setSuggestedRoute] = (0, react_1.useState)("");
     const formatBins = (binsList) => {
-        return binsList.map((bin) => ({
-            latitude: bin.latitude,
-            longitude: bin.longitude,
-            fill_level: bin.data.length > 0 ? bin.data[bin.data.length - 1].record : 0,
-            last_pickup_time: bin.last_pickup_time,
-        }));
+        return binsList.map((bin) => {
+            var _a;
+            return ({
+                latitude: bin.latitude,
+                longitude: bin.longitude,
+                fill_level: bin.data.length > 0 ? bin.data[bin.data.length - 1].record : 0,
+                last_pickup_time: (_a = bin.collection_history[bin.collection_history.length - 1]) === null || _a === void 0 ? void 0 : _a.updatedAt,
+            });
+        });
     };
     const prepareAndSendToAPI = () => __awaiter(this, void 0, void 0, function* () {
         try {
@@ -119,6 +122,7 @@ function AdminMap() {
                     react_hot_toast_1.default.success("Route Suggestion Complete", {
                         duration: 1500,
                     });
+                    console.log(osrmResponse.data.geometry);
                     setSuggestedRoute(osrmResponse.data.geometry);
                 }, 500);
             }
