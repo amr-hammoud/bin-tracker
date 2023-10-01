@@ -395,33 +395,35 @@ export default function AdminUsers() {
 					<ListHeader
 						items={["Name", "Username", "Email", "Role", "Actions"]}
 					/>
-					{filterByRole(
-						filterBySearch(userList, filters.searchQuery),
-						filters.selectedFilter
-					).map((user: User, key) => {
-						let user_type: string = "";
-						if (user.user_type === "1") {
-							user_type = "Super Admin";
-						} else if (user.user_type === "2") {
-							user_type = "Admin";
-						} else if (user.user_type === "3") {
-							user_type = "Driver";
-						}
+					<div className="flex flex-col-reverse gap-0">
+						{filterByRole(
+							filterBySearch(userList, filters.searchQuery),
+							filters.selectedFilter
+						).map((user: User, key) => {
+							let user_type: string = "";
+							if (user.user_type === "1") {
+								user_type = "Super Admin";
+							} else if (user.user_type === "2") {
+								user_type = "Admin";
+							} else if (user.user_type === "3") {
+								user_type = "Driver";
+							}
 
-						return (
-							<ListItem
-								items={[
-									`${user.first_name} ${user.last_name}`,
-									user.username,
-									user.email,
-									user_type,
-								]}
-								object={user}
-								onEdit={(data) => activateEditModal(data)}
-								onDelete={(id) => activateDeleteModal(id)}
-							/>
-						);
-					})}
+							return (
+								<ListItem
+									items={[
+										`${user.first_name} ${user.last_name}`,
+										user.username,
+										user.email,
+										user_type,
+									]}
+									object={user}
+									onEdit={(data) => activateEditModal(data)}
+									onDelete={(id) => activateDeleteModal(id)}
+								/>
+							);
+						})}
+					</div>
 				</div>
 			</div>
 		</div>

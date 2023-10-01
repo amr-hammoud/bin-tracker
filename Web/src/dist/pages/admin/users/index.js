@@ -243,7 +243,7 @@ function AdminUsers() {
                             }, onChange: (e) => setfilters(Object.assign(Object.assign({}, filters), { selectedFilter: e.target.value })) })))),
             react_1.default.createElement("div", { className: "p-10 pt-3" },
                 react_1.default.createElement(listheader_1.default, { items: ["Name", "Username", "Email", "Role", "Actions"] }),
-                filterByRole(filterBySearch(userList, filters.searchQuery), filters.selectedFilter).map((user, key) => {
+                react_1.default.createElement("div", { className: "flex flex-col-reverse gap-0" }, filterByRole(filterBySearch(userList, filters.searchQuery), filters.selectedFilter).map((user, key) => {
                     let user_type = "";
                     if (user.user_type === "1") {
                         user_type = "Super Admin";
@@ -260,6 +260,6 @@ function AdminUsers() {
                             user.email,
                             user_type,
                         ], object: user, onEdit: (data) => activateEditModal(data), onDelete: (id) => activateDeleteModal(id) }));
-                })))));
+                }))))));
 }
 exports.default = AdminUsers;
