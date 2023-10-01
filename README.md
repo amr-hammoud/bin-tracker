@@ -1,6 +1,17 @@
 <img src="./readme/title1.svg"/>
 <br><br>
 
+## Table of Contents
+- [Table of Contents](#table-of-contents)
+	- [User Stories](#user-stories)
+	- [Wireframes](#wireframes)
+	- [Mockups](#mockups)
+	- [Admin Screens](#admin-screens)
+	- [Bin Tracker is built using the following technologies](#bin-tracker-is-built-using-the-following-technologies)
+	- [Prerequisites (Windows)](#prerequisites-windows)
+	- [Installation (Windows)](#installation-windows)
+
+<br><br>
 <!-- project philosophy -->
 <img src="./readme/title2.svg"/>
 
@@ -29,10 +40,6 @@
 | ---| ---| ---|
 | ![Landing](./readme/wireframes/web/map.png) | ![Admin Dashboard](./readme/wireframes/web/dashboard.png) | ![User Management](./readme/wireframes/web/bin_crud.png) |
 
-| Truck Management screen  | Chats screen |  Announcements screen |
-| ---| ---| ---|
-| ![User Management](./readme/wireframes/web/trucks_crud.png)| ![Bin Management](./readme/wireframes/web/chats.png)| ![Truck Management](./readme/wireframes/web/announcements.png)|
-
 
 ### Mockups
 
@@ -40,32 +47,21 @@
 | ---| ---| ---|
 | ![Map](readme/mockups/web/map.png)| ![Map](./readme/mockups/web/dashboard.png)| ![Map](./readme/mockups/web/bin_crud.png)|
 
-| Truck Management screen  | Announcements screen |  Chats screen |
-| ---| ---| ---|
-| ![Map](./readme/mockups/web/truck_crud.png)| ![Map](./readme/mockups/web/announcements.png)| ![Map](./readme/mockups/web/chats.png)|
 
 <!-- Implementation -->
-<!-- <img src="./readme/title4.svg"/>
+<img src="./readme/title4.svg"/>
 
-> Using the wireframes and mockups as a guide, we implemented the Coffee Express app with the following features: 
+> Using the wireframes and mockups as a guide, we implemented the Bin Tracker with the following features and many more: 
 
-### User Screens (Mobile)
+### Admin Screens
 
-| Login screen  | Register screen | Landing screen | Loading screen |
-| ---| ---| ---| ---|
-| ![Landing](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) |
-| Home screen  | Menu Screen | Order Screen | Checkout Screen |
-| ![Landing](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) | 
+| Dashboard screen  | Create Bin screen |
+| ---| ---|
+| ![Landing](./readme/implementation/dashboard.gif) | ![fsdaf](./readme/implementation/create_bin.gif) |
+| Announcements screen  |  Bins to Map screen |
+| ![Landing](./readme/implementation/message.gif) | ![fsdaf](./readme/implementation/map.gif) |
 
-### Admin Screens (Web)
-
-| Login screen  | Register screen |  Landing screen |
-| ---| ---| ---|
-| ![Landing](./readme/demo/1440x1024.png) | ![fsdaf](./readme/demo/1440x1024.png) | ![fsdaf](./readme/demo/1440x1024.png) |
-| Home screen  | Menu Screen | Order Screen |
-| ![Landing](./readme/demo/1440x1024.png) | ![fsdaf](./readme/demo/1440x1024.png) | ![fsdaf](./readme/demo/1440x1024.png) |
-
-<br><br> -->
+<br><br>
 
 <!-- Tech stack -->
 <img src="./readme/title5.svg"/>
@@ -140,11 +136,4 @@
 	npm run dev
 	```
 
-6) Now the web app should be running, you can login to the app using:
-	<!-- 1) For the super admin:
-		- username: super_admin
-		- password: password
-	
-	2) For the admin:
-		- username: admin
-		- password: password -->
+6) Now the web app should be running
