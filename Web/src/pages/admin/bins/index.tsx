@@ -274,7 +274,7 @@ export default function AdminBins() {
 	};
 
 	return (
-		<div className="flex">
+		<div className="flex w-screen">
 			<Sidebar
 				items={[
 					"Dashboard",
@@ -288,6 +288,7 @@ export default function AdminBins() {
 				]}
 				selected="Bins"
 			/>
+
 			{/* Create - Edit Modal */}
 			<ModalComponent
 				showModal={createModalState.open}
@@ -299,7 +300,7 @@ export default function AdminBins() {
 				}
 			>
 				<div className="text-xl">Create/Edit User</div>
-				<div className="flex flex-col flex-wrap justify-center content-center w-96">
+				<div className="flex flex-col flex-wrap justify-center content-center gap-3 w-fit">
 					<div className="flex gap-5">
 						<Input
 							label="Name"
@@ -315,7 +316,7 @@ export default function AdminBins() {
 							required
 						/>
 					</div>
-					<div className="h-60 w-full my-5 z-10">
+					<div className="flex flex-col h-96 w-96 z-10">
 						<div className="font-poppins text-sm text-gunmetal">
 							Location<span className=" text-red-500">*</span>
 						</div>
@@ -325,22 +326,24 @@ export default function AdminBins() {
 							onLocationChange={handleLocationChange}
 						/>
 					</div>
-					<Select
-						label="Waste Type"
-						required
-						value={binData.waste_type}
-						options={{
-							General: "General",
-							Recyclables: "Recyclables",
-							Hazardous: "Hazardous",
-						}}
-						onChange={(e) =>
-							setBinData({
-								...binData,
-								waste_type: e.target.value,
-							})
-						}
-					/>
+					<div>
+						<Select
+							label="Waste Type"
+							required
+							value={binData.waste_type}
+							options={{
+								General: "General",
+								Recyclables: "Recyclables",
+								Hazardous: "Hazardous",
+							}}
+							onChange={(e) =>
+								setBinData({
+									...binData,
+									waste_type: e.target.value,
+								})
+							}
+						/>
+					</div>
 				</div>
 				<div className="flex w-full justify-center gap-10 mt-5">
 					<Button
