@@ -54,7 +54,7 @@ const LineChart = ({ data }) => {
                 max: 100,
                 stacked: true,
                 reverse: false,
-            }, curve: "natural", colors: "#3da35d", enableGridX: false, axisTop: null, axisRight: null, axisBottom: {
+            }, curve: "linear", colors: "#3da35d", enableGridX: false, axisTop: null, axisRight: null, axisBottom: {
                 tickSize: 5,
                 tickPadding: 5,
                 tickRotation: 0,

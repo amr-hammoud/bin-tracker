@@ -276,15 +276,15 @@ export default function AdminMap() {
 					</div>
 				</div>
 				{activeBin ? (
-					<div className="absolute bottom-5 left-5 z-20 w-fit">
-						<div className="flex flex-col h-fit w-fit bg-neutral-0 shadow-lg rounded-md border border-primary-500">
-							<div className="flex justify-between pt-5 pl-5 pr-10">
-								<div className="flex gap-2 m-1 font-semibold text-gunmetal">
+					<div className="flex justify-center absolute bottom-5 left-5 z-20 w-11/12 pl-16">
+						<div className="flex flex-col h-fit w-full bg-neutral-0 shadow-lg rounded-md border border-primary-500">
+							<div className="flex justify-between pt-3 pl-5 pr-10">
+								<div className="flex gap-2 font-semibold text-gunmetal">
 									<div className="flex flex-wrap content-center text-primary-500 font-semibold text-lg">
 										<RiDeleteBin6Line />
 									</div>
 									<div className="flex flex-wrap content-center text-primary-500 font-semibold text-lg">
-										Active Bin
+										{activeBin?.name}
 									</div>
 								</div>
 								<div>
@@ -295,30 +295,21 @@ export default function AdminMap() {
 								</div>
 							</div>
 
-							<div className="flex  p-3 ">
-								<div className="flex flex-col h-fit p-4 gap-2 text-gunmetal w-fit mr-3">
+							<div className="flex flex-col pl-2 w-full ">
+								<div className="flex h-fit pl-75 p-4 gap-4 text-gunmetal w-full">
 									<div>
 										<span className="font-bold">ID:</span>{" "}
 										{activeBin?._id}
 									</div>
-									<div>
-										<span className="font-bold">Name:</span>{" "}
-										{activeBin?.name}
-									</div>
+									|
 									<div>
 										<span className="font-bold">
 											Waste Type:
 										</span>{" "}
 										{activeBin?.waste_type}
 									</div>
-									<div>
-										<span className="font-bold">
-											Coordinates:
-										</span>{" "}
-										{`${activeBin?.latitude}, ${activeBin?.longitude}`}
-									</div>
 								</div>
-								<div className=" h-52 w-96 z-30 bg-neutral-0">
+								<div className=" h-52 w-full z-30 bg-neutral-0">
 									<LineChart data={activeBin.data} />
 								</div>
 							</div>

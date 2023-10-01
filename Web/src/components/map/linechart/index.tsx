@@ -58,7 +58,7 @@ const LineChart: React.FC<{ data: any }> = ({ data }) => {
 					stacked: true,
 					reverse: false,
 				}}
-				curve="natural"
+				curve="linear"
 				colors="#3da35d"
 				enableGridX={false}
 				axisTop={null}
