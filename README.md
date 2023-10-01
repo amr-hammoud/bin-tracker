@@ -6,10 +6,12 @@
 	- [User Stories](#user-stories)
 	- [Wireframes](#wireframes)
 	- [Mockups](#mockups)
-	- [Admin Screens](#admin-screens)
-	- [Bin Tracker is built using the following technologies](#bin-tracker-is-built-using-the-following-technologies)
-	- [Prerequisites (Windows)](#prerequisites-windows)
-	- [Installation (Windows)](#installation-windows)
+	- [Admin Screens](#admin)
+	- [IoT System](#iot)
+	- [Stacks Used in Project](#stacks)
+	- [Running Project](#running)
+		- [Prerequisites](#prerequisites)
+		- [Installation](#installation)
 
 <br><br>
 <!-- project philosophy -->
@@ -19,7 +21,7 @@
 >
 > Bin Tracker aims to decrease the consumption of fuel by garbage trucks and help cities become more eco-friendly.
 
-### User Stories
+### User-Stories
 
 - As an admin, I want to view the bins on an interactive map.
 - As an admin, I want to view real-time and historical data on bins fill levels to generate reports and make decisions based on data.
@@ -53,20 +55,36 @@
 
 > Using the wireframes and mockups as a guide, we implemented the Bin Tracker with the following features and many more: 
 
-### Admin Screens
+### Admin
 
 | Dashboard screen  | Create Bin screen |
 | ---| ---|
 | ![Landing](./readme/implementation/dashboard.gif) | ![fsdaf](./readme/implementation/create_bin.gif) |
-| Announcements screen  |  Bins to Map screen |
-| ![Landing](./readme/implementation/message.gif) | ![fsdaf](./readme/implementation/map.gif) |
+
+| Bins to Map screen |
+| ---|
+ | ![fsdaf](./readme/implementation/map.gif) |
+
+| Announcements screen  |
+| ---|
+| ![fsdaf](./readme/implementation/message.gif)|
 
 <br><br>
+### IoT
+Using the esp8266 and the ultrasonic sensor, we are tracking the fill level of the waste bin and it's location.
 
+The Arduino board is designed to send data periodically to the server which binds them to the bin and displays them in a user-friendly way.
+
+| Connection Diagram | Data Transfer Demo |
+| ---| ---|
+|![fsdaf](./readme/implementation/arduino.gif)|![fsdaf](./readme/implementation/arduino_data.png)
+
+<br><br>
 <!-- Tech stack -->
 <img src="./readme/title5.svg"/>
 
-### Bin Tracker is built using the following technologies
+### Stacks
+Bin Tracker is built using the following technologies
 
 1) MERN Stack using TypeScript for the web application
 	- ["React Library"](https://react.dev/) for the web application frontend development. It is a robust JavaScript library for building reusable UI components.
@@ -81,8 +99,8 @@
 
 > To set up Bin Tracker locally, follow these steps:
 
-### Prerequisites (Windows)
-
+### Running
+#### Prerequisites
 - Node.js & npm
 	1) Follow the instructions on this link to setup Node.js: https://www.geeksforgeeks.org/installation-of-node-js-on-windows/
 
@@ -91,7 +109,7 @@
 	1) Follow the instructions on this link to setup MongoDB: https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-windows/#install-mongodb-community-edition
 
 
-### Installation (Windows)
+#### Installation
 
 
 1) Clone the repo
