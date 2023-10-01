@@ -7,6 +7,7 @@ router.get("/drivers", authMiddleware, userController.getGroupDrivers)
 router.get("/group/:id?", authMiddleware, userController.getGroupUser)
 router.get("/:id?", authMiddleware, userController.getUser)
 router.put("/profile", authMiddleware, userController.updateProfile)
+router.put("/image", authMiddleware, userController.updateImage)
 router.put("/:id", authMiddleware, userController.updateUser)
 router.delete("/:id", authMiddleware, userController.deleteUser)
 
