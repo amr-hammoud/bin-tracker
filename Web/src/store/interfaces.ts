@@ -1,15 +1,16 @@
 interface User {
-	_id: string;
-	first_name: string;
-	last_name: string;
-	username: string;
-	email?: string;
-	user_type: "1" | "2" | "3";
-	createdAt?: string;
-	updatedAt?: string;
 	__v?: number;
+	_id: string;
+	createdAt?: string;
 	device_id?: string;
+	email?: string;
+	first_name: string;
 	group_id?: Group;
+	image: string;
+	last_name: string;
+	updatedAt?: string;
+	user_type: "1" | "2" | "3";
+	username: string;
 }
 interface User_Password {
 	_id: string;
