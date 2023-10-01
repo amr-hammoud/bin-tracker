@@ -146,7 +146,7 @@ function AdminBins() {
             if (response.status === 200) {
                 setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false }));
                 getBins();
-                react_hot_toast_1.toast.success("Bin created successfully", { duration: 2500 });
+                react_hot_toast_1.toast.success("Bin added successfully", { duration: 2500 });
             }
             else {
                 setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false }));
@@ -229,7 +229,9 @@ function AdminBins() {
             });
             if (response.status === 200) {
                 getBins();
-                react_hot_toast_1.toast.success("Pickup Time Updated Successfully", { duration: 1000 });
+                react_hot_toast_1.toast.success("Pickup Time Updated Successfully", {
+                    duration: 1000,
+                });
             }
         }
         catch (err) {
@@ -275,7 +277,7 @@ function AdminBins() {
                 react_1.default.createElement(button_1.default, { label: "Cancel", color: "text-gunmetal", bgColor: "bg-neutral-100", hoverColor: "hover:bg-neutral-600", onClick: () => setDeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: false })) }),
                 react_1.default.createElement(button_1.default, { label: "Delete", bgColor: "bg-red-400", hoverColor: "hover:bg-red-500", onClick: () => deleteBins(deleteModalState.id) }))),
         react_1.default.createElement("div", { className: `flex flex-col w-full ${collapse ? "ml-20" : "ml-52"}` },
-            react_1.default.createElement(navbar_1.default, { label: "Bins", buttonLabel: "+ Create Bin", buttonAction: () => activateCreateModal() }),
+            react_1.default.createElement(navbar_1.default, { label: "Bins", buttonLabel: "+ Add Bin", buttonAction: () => activateCreateModal() }),
             react_1.default.createElement("div", null,
                 react_1.default.createElement(react_hot_toast_1.Toaster, null)),
             react_1.default.createElement("div", { className: "p-10 pb-2" },
@@ -297,7 +299,7 @@ function AdminBins() {
                         "Last pickup time",
                         "Actions",
                     ] }),
-                filterByWasteType(filterBySearch(binsList, filters.searchQuery), filters.selectedFilter).map((bin, index) => {
+                react_1.default.createElement("div", { className: "flex flex-col-reverse gap-0" }, filterByWasteType(filterBySearch(binsList, filters.searchQuery), filters.selectedFilter).map((bin, index) => {
                     var _a;
                     const updatedAt = (_a = bin.collection_history[bin.collection_history.length - 1]) === null || _a === void 0 ? void 0 : _a.updatedAt;
                     const date = new Date(updatedAt);
@@ -317,7 +319,6 @@ function AdminBins() {
                             bin.waste_type,
                             isValidDate(date) ? formattedDate : "-",
                         ], object: bin, customIcon: react_1.default.createElement(md_1.MdLocationPin, null), customIconAction: (object) => showLocation(object), customIcon_2: react_1.default.createElement(md_2.MdRestoreFromTrash, null), customIconAction_2: (object) => addPickupStamp(object), onEdit: (data) => activateEditModal(data), onDelete: (id) => activateDeleteModal(id) }));
-                    //TODO: Add location icon to listItem
-                })))));
+                }))))));
 }
 exports.default = AdminBins;

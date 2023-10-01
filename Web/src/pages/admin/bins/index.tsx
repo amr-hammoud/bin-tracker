@@ -150,7 +150,7 @@ export default function AdminBins() {
 			if (response.status === 200) {
 				setCreateModalState({ ...createModalState, open: false });
 				getBins();
-				toast.success("Bin created successfully", { duration: 2500 });
+				toast.success("Bin added successfully", { duration: 2500 });
 			} else {
 				setCreateModalState({ ...createModalState, open: false });
 				toast.error("Couldn't Create, Try Again", { duration: 4000 });
@@ -262,12 +262,14 @@ export default function AdminBins() {
 				token,
 			});
 			if (response.status === 200) {
-				getBins()
-				toast.success("Pickup Time Updated Successfully", {duration: 1000})
+				getBins();
+				toast.success("Pickup Time Updated Successfully", {
+					duration: 1000,
+				});
 			}
 		} catch (err: any) {
 			console.error(err);
-			toast.success("Failed to update pickup time", {duration: 1500})
+			toast.success("Failed to update pickup time", { duration: 1500 });
 		}
 	};
 
@@ -409,7 +411,7 @@ export default function AdminBins() {
 			>
 				<Navbar
 					label="Bins"
-					buttonLabel="+ Create Bin"
+					buttonLabel="+ Add Bin"
 					buttonAction={() => activateCreateModal()}
 				/>
 				<div>
@@ -454,50 +456,53 @@ export default function AdminBins() {
 							"Actions",
 						]}
 					/>
-					{filterByWasteType(
-						filterBySearch(binsList, filters.searchQuery),
-						filters.selectedFilter
-					).map((bin: Bin, index) => {
-						const updatedAt =
-							bin.collection_history[
-								bin.collection_history.length - 1
-							]?.updatedAt;
-						const date = new Date(updatedAt);
+					<div className="flex flex-col-reverse gap-0">
+						{filterByWasteType(
+							filterBySearch(binsList, filters.searchQuery),
+							filters.selectedFilter
+						).map((bin: Bin, index) => {
+							const updatedAt =
+								bin.collection_history[
+									bin.collection_history.length - 1
+								]?.updatedAt;
+							const date = new Date(updatedAt);
 
-						const formattedDate = date.toLocaleString("en-US", {
-							day: "2-digit",
-							month: "long",
-							hour: "numeric",
-							minute: "numeric",
-							hour12: true,
-						});
+							const formattedDate = date.toLocaleString("en-US", {
+								day: "2-digit",
+								month: "long",
+								hour: "numeric",
+								minute: "numeric",
+								hour12: true,
+							});
 
-						function isValidDate(date: Date): boolean {
-							return isFinite(date.getTime());
-						}
+							function isValidDate(date: Date): boolean {
+								return isFinite(date.getTime());
+							}
 
-						return (
-							<ListItem
-								key={index}
-								items={[
-									bin._id,
-									bin.name,
-									bin.waste_type,
-									isValidDate(date) ? formattedDate : "-",
-								]}
-								object={bin}
-								customIcon={<MdLocationPin />}
-								customIconAction={(object) =>
-									showLocation(object)
-								}
-								customIcon_2={<MdRestoreFromTrash />}
-								customIconAction_2={(object) => addPickupStamp(object)}
-								onEdit={(data) => activateEditModal(data)}
-								onDelete={(id) => activateDeleteModal(id)}
-							/>
-						);
-						//TODO: Add location icon to listItem
-					})}
+							return (
+								<ListItem
+									key={index}
+									items={[
+										bin._id,
+										bin.name,
+										bin.waste_type,
+										isValidDate(date) ? formattedDate : "-",
+									]}
+									object={bin}
+									customIcon={<MdLocationPin />}
+									customIconAction={(object) =>
+										showLocation(object)
+									}
+									customIcon_2={<MdRestoreFromTrash />}
+									customIconAction_2={(object) =>
+										addPickupStamp(object)
+									}
+									onEdit={(data) => activateEditModal(data)}
+									onDelete={(id) => activateDeleteModal(id)}
+								/>
+							);
+						})}
+					</div>
 				</div>
 			</div>
 		</div>

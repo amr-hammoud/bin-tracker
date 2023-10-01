@@ -20,7 +20,7 @@ export default function ListItem(props: ListItemProps) {
 
 	return (
 		<div
-			className="flex justify-between content-center shadow border border-primary-100 rounded-md px-3 py-4 my-3
+			className="flex justify-between content-center shadow border border-primary-100 rounded-md px-3 py-4 my-2
                         hover:bg-primary-100"
 		>
 			<div className="flex flex-grow justify-between gap-3">
