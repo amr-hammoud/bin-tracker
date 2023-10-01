@@ -216,7 +216,7 @@ function AdminBins() {
     };
     const navigate = (0, react_router_dom_1.useNavigate)();
     const showLocation = (object) => {
-        navigate(`/map/${object._id}`, { replace: true });
+        navigate(`/admin/map/${object._id}`, { replace: true });
     };
     const handleLocationChange = (lat, lng) => {
         setBinData(Object.assign(Object.assign({}, binData), { latitude: lat.toString(), longitude: lng.toString() }));

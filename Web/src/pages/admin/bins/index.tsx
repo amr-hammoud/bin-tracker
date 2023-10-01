@@ -244,7 +244,7 @@ export default function AdminBins() {
 
 	const navigate = useNavigate();
 	const showLocation = (object: any) => {
-		navigate(`/map/${object._id}`, { replace: true });
+		navigate(`/admin/map/${object._id}`, { replace: true });
 	};
 
 	const handleLocationChange = (lat: number, lng: number) => {
