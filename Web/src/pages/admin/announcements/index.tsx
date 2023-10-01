@@ -10,6 +10,7 @@ import { format, parseISO } from "date-fns";
 import { IoSend } from "react-icons/io5";
 import { Toaster, toast } from "react-hot-toast";
 import io from "socket.io-client";
+import ChatRow from "../../../components/base/chatrow";
 interface GroupedAnnouncements {
 	[date: string]: Message[];
 }
@@ -83,7 +84,7 @@ export default function AdminAnnouncements() {
 			grouped[formattedDate].push(message);
 		});
 		setGroupedAnnouncements(grouped);
-		scrollToBottom()
+		scrollToBottom();
 	}, [announcements]);
 
 	const handleTextareaChange = (text: string) => {
@@ -100,7 +101,6 @@ export default function AdminAnnouncements() {
 			e.preventDefault();
 		}
 	};
-	
 
 	const sendMessage = async () => {
 		try {
@@ -113,7 +113,7 @@ export default function AdminAnnouncements() {
 
 			if (response.status === 200) {
 				setMessageText("");
-				scrollToBottom()
+				scrollToBottom();
 			} else {
 				toast.error("Couldn't Send, Try Again", { duration: 4000 });
 			}
@@ -156,27 +156,29 @@ export default function AdminAnnouncements() {
 					<Toaster />
 				</div>
 				<div
-					className="p-5 bg-neutral-100 h-full overflow-auto pb-20"
+					className="flex bg-neutral-100 h-full overflow-auto pb-20"
 					ref={messagesBottom}
 				>
-					{Object.keys(groupedAnnouncements).map((date) => (
-						<div key={date}>
-							<div className=" flex justify-center w-full mt-5 mb-2">
-								<div className="text-center text-xs bg-neutral-700 px-2 py-1 rounded-full text-neutral-0">
-									{date}
+					<div className="p-5 bg-neutral-100 w-full h-full overflow-auto pb-20">
+						{Object.keys(groupedAnnouncements).map((date) => (
+							<div key={date}>
+								<div className=" flex justify-center w-full mt-5 mb-2">
+									<div className="text-center text-xs bg-neutral-700 px-2 py-1 rounded-full text-neutral-0">
+										{date}
+									</div>
 								</div>
+								{groupedAnnouncements[date].map(
+									(message, index) => (
+										<MessageComponent
+											key={index}
+											message={message}
+											user_id={user._id}
+										/>
+									)
+								)}
 							</div>
-							{groupedAnnouncements[date].map(
-								(message, index) => (
-									<MessageComponent
-										key={index}
-										message={message}
-										user_id={user._id}
-									/>
-								)
-							)}
-						</div>
-					))}
+						))}
+					</div>
 				</div>
 				<div className="absolute bottom-5 left-5 w-11/12 flex flex-wrap flex-col justify-center content-center font-poppins h-fit my-1 text-gunmetal">
 					<textarea

@@ -154,10 +154,11 @@ function AdminAnnouncements() {
             react_1.default.createElement(navbar_1.default, { label: "Announcements" }),
             react_1.default.createElement("div", null,
                 react_1.default.createElement(react_hot_toast_1.Toaster, null)),
-            react_1.default.createElement("div", { className: "p-5 bg-neutral-100 h-full overflow-auto pb-20", ref: messagesBottom }, Object.keys(groupedAnnouncements).map((date) => (react_1.default.createElement("div", { key: date },
-                react_1.default.createElement("div", { className: " flex justify-center w-full mt-5 mb-2" },
-                    react_1.default.createElement("div", { className: "text-center text-xs bg-neutral-700 px-2 py-1 rounded-full text-neutral-0" }, date)),
-                groupedAnnouncements[date].map((message, index) => (react_1.default.createElement(messages_1.default, { key: index, message: message, user_id: user._id }))))))),
+            react_1.default.createElement("div", { className: "flex bg-neutral-100 h-full overflow-auto pb-20", ref: messagesBottom },
+                react_1.default.createElement("div", { className: "p-5 bg-neutral-100 w-full h-full overflow-auto pb-20" }, Object.keys(groupedAnnouncements).map((date) => (react_1.default.createElement("div", { key: date },
+                    react_1.default.createElement("div", { className: " flex justify-center w-full mt-5 mb-2" },
+                        react_1.default.createElement("div", { className: "text-center text-xs bg-neutral-700 px-2 py-1 rounded-full text-neutral-0" }, date)),
+                    groupedAnnouncements[date].map((message, index) => (react_1.default.createElement(messages_1.default, { key: index, message: message, user_id: user._id })))))))),
             react_1.default.createElement("div", { className: "absolute bottom-5 left-5 w-11/12 flex flex-wrap flex-col justify-center content-center font-poppins h-fit my-1 text-gunmetal" },
                 react_1.default.createElement("textarea", { className: `rounded-xl text-base w-11/12
 									bg-neutral-0 border-primary-400 shadow-lg
