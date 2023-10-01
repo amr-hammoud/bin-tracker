@@ -9,6 +9,9 @@ import BarChart from "../../../components/dashboard/barchart";
 import PieChart from "../../../components/dashboard/piechart";
 
 export default function SuperAdminDashboard() {
+	const user: User | null = useSelector(
+		(state: RootState) => state.auth.user
+	);
 
 	const token: Token | null = useSelector(
 		(state: RootState) => state.auth.token
@@ -20,7 +23,6 @@ export default function SuperAdminDashboard() {
 
 	const [stats, setStats] = useState<{
 		users_count: number;
-		super_admins_count: number;
 		admins_count: number;
 		drivers_count: number;
 		bins_count: number;
@@ -34,7 +36,6 @@ export default function SuperAdminDashboard() {
 		}>;
 	}>({
 		users_count: 0,
-		super_admins_count: 0,
 		admins_count: 0,
 		drivers_count: 0,
 		bins_count: 0,
@@ -69,22 +70,22 @@ export default function SuperAdminDashboard() {
 	}, []);
 
 	return (
-		<div className="flex">
+		<div className="flex h-screen">
 			<Sidebar
 				items={["Dashboard", "Users", "Groups", "Account"]}
 				selected="Dashboard"
 			/>
 			<div
-				className={`flex flex-col w-full ${
+				className={`flex flex-col h-full w-full ${
 					collapse ? "ml-20" : "ml-52"
 				}`}
 			>
 				<Navbar label="Dashboard" />
-				<div className="p-5">
-					<div className="flex w-full flex-wrap md:flex-nowrap justify-center gap-16 h-fit text-gunmetal">
+				<div className="p-5 h-full">
+					<div className="flex w-full flex-wrap md:flex-nowrap justify-center gap-16 h-full max-h-96 text-gunmetal">
 						<div className="flex flex-col w-full h-full gap-2">
-							<div className="flex flex-col w-full h-full gap-2">
-								<div className="flex flex-col flex-wrap justify-center content-center h-full w-full bg-primary-100 hover:bg-primary-200 p-3 text-center rounded">
+							<div className="flex flex-col w-full h-fit  gap-2">
+								<div className="flex flex-col flex-wrap justify-center content-center h-fit w-full bg-primary-100 hover:bg-primary-200 p-3 text-center rounded">
 									<div className=" text-xl">
 										Users&nbsp;Count
 									</div>
@@ -92,42 +93,17 @@ export default function SuperAdminDashboard() {
 										{stats?.users_count}
 									</div>
 								</div>
-								<div className="flex flex-wrap sm:flex-nowrap h-full gap-2">
-									<div className="flex flex-col flex-wrap justify-center content-center w-full h-full bg-neutral-50 hover:bg-neutral-100 p-3 text-center rounded">
-										<div className=" text-xl">Super</div>
-										<div className="mt-5 font-bold text-4xl">
-											{stats?.super_admins_count}
-										</div>
-									</div>
-									<div className="flex flex-col flex-wrap justify-center content-center w-full h-full bg-neutral-50 hover:bg-neutral-100 p-3 text-center rounded">
-										<div className=" text-xl">Admins</div>
-										<div className="mt-5 font-bold text-4xl">
-											{stats?.admins_count}
-										</div>
-									</div>
-									<div className="flex flex-col flex-wrap justify-center content-center w-full h-full bg-neutral-50 hover:bg-neutral-100 p-3 text-center rounded">
-										<div className=" text-xl">Drivers</div>
-										<div className="mt-5 font-bold text-4xl">
-											{stats?.drivers_count}
-										</div>
-									</div>
-								</div>
 							</div>
-							<div className="flex flex-col w-full h-96 gap-2 z-10">
+							<div className="flex flex-col w-full h-full gap-2 z-10 bg-neutral-100 rounded">
 								<PieChart
 									data={[
 										{
-											id: "Super Admins",
-											label: "Super Admins",
-											value: stats.super_admins_count,
-										},
-										{
-											id: "Admins",
+											id: "admins",
 											label: "Admins",
 											value: stats.admins_count,
 										},
 										{
-											id: "Drivers",
+											id: "drivers",
 											label: "Drivers",
 											value: stats.drivers_count,
 										},
@@ -136,8 +112,8 @@ export default function SuperAdminDashboard() {
 							</div>
 						</div>
 						<div className="flex flex-col w-full h-full gap-2">
-							<div className="flex flex-col w-full h-full gap-2">
-								<div className="flex flex-col flex-wrap justify-center content-center h-full w-full bg-primary-100 hover:bg-primary-200 p-3 text-center rounded">
+							<div className="flex flex-col w-full h-fit gap-2">
+								<div className="flex flex-col flex-wrap justify-center content-center h-fit w-full bg-primary-100 hover:bg-primary-200 p-3 text-center rounded">
 									<div className=" text-xl">
 										Bins&nbsp;Count
 									</div>
@@ -145,32 +121,8 @@ export default function SuperAdminDashboard() {
 										{stats?.bins_count}
 									</div>
 								</div>
-								<div className="flex flex-wrap lg:flex-nowrap h-full gap-2">
-									<div className="flex flex-col flex-wrap justify-center content-center w-full h-full bg-neutral-50 hover:bg-neutral-100 p-3 text-center rounded">
-										<div className=" text-xl">General</div>
-										<div className="mt-5 font-bold text-4xl">
-											{stats?.general_bins_count}
-										</div>
-									</div>
-									<div className="flex flex-col flex-wrap justify-center content-center w-full h-full bg-neutral-50 hover:bg-neutral-100 p-3 text-center rounded">
-										<div className=" text-xl">
-											Recyclables
-										</div>
-										<div className="mt-5 font-bold text-4xl">
-											{stats?.recyclables_bins_count}
-										</div>
-									</div>
-									<div className="flex flex-col flex-wrap justify-center content-center w-full h-full bg-neutral-50 hover:bg-neutral-100 p-3 text-center rounded">
-										<div className=" text-xl">
-											Hazardous
-										</div>
-										<div className="mt-5 font-bold text-4xl">
-											{stats?.hazardous_bins_count}
-										</div>
-									</div>
-								</div>
 							</div>
-							<div className="flex flex-col w-full h-96 gap-2 z-10">
+							<div className="flex flex-col w-full h-full gap-2 z-10 bg-neutral-100 rounded">
 								<PieChart
 									data={[
 										{
@@ -194,49 +146,16 @@ export default function SuperAdminDashboard() {
 						</div>
 						<div className="flex flex-col w-full h-full gap-2">
 							<div className="flex flex-col flex-wrap justify-center content-center h-full w-full bg-primary-100 hover:bg-primary-200 p-3 text-center rounded">
-								<div className=" text-xl">
-									Trucks&nbsp;Count
-								</div>
-								<div className="mt-5 font-bold text-4xl">
-									{stats?.trucks_count}
+								<div className="flex flex-col justify-center flex-nowrap content-center h-full text-xl">
+									<div>Trucks&nbsp;Count</div>
+									<div className="mt-5 font-bold text-4xl">2</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div className="flex flex-col justify-center w-full h-96 bg-neutral-50 p-5 mt-5">
+					<div className="flex flex-col justify-center w-full h-1/2 bg-neutral-50 p-5 mt-5">
 						<div>Bins Collected Per day (Last week)</div>
-						<BarChart
-							data={[
-								{
-									date: "2023-09-20T21:00:00.000Z",
-									count: 3,
-								},
-								{
-									date: "2023-09-21T21:00:00.000Z",
-									count: 6,
-								},
-								{
-									date: "2023-09-22T21:00:00.000Z",
-									count: 5,
-								},
-								{
-									date: "2023-09-23T21:00:00.000Z",
-									count: 7,
-								},
-								{
-									date: "2023-09-24T21:00:00.000Z",
-									count: 8,
-								},
-								{
-									date: "2023-09-25T21:00:00.000Z",
-									count: 6,
-								},
-								{
-									date: "2023-09-26T21:00:00.000Z",
-									count: 9,
-								},
-							]}
-						/>
+						<BarChart data={stats?.collected_bins_per_day} />
 					</div>
 				</div>
 			</div>

@@ -91,8 +91,8 @@ export default function AdminDashboard() {
 			>
 				<Navbar label="Dashboard" />
 				<div className="p-5 h-full">
-					<div className="flex w-full flex-wrap md:flex-nowrap justify-center gap-16 h-fit max-h-96 text-gunmetal">
-						<div className="flex flex-col w-full h-fit  gap-2">
+					<div className="flex w-full flex-wrap md:flex-nowrap justify-center gap-16 h-full max-h-96 text-gunmetal">
+						<div className="flex flex-col w-full h-full gap-2">
 							<div className="flex flex-col w-full h-fit  gap-2">
 								<div className="flex flex-col flex-wrap justify-center content-center h-fit w-full bg-primary-100 hover:bg-primary-200 p-3 text-center rounded">
 									<div className=" text-xl">
@@ -103,7 +103,7 @@ export default function AdminDashboard() {
 									</div>
 								</div>
 							</div>
-							<div className="flex flex-col w-full h-60 gap-2 z-10 bg-neutral-100 rounded">
+							<div className="flex flex-col w-full h-full gap-2 z-10 bg-neutral-100 rounded">
 								<PieChart
 									data={[
 										{
@@ -120,7 +120,7 @@ export default function AdminDashboard() {
 								/>
 							</div>
 						</div>
-						<div className="flex flex-col w-full h-fit gap-2">
+						<div className="flex flex-col w-full h-full gap-2">
 							<div className="flex flex-col w-full h-fit gap-2">
 								<div className="flex flex-col flex-wrap justify-center content-center h-fit w-full bg-primary-100 hover:bg-primary-200 p-3 text-center rounded">
 									<div className=" text-xl">
@@ -131,7 +131,7 @@ export default function AdminDashboard() {
 									</div>
 								</div>
 							</div>
-							<div className="flex flex-col w-full h-60 gap-2 z-10 bg-neutral-100 rounded">
+							<div className="flex flex-col w-full h-full gap-2 z-10 bg-neutral-100 rounded">
 								<PieChart
 									data={[
 										{
@@ -155,21 +155,16 @@ export default function AdminDashboard() {
 						</div>
 						<div className="flex flex-col w-full h-full gap-2">
 							<div className="flex flex-col flex-wrap justify-center content-center h-full w-full bg-primary-100 hover:bg-primary-200 p-3 text-center rounded">
-								<div className="h-full text-xl">
-									Trucks&nbsp;Count <br/>
-									<span className="mt-5 h-full font-bold text-4xl">
-
-									{stats?.trucks_count}
-									</span>
+								<div className="flex flex-col justify-center flex-nowrap content-center h-full text-xl">
+									<div>Trucks&nbsp;Count</div>
+									<div className="mt-5 font-bold text-4xl">2</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div className="flex flex-col justify-center w-full h-72 bg-neutral-50 p-5 mt-5">
+					<div className="flex flex-col justify-center w-full h-1/2 bg-neutral-50 p-5 mt-5">
 						<div>Bins Collected Per day (Last week)</div>
-						<BarChart
-							data={stats?.collected_bins_per_day}
-						/>
+						<BarChart data={stats?.collected_bins_per_day} />
 					</div>
 				</div>
 			</div>

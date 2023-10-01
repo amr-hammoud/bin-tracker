@@ -22,6 +22,7 @@ const customStyles: Modal.Styles = {
 		flexDirection: "column",
 		justifyContent: "center",
 		alignItems: "center",
+
 		
 	},
 	overlay: {
@@ -30,6 +31,7 @@ const customStyles: Modal.Styles = {
 		left: 0,
 		right: 0,
 		bottom: 0,
+		zIndex: 60
 	},
 };
 

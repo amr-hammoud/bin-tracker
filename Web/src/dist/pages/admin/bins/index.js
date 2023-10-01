@@ -239,7 +239,7 @@ function AdminBins() {
             react_hot_toast_1.toast.success("Failed to update pickup time", { duration: 1500 });
         }
     });
-    return (react_1.default.createElement("div", { className: "flex" },
+    return (react_1.default.createElement("div", { className: "flex w-screen" },
         react_1.default.createElement(sidebar_1.default, { items: [
                 "Dashboard",
                 "Bins",
@@ -252,22 +252,23 @@ function AdminBins() {
             ], selected: "Bins" }),
         react_1.default.createElement(modal_1.default, { showModal: createModalState.open, onRequestClose: () => setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: !createModalState.open })) },
             react_1.default.createElement("div", { className: "text-xl" }, "Create/Edit User"),
-            react_1.default.createElement("div", { className: "flex flex-col flex-wrap justify-center content-center w-96" },
+            react_1.default.createElement("div", { className: "flex flex-col flex-wrap justify-center content-center gap-3 w-fit" },
                 react_1.default.createElement("div", { className: "flex gap-5" },
                     react_1.default.createElement(input_1.default, { label: "Name", placeholder: "name", value: binData.name, onChange: (e) => {
                             setBinData(Object.assign(Object.assign({}, binData), { name: e.target.value }));
                             console.log(e.target.value);
                         }, required: true })),
-                react_1.default.createElement("div", { className: "h-60 w-full my-5 z-10" },
+                react_1.default.createElement("div", { className: "flex flex-col h-96 w-96 z-10" },
                     react_1.default.createElement("div", { className: "font-poppins text-sm text-gunmetal" },
                         "Location",
                         react_1.default.createElement("span", { className: " text-red-500" }, "*")),
                     react_1.default.createElement(locationInput_1.default, { lat: binData.latitude, lng: binData.longitude, onLocationChange: handleLocationChange })),
-                react_1.default.createElement(select_1.default, { label: "Waste Type", required: true, value: binData.waste_type, options: {
-                        General: "General",
-                        Recyclables: "Recyclables",
-                        Hazardous: "Hazardous",
-                    }, onChange: (e) => setBinData(Object.assign(Object.assign({}, binData), { waste_type: e.target.value })) })),
+                react_1.default.createElement("div", null,
+                    react_1.default.createElement(select_1.default, { label: "Waste Type", required: true, value: binData.waste_type, options: {
+                            General: "General",
+                            Recyclables: "Recyclables",
+                            Hazardous: "Hazardous",
+                        }, onChange: (e) => setBinData(Object.assign(Object.assign({}, binData), { waste_type: e.target.value })) }))),
             react_1.default.createElement("div", { className: "flex w-full justify-center gap-10 mt-5" },
                 react_1.default.createElement(button_1.default, { label: "Cancel", color: "text-gunmetal", bgColor: "bg-neutral-100", hoverColor: "hover:bg-neutral-600", onClick: () => setCreateModalState(Object.assign(Object.assign({}, createModalState), { open: false })) }),
                 createModalState.type === "edit" ? (react_1.default.createElement(button_1.default, { label: "Update", bgColor: "bg-primary-500", hoverColor: "hover:bg-primary-700", onClick: () => updateBin() })) : (react_1.default.createElement(button_1.default, { label: "Create", bgColor: "bg-primary-500", hoverColor: "hover:bg-primary-700", onClick: () => createBin() })))),

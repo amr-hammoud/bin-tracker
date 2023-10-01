@@ -27,6 +27,7 @@ const customStyles = {
         left: 0,
         right: 0,
         bottom: 0,
+        zIndex: 60
     },
 };
 const ModalComponent = ({ showModal, onRequestClose, children, }) => {
