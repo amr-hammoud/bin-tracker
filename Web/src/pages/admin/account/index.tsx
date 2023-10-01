@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { Token, User, User_Password } from "../../../store/interfaces";
@@ -6,11 +6,12 @@ import Sidebar from "../../../components/common/sidebar";
 import Navbar from "../../../components/common/navbar";
 import toast, { Toaster } from "react-hot-toast";
 import EditArea from "../../../components/base/editarea";
-import profile from "../../../assets/images/profile.jpg";
 import { MdOutlineEdit } from "react-icons/md";
 import Button from "../../../components/base/button";
 import { sendRequest } from "../../../configs/request";
 import { setUser } from "../../../store/authSlice";
+import userDefault from "../../../assets/icons/user-default.svg";
+import ModalComponent from "../../../components/base/modal";
 
 export default function SuperAdminAccount() {
 	const user: User | null = useSelector(
@@ -40,6 +41,7 @@ export default function SuperAdminAccount() {
 		email: user?.email ? user?.email : "",
 		username: user?.username ? user?.username : "",
 		password: "",
+		image: user?.image ? user.image : userDefault,
 	});
 
 	const dispatch = useDispatch();
@@ -52,8 +54,6 @@ export default function SuperAdminAccount() {
 			});
 
 			if (response.status === 200) {
-				console.log(response);
-
 				setProfileDetails(response.data);
 				setDisabledInputs({
 					...disabledInputs,
@@ -123,6 +123,57 @@ export default function SuperAdminAccount() {
 		}
 	};
 
+	const [createModalState, setCreateModalState] = useState<boolean>(false);
+
+	const activateImageModal = () => {
+		setCreateModalState(true); 
+	};
+
+	const imageInput = useRef<HTMLInputElement>(null);
+
+	const handleImageSelect = (e: any) => {
+		const file = e.target.files[0];
+		if (file) {
+			const reader = new FileReader();
+			reader.onload = function (event) {
+				const image = event.target ? event.target.result : ""
+				if(image && image !== "" && typeof image === "string"){				
+				
+				setProfileDetails({
+					...profileDetails,
+					image: image,
+				})};
+			};
+			reader.readAsDataURL(file);
+		}
+	};
+
+	
+	const updateImage = async () => {
+		const { image } = profileDetails;
+
+		try {
+			const response = await sendRequest({
+				method: "PUT",
+				route: `users/image`,
+				body: {image: image},
+				token,
+			});
+
+			if (response.status === 200) {
+				toast.success("Image updated successfully", {
+					duration: 2500,
+				});
+				getProfile();
+			} else {
+				toast.error("Couldn't Update, Try Again", { duration: 4000 });
+			}
+		} catch (err: any) {
+			console.error(err);
+			toast.error("Couldn't Update, Try Again", { duration: 2500 });
+		}
+	};
+
 	return (
 		<div className="flex">
 			<Sidebar
@@ -147,18 +198,70 @@ export default function SuperAdminAccount() {
 				<div>
 					<Toaster />
 				</div>
+				<ModalComponent
+					showModal={createModalState}
+					onRequestClose={() =>
+						setCreateModalState(!createModalState)
+					}
+				>
+					<div className="text-xl">Edit Image</div>
+					<div className="flex flex-col flex-wrap justify-center content-center gap-3 w-fit">
+						<div>
+							<input
+								ref={imageInput}
+								className="baseInput"
+								type="file"
+								name="picture"
+								id="picture"
+								hidden
+								onChange={(e) => handleImageSelect(e)}
+							/>
+							<Button
+								label="Select Image"
+								onClick={() =>
+									imageInput.current
+										? imageInput.current.click()
+										: console.log("")
+								}
+							/>
+						</div>
+						<div>
+							<img
+								className="w-80 h-80 rounded-full object-cover"
+								src={profileDetails.image ? profileDetails.image : userDefault}
+								alt=""
+							/>
+						</div>
+					</div>
+					<div className="flex w-full justify-center gap-10 mt-5">
+						<Button
+							label="Cancel"
+							color="text-gunmetal"
+							bgColor="bg-neutral-100"
+							hoverColor="hover:bg-neutral-600"
+							onClick={() => setCreateModalState(false)}
+						/>
+						<Button
+							label="Update"
+							bgColor="bg-primary-500"
+							hoverColor="hover:bg-primary-700"
+							onClick={() => {updateImage(); setCreateModalState(false);}}
+						/>
+					</div>
+				</ModalComponent>
 				<div className="flex flex-col flex-wrap content-center justify-center py-20 px-3">
 					<div className="flex flex-wrap content-center gap-10">
-						<div className="relative flex aspect-square w-48">
+						<div className="relative flex aspect-square">
 							<img
-								src={profile}
-								className="rounded-full"
+								src={user?.image ? user?.image : userDefault}
+								className="w-48 h-48 rounded-full object-cover"
 								alt="profile"
 							/>
 							<div
 								className="absolute bottom-2 right-2 p-3 text-2xl rounded-full
 											bg-primary-500 text-neutral-0
 											hover:bg-primary-700 hover:cursor-pointer"
+								onClick={activateImageModal}
 							>
 								<MdOutlineEdit />
 							</div>

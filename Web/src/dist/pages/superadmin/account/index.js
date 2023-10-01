@@ -52,11 +52,12 @@ const sidebar_1 = __importDefault(require("../../../components/common/sidebar"))
 const navbar_1 = __importDefault(require("../../../components/common/navbar"));
 const react_hot_toast_1 = __importStar(require("react-hot-toast"));
 const editarea_1 = __importDefault(require("../../../components/base/editarea"));
-const profile_jpg_1 = __importDefault(require("../../../assets/images/profile.jpg"));
 const md_1 = require("react-icons/md");
 const button_1 = __importDefault(require("../../../components/base/button"));
 const request_1 = require("../../../configs/request");
 const authSlice_1 = require("../../../store/authSlice");
+const user_default_svg_1 = __importDefault(require("../../../assets/icons/user-default.svg"));
+const modal_1 = __importDefault(require("../../../components/base/modal"));
 function SuperAdminAccount() {
     const user = (0, react_redux_1.useSelector)((state) => state.auth.user);
     const token = (0, react_redux_1.useSelector)((state) => state.auth.token);
@@ -76,6 +77,7 @@ function SuperAdminAccount() {
         email: (user === null || user === void 0 ? void 0 : user.email) ? user === null || user === void 0 ? void 0 : user.email : "",
         username: (user === null || user === void 0 ? void 0 : user.username) ? user === null || user === void 0 ? void 0 : user.username : "",
         password: "",
+        image: (user === null || user === void 0 ? void 0 : user.image) ? user.image : user_default_svg_1.default,
     });
     const dispatch = (0, react_redux_1.useDispatch)();
     const getProfile = () => __awaiter(this, void 0, void 0, function* () {
@@ -85,7 +87,6 @@ function SuperAdminAccount() {
                 token,
             });
             if (response.status === 200) {
-                console.log(response);
                 setProfileDetails(response.data);
                 setDisabledInputs(Object.assign(Object.assign({}, disabledInputs), { first_name: true, last_name: true, email: true, username: true, password: true, button: true }));
                 dispatch((0, authSlice_1.setUser)(response === null || response === void 0 ? void 0 : response.data));
@@ -139,17 +140,73 @@ function SuperAdminAccount() {
             react_hot_toast_1.default.error("Couldn't Update, Try Again", { duration: 2500 });
         }
     });
+    const [createModalState, setCreateModalState] = (0, react_1.useState)(false);
+    const activateImageModal = () => {
+        setCreateModalState(true);
+    };
+    const imageInput = (0, react_1.useRef)(null);
+    const handleImageSelect = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                const image = event.target ? event.target.result : "";
+                if (image && image !== "" && typeof image === "string") {
+                    setProfileDetails(Object.assign(Object.assign({}, profileDetails), { image: image }));
+                }
+                ;
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+    const updateImage = () => __awaiter(this, void 0, void 0, function* () {
+        const { image } = profileDetails;
+        try {
+            const response = yield (0, request_1.sendRequest)({
+                method: "PUT",
+                route: `users/image`,
+                body: { image: image },
+                token,
+            });
+            if (response.status === 200) {
+                react_hot_toast_1.default.success("Image updated successfully", {
+                    duration: 2500,
+                });
+                getProfile();
+            }
+            else {
+                react_hot_toast_1.default.error("Couldn't Update, Try Again", { duration: 4000 });
+            }
+        }
+        catch (err) {
+            console.error(err);
+            react_hot_toast_1.default.error("Couldn't Update, Try Again", { duration: 2500 });
+        }
+    });
     return (react_1.default.createElement("div", { className: "flex" },
         react_1.default.createElement(sidebar_1.default, { items: ["Dashboard", "Users", "Groups", "Account"], selected: "Account" }),
         react_1.default.createElement("div", { className: `flex flex-col w-full ${collapse ? "ml-20" : "ml-52"}` },
             react_1.default.createElement(navbar_1.default, { label: "Account" }),
             react_1.default.createElement("div", null,
                 react_1.default.createElement(react_hot_toast_1.Toaster, null)),
+            react_1.default.createElement(modal_1.default, { showModal: createModalState, onRequestClose: () => setCreateModalState(!createModalState) },
+                react_1.default.createElement("div", { className: "text-xl" }, "Edit Image"),
+                react_1.default.createElement("div", { className: "flex flex-col flex-wrap justify-center content-center gap-3 w-fit" },
+                    react_1.default.createElement("div", null,
+                        react_1.default.createElement("input", { ref: imageInput, className: "baseInput", type: "file", name: "picture", id: "picture", hidden: true, onChange: (e) => handleImageSelect(e) }),
+                        react_1.default.createElement(button_1.default, { label: "Select Image", onClick: () => imageInput.current
+                                ? imageInput.current.click()
+                                : console.log("") })),
+                    react_1.default.createElement("div", null,
+                        react_1.default.createElement("img", { className: "w-80 h-80 rounded-full object-cover", src: profileDetails.image ? profileDetails.image : user_default_svg_1.default, alt: "" }))),
+                react_1.default.createElement("div", { className: "flex w-full justify-center gap-10 mt-5" },
+                    react_1.default.createElement(button_1.default, { label: "Cancel", color: "text-gunmetal", bgColor: "bg-neutral-100", hoverColor: "hover:bg-neutral-600", onClick: () => setCreateModalState(false) }),
+                    react_1.default.createElement(button_1.default, { label: "Update", bgColor: "bg-primary-500", hoverColor: "hover:bg-primary-700", onClick: () => { updateImage(); setCreateModalState(false); } }))),
             react_1.default.createElement("div", { className: "flex flex-col flex-wrap content-center justify-center py-20 px-3" },
                 react_1.default.createElement("div", { className: "flex flex-wrap content-center gap-10" },
-                    react_1.default.createElement("div", { className: "relative flex aspect-square w-48" },
-                        react_1.default.createElement("img", { src: profile_jpg_1.default, className: "rounded-full", alt: "profile" }),
-                        react_1.default.createElement("div", { className: "absolute bottom-2 right-2 p-3 text-2xl rounded-full\r\n\t\t\t\t\t\t\t\t\t\t\tbg-primary-500 text-neutral-0\r\n\t\t\t\t\t\t\t\t\t\t\thover:bg-primary-700 hover:cursor-pointer" },
+                    react_1.default.createElement("div", { className: "relative flex aspect-square" },
+                        react_1.default.createElement("img", { src: (user === null || user === void 0 ? void 0 : user.image) ? user === null || user === void 0 ? void 0 : user.image : user_default_svg_1.default, className: "w-48 h-48 rounded-full object-cover", alt: "profile" }),
+                        react_1.default.createElement("div", { className: "absolute bottom-2 right-2 p-3 text-2xl rounded-full\r\n\t\t\t\t\t\t\t\t\t\t\tbg-primary-500 text-neutral-0\r\n\t\t\t\t\t\t\t\t\t\t\thover:bg-primary-700 hover:cursor-pointer", onClick: activateImageModal },
                             react_1.default.createElement(md_1.MdOutlineEdit, null))),
                     react_1.default.createElement("div", { className: "flex flex-col justify-center gap-5 text-xl" },
                         react_1.default.createElement("div", null, `${user === null || user === void 0 ? void 0 : user.first_name} ${user === null || user === void 0 ? void 0 : user.last_name}`),

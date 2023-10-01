@@ -25,6 +25,7 @@ interface User_Password {
 	__v?: number;
 	device_id?: string;
 	group_id?: Group;
+	image: string;
 }
 
 interface User2 {

@@ -74,6 +74,31 @@ const updateProfile = async (req, res) => {
 	}
 };
 
+const updateImage = async (req, res) => {
+	const image_data = req.body;
+	const user_id = req.user._id;
+
+	try {
+		let user;
+
+		if (user_id) {
+			user = await User.findById(user_id);
+
+			if (!user) {
+				return res.status(404).send("User not found");
+			}
+		}
+
+		user.image = image_data.image;
+
+		await user.save();
+		return res.send(user);
+	} catch (error) {
+		console.error("Error updating profile:", error);
+		return res.status(500).send("Internal server error");
+	}
+};
+
 const getGroupUser = async (req, res) => {
 	if (req.params.id) {
 		const user = await User.findById(req.params.id).populate("group_id");
@@ -219,5 +244,6 @@ module.exports = {
 	deleteUser,
 	getGroupUser,
 	getGroupDrivers,
-	updateProfile
+	updateProfile,
+	updateImage,
 };
