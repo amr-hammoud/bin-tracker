@@ -406,7 +406,7 @@ export default function AdminBins() {
 			</ModalComponent>
 			<div
 				className={`flex flex-col w-full ${
-					collapse ? "ml-20" : "ml-52"
+					collapse ? "ml-20" : "ml-64"
 				}`}
 			>
 				<Navbar

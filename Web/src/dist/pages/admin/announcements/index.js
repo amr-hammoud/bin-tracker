@@ -150,7 +150,7 @@ function AdminAnnouncements() {
                 "Chats",
                 "Account",
             ], selected: "Announcements" }),
-        react_1.default.createElement("div", { className: `flex flex-col w-full h-screen relative ${collapse ? "ml-20" : "ml-52"}` },
+        react_1.default.createElement("div", { className: `flex flex-col w-full h-screen relative ${collapse ? "ml-20" : "ml-64"}` },
             react_1.default.createElement(navbar_1.default, { label: "Announcements" }),
             react_1.default.createElement("div", null,
                 react_1.default.createElement(react_hot_toast_1.Toaster, null)),

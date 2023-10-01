@@ -195,7 +195,7 @@ function AdminUsers() {
                 "Chats",
                 "Account",
             ], selected: "Users" }),
-        react_1.default.createElement("div", { className: `flex flex-col w-full ${collapse ? "ml-20" : "ml-52"}` },
+        react_1.default.createElement("div", { className: `flex flex-col w-full ${collapse ? "ml-20" : "ml-64"}` },
             react_1.default.createElement(navbar_1.default, { label: "Users" }),
             react_1.default.createElement("div", null,
                 react_1.default.createElement(react_hot_toast_1.Toaster, null)),

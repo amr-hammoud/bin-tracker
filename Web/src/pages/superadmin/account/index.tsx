@@ -131,7 +131,7 @@ export default function SuperAdminAccount() {
 			/>
 			<div
 				className={`flex flex-col w-full ${
-					collapse ? "ml-20" : "ml-40"
+					collapse ? "ml-20" : "ml-52"
 				}`}
 			>
 				<Navbar label="Account" />

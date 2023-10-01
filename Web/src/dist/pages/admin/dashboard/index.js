@@ -90,7 +90,7 @@ function AdminDashboard() {
                 "Chats",
                 "Account",
             ], selected: "Dashboard" }),
-        react_1.default.createElement("div", { className: `flex flex-col h-full w-full ${collapse ? "ml-20" : "ml-52"}` },
+        react_1.default.createElement("div", { className: `flex flex-col h-full w-full ${collapse ? "ml-20" : "ml-64"}` },
             react_1.default.createElement(navbar_1.default, { label: "Dashboard" }),
             react_1.default.createElement("div", { className: "p-5 h-full" },
                 react_1.default.createElement("div", { className: "flex w-full flex-wrap md:flex-nowrap justify-center gap-16 h-fit max-h-96 text-gunmetal" },

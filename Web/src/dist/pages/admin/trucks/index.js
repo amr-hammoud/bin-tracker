@@ -260,7 +260,7 @@ function AdminTrucks() {
             react_1.default.createElement("div", { className: "flex w-full justify-center gap-10 mt-5" },
                 react_1.default.createElement(button_1.default, { label: "Cancel", color: "text-gunmetal", bgColor: "bg-neutral-100", hoverColor: "hover:bg-neutral-600", onClick: () => setDeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: false })) }),
                 react_1.default.createElement(button_1.default, { label: "Delete", bgColor: "bg-red-400", hoverColor: "hover:bg-red-500", onClick: () => deleteTruck(deleteModalState.id) }))),
-        react_1.default.createElement("div", { className: `flex flex-col w-full ${collapse ? "ml-20" : "ml-52"}` },
+        react_1.default.createElement("div", { className: `flex flex-col w-full ${collapse ? "ml-20" : "ml-64"}` },
             react_1.default.createElement(navbar_1.default, { label: "Trucks", buttonLabel: "+ Add Truck", buttonAction: () => activateCreateModal() }),
             react_1.default.createElement("div", null,
                 react_1.default.createElement(react_hot_toast_1.Toaster, null)),

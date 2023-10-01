@@ -81,7 +81,7 @@ function SuperAdminDashboard() {
     }, []);
     return (react_1.default.createElement("div", { className: "flex" },
         react_1.default.createElement(sidebar_1.default, { items: ["Dashboard", "Users", "Groups", "Account"], selected: "Dashboard" }),
-        react_1.default.createElement("div", { className: `flex flex-col w-full ${collapse ? "ml-20" : "ml-40"}` },
+        react_1.default.createElement("div", { className: `flex flex-col w-full ${collapse ? "ml-20" : "ml-52"}` },
             react_1.default.createElement(navbar_1.default, { label: "Dashboard" }),
             react_1.default.createElement("div", { className: "p-5" },
                 react_1.default.createElement("div", { className: "flex w-full flex-wrap md:flex-nowrap justify-center gap-16 h-fit text-gunmetal" },

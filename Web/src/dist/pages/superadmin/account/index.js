@@ -141,7 +141,7 @@ function SuperAdminAccount() {
     });
     return (react_1.default.createElement("div", { className: "flex" },
         react_1.default.createElement(sidebar_1.default, { items: ["Dashboard", "Users", "Groups", "Account"], selected: "Account" }),
-        react_1.default.createElement("div", { className: `flex flex-col w-full ${collapse ? "ml-20" : "ml-40"}` },
+        react_1.default.createElement("div", { className: `flex flex-col w-full ${collapse ? "ml-20" : "ml-52"}` },
             react_1.default.createElement(navbar_1.default, { label: "Account" }),
             react_1.default.createElement("div", null,
                 react_1.default.createElement(react_hot_toast_1.Toaster, null)),

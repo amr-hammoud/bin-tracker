@@ -21,7 +21,7 @@ function AdminChats() {
                 "Chats",
                 "Account",
             ], selected: "Chats" }),
-        react_1.default.createElement("div", { className: `flex flex-col w-full ${collapse ? "ml-20" : "ml-52"}` },
+        react_1.default.createElement("div", { className: `flex flex-col w-full ${collapse ? "ml-20" : "ml-64"}` },
             react_1.default.createElement(navbar_1.default, { label: "Chats" }),
             react_1.default.createElement("div", { className: "p-5" },
                 react_1.default.createElement("h2", null,

@@ -147,7 +147,7 @@ export default function AdminAnnouncements() {
 			/>
 			<div
 				className={`flex flex-col w-full h-screen relative ${
-					collapse ? "ml-20" : "ml-52"
+					collapse ? "ml-20" : "ml-64"
 				}`}
 			>
 				<Navbar label="Announcements" />

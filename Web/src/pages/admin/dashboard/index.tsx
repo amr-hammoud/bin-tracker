@@ -86,7 +86,7 @@ export default function AdminDashboard() {
 			/>
 			<div
 				className={`flex flex-col h-full w-full ${
-					collapse ? "ml-20" : "ml-52"
+					collapse ? "ml-20" : "ml-64"
 				}`}
 			>
 				<Navbar label="Dashboard" />
