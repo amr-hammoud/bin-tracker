@@ -261,7 +261,7 @@ function AdminTrucks() {
                 react_1.default.createElement(button_1.default, { label: "Cancel", color: "text-gunmetal", bgColor: "bg-neutral-100", hoverColor: "hover:bg-neutral-600", onClick: () => setDeleteModalState(Object.assign(Object.assign({}, deleteModalState), { open: false })) }),
                 react_1.default.createElement(button_1.default, { label: "Delete", bgColor: "bg-red-400", hoverColor: "hover:bg-red-500", onClick: () => deleteTruck(deleteModalState.id) }))),
         react_1.default.createElement("div", { className: `flex flex-col w-full ${collapse ? "ml-20" : "ml-52"}` },
-            react_1.default.createElement(navbar_1.default, { label: "Trucks", buttonLabel: "+ Create Truck", buttonAction: () => activateCreateModal() }),
+            react_1.default.createElement(navbar_1.default, { label: "Trucks", buttonLabel: "+ Add Truck", buttonAction: () => activateCreateModal() }),
             react_1.default.createElement("div", null,
                 react_1.default.createElement(react_hot_toast_1.Toaster, null)),
             react_1.default.createElement("div", { className: "p-10 pb-2" },
@@ -276,7 +276,7 @@ function AdminTrucks() {
                         "Last Wash",
                         "Actions",
                     ] }),
-                filterBySearch(truckList, filters.searchQuery).map((truck, index) => {
+                react_1.default.createElement("div", { className: "flex flex-col-reverse gap-0" }, filterBySearch(truckList, filters.searchQuery).map((truck, index) => {
                     return (react_1.default.createElement(listItem_1.default, { key: index, items: [
                             truck.plate_number,
                             truck.driver_id.first_name +
@@ -285,6 +285,6 @@ function AdminTrucks() {
                             truck.last_oil_change,
                             truck.last_wash,
                         ], object: truck, onEdit: (data) => activateEditModal(data), onDelete: (id) => activateDeleteModal(id) }));
-                })))));
+                }))))));
 }
 exports.default = AdminTrucks;

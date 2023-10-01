@@ -397,7 +397,7 @@ export default function AdminTrucks() {
 			>
 				<Navbar
 					label="Trucks"
-					buttonLabel="+ Create Truck"
+					buttonLabel="+ Add Truck"
 					buttonAction={() => activateCreateModal()}
 				/>
 				<div>
@@ -424,26 +424,32 @@ export default function AdminTrucks() {
 							"Actions",
 						]}
 					/>
-					{filterBySearch(truckList, filters.searchQuery).map(
-						(truck: Truck, index) => {
-							return (
-								<ListItem
-									key={index}
-									items={[
-										truck.plate_number,
-										truck.driver_id.first_name +
-											" " +
-											truck.driver_id.last_name,
-										truck.last_oil_change,
-										truck.last_wash,
-									]}
-									object={truck}
-									onEdit={(data) => activateEditModal(data)}
-									onDelete={(id) => activateDeleteModal(id)}
-								/>
-							);
-						}
-					)}
+					<div className="flex flex-col-reverse gap-0">
+						{filterBySearch(truckList, filters.searchQuery).map(
+							(truck: Truck, index) => {
+								return (
+									<ListItem
+										key={index}
+										items={[
+											truck.plate_number,
+											truck.driver_id.first_name +
+												" " +
+												truck.driver_id.last_name,
+											truck.last_oil_change,
+											truck.last_wash,
+										]}
+										object={truck}
+										onEdit={(data) =>
+											activateEditModal(data)
+										}
+										onDelete={(id) =>
+											activateDeleteModal(id)
+										}
+									/>
+								);
+							}
+						)}
+					</div>
 				</div>
 			</div>
 		</div>
