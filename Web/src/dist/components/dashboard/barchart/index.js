@@ -7,7 +7,7 @@ const react_1 = __importDefault(require("react"));
 const bar_1 = require("@nivo/bar");
 const BarChart = ({ data, }) => {
     return (react_1.default.createElement("div", { style: { height: "100%", width: "100%" } },
-        react_1.default.createElement(bar_1.ResponsiveBar, { data: data, keys: ["count"], indexBy: "date", margin: { top: 15, right: 25, bottom: 20, left: 60 }, padding: 0.4, valueScale: { type: "linear" }, colors: "#3da35d", enableLabel: false, axisTop: null, axisRight: null, axisLeft: {
+        react_1.default.createElement(bar_1.ResponsiveBar, { data: data, keys: ["count"], indexBy: "date", margin: { top: 15, right: 25, bottom: 20, left: 60 }, padding: 0.4, valueScale: { type: "linear" }, colors: "#3da35d", enableLabel: false, axisTop: null, axisRight: null, motionConfig: "wobbly", axisLeft: {
                 tickSize: 10,
                 tickPadding: 5,
                 tickRotation: 0,

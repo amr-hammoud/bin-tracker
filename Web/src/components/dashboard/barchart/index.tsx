@@ -17,6 +17,7 @@ const BarChart: React.FC<{ data: { date: string; count: number }[] }> = ({
 				enableLabel={false}
 				axisTop={null}
 				axisRight={null}
+				motionConfig="wobbly"
 				axisLeft={{
 					tickSize: 10,
 					tickPadding: 5,
