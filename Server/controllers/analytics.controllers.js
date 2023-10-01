@@ -47,44 +47,87 @@ const getAnalytics = async (req, res) => {
 		const sevenDaysAgo = new Date();
 		sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 8);
 
-		const collectedBinsPerDay = await Bins.aggregate([
-			{
-				$match: {
-					group_id: group_id,
+		if (user_type === "1") {
+			const collectedBinsPerDay = await Bins.aggregate([
+				{
+					$unwind: "$collection_history",
 				},
-			},
-			{
-				$unwind: "$collection_history",
-			},
-			{
-				$match: {
-					"collection_history.updatedAt": { $ne: null },
-					"collection_history.updatedAt": { $gte: sevenDaysAgo },
-				},
-			},
-			{
-				$group: {
-					_id: {
-						year: { $year: "$collection_history.updatedAt" },
-						month: { $month: "$collection_history.updatedAt" },
-						day: { $dayOfMonth: "$collection_history.updatedAt" },
+				{
+					$match: {
+						"collection_history.updatedAt": { $ne: null },
+						"collection_history.updatedAt": { $gte: sevenDaysAgo },
 					},
-					count: { $sum: 1 },
 				},
-			},
-			{
-				$sort: {
-					_id: 1,
+				{
+					$group: {
+						_id: {
+							year: { $year: "$collection_history.updatedAt" },
+							month: { $month: "$collection_history.updatedAt" },
+							day: {
+								$dayOfMonth: "$collection_history.updatedAt",
+							},
+						},
+						count: { $sum: 1 },
+					},
 				},
-			},
-		]);
+				{
+					$sort: {
+						_id: 1,
+					},
+				},
+			]);
 
-		const formattedData = collectedBinsPerDay.map((item) => ({
-			date: new Date(item._id.year, item._id.month - 1, item._id.day),
-			count: item.count,
-		}));
+			const formattedData = collectedBinsPerDay.map((item) => ({
+				date: new Date(item._id.year, item._id.month - 1, item._id.day),
+				count: item.count,
+			}));
+	
+			response.collected_bins_per_day = formattedData;
+			
+		} else if (user_type === "2") {
+			const collectedBinsPerDay = await Bins.aggregate([
+				{
+					$match: {
+						group_id: group_id,
+					},
+				},
+				{
+					$unwind: "$collection_history",
+				},
+				{
+					$match: {
+						"collection_history.updatedAt": { $ne: null },
+						"collection_history.updatedAt": { $gte: sevenDaysAgo },
+					},
+				},
+				{
+					$group: {
+						_id: {
+							year: { $year: "$collection_history.updatedAt" },
+							month: { $month: "$collection_history.updatedAt" },
+							day: {
+								$dayOfMonth: "$collection_history.updatedAt",
+							},
+						},
+						count: { $sum: 1 },
+					},
+				},
+				{
+					$sort: {
+						_id: 1,
+					},
+				},
+			]);
 
-		response.collected_bins_per_day = formattedData;
+			const formattedData = collectedBinsPerDay.map((item) => ({
+				date: new Date(item._id.year, item._id.month - 1, item._id.day),
+				count: item.count,
+			}));
+	
+			response.collected_bins_per_day = formattedData;
+		}
+
+		
 
 		res.status(200).send(response);
 	} catch (err) {
