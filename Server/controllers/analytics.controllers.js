@@ -45,7 +45,7 @@ const getAnalytics = async (req, res) => {
 		response.trucks_count = trucks.length;
 
 		const sevenDaysAgo = new Date();
-		sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+		sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 8);
 
 		const collectedBinsPerDay = await Bins.aggregate([
 			{
