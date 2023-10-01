@@ -79,7 +79,7 @@ function AdminDashboard() {
     (0, react_1.useEffect)(() => {
         getAnalytics();
     }, []);
-    return (react_1.default.createElement("div", { className: "flex" },
+    return (react_1.default.createElement("div", { className: "flex h-screen" },
         react_1.default.createElement(sidebar_1.default, { items: [
                 "Dashboard",
                 "Bins",
@@ -90,16 +90,16 @@ function AdminDashboard() {
                 "Chats",
                 "Account",
             ], selected: "Dashboard" }),
-        react_1.default.createElement("div", { className: `flex flex-col w-full ${collapse ? "ml-20" : "ml-52"}` },
+        react_1.default.createElement("div", { className: `flex flex-col h-full w-full ${collapse ? "ml-20" : "ml-52"}` },
             react_1.default.createElement(navbar_1.default, { label: "Dashboard" }),
             react_1.default.createElement("div", { className: "p-5 h-full" },
-                react_1.default.createElement("div", { className: "flex w-full flex-wrap md:flex-nowrap justify-center gap-16 h-fit text-gunmetal" },
-                    react_1.default.createElement("div", { className: "flex flex-col w-full h-full gap-2" },
-                        react_1.default.createElement("div", { className: "flex flex-col w-full h-full gap-2" },
-                            react_1.default.createElement("div", { className: "flex flex-col flex-wrap justify-center content-center h-full w-full bg-primary-100 hover:bg-primary-200 p-3 text-center rounded" },
+                react_1.default.createElement("div", { className: "flex w-full flex-wrap md:flex-nowrap justify-center gap-16 h-fit max-h-96 text-gunmetal" },
+                    react_1.default.createElement("div", { className: "flex flex-col w-full h-fit  gap-2" },
+                        react_1.default.createElement("div", { className: "flex flex-col w-full h-fit  gap-2" },
+                            react_1.default.createElement("div", { className: "flex flex-col flex-wrap justify-center content-center h-fit w-full bg-primary-100 hover:bg-primary-200 p-3 text-center rounded" },
                                 react_1.default.createElement("div", { className: " text-xl" }, "Users\u00A0Count"),
                                 react_1.default.createElement("div", { className: "mt-5 font-bold text-4xl" }, stats === null || stats === void 0 ? void 0 : stats.users_count))),
-                        react_1.default.createElement("div", { className: "flex flex-col w-full h-72 gap-2 z-10 bg-neutral-100 rounded" },
+                        react_1.default.createElement("div", { className: "flex flex-col w-full h-60 gap-2 z-10 bg-neutral-100 rounded" },
                             react_1.default.createElement(piechart_1.default, { data: [
                                     {
                                         id: "admins",
@@ -112,12 +112,12 @@ function AdminDashboard() {
                                         value: stats.drivers_count,
                                     },
                                 ] }))),
-                    react_1.default.createElement("div", { className: "flex flex-col w-full h-full gap-2" },
-                        react_1.default.createElement("div", { className: "flex flex-col w-full h-full gap-2" },
-                            react_1.default.createElement("div", { className: "flex flex-col flex-wrap justify-center content-center h-full w-full bg-primary-100 hover:bg-primary-200 p-3 text-center rounded" },
+                    react_1.default.createElement("div", { className: "flex flex-col w-full h-fit gap-2" },
+                        react_1.default.createElement("div", { className: "flex flex-col w-full h-fit gap-2" },
+                            react_1.default.createElement("div", { className: "flex flex-col flex-wrap justify-center content-center h-fit w-full bg-primary-100 hover:bg-primary-200 p-3 text-center rounded" },
                                 react_1.default.createElement("div", { className: " text-xl" }, "Bins\u00A0Count"),
                                 react_1.default.createElement("div", { className: "mt-5 font-bold text-4xl" }, stats === null || stats === void 0 ? void 0 : stats.bins_count))),
-                        react_1.default.createElement("div", { className: "flex flex-col w-full h-72 gap-2 z-10 bg-neutral-100 rounded" },
+                        react_1.default.createElement("div", { className: "flex flex-col w-full h-60 gap-2 z-10 bg-neutral-100 rounded" },
                             react_1.default.createElement(piechart_1.default, { data: [
                                     {
                                         id: "general",
@@ -137,8 +137,10 @@ function AdminDashboard() {
                                 ] }))),
                     react_1.default.createElement("div", { className: "flex flex-col w-full h-full gap-2" },
                         react_1.default.createElement("div", { className: "flex flex-col flex-wrap justify-center content-center h-full w-full bg-primary-100 hover:bg-primary-200 p-3 text-center rounded" },
-                            react_1.default.createElement("div", { className: " text-xl" }, "Trucks\u00A0Count"),
-                            react_1.default.createElement("div", { className: "mt-5 font-bold text-4xl" }, stats === null || stats === void 0 ? void 0 : stats.trucks_count)))),
+                            react_1.default.createElement("div", { className: "h-full text-xl" },
+                                "Trucks\u00A0Count ",
+                                react_1.default.createElement("br", null),
+                                react_1.default.createElement("span", { className: "mt-5 h-full font-bold text-4xl" }, stats === null || stats === void 0 ? void 0 : stats.trucks_count))))),
                 react_1.default.createElement("div", { className: "flex flex-col justify-center w-full h-72 bg-neutral-50 p-5 mt-5" },
                     react_1.default.createElement("div", null, "Bins Collected Per day (Last week)"),
                     react_1.default.createElement(barchart_1.default, { data: stats === null || stats === void 0 ? void 0 : stats.collected_bins_per_day }))))));

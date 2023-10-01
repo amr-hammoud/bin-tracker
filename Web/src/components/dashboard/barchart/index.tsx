@@ -10,11 +10,10 @@ const BarChart: React.FC<{ data: { date: string; count: number }[] }> = ({
 				data={data}
 				keys={["count"]}
 				indexBy="date"
-				margin={{ top: 30, right: 25, bottom: 50, left: 60 }}
+				margin={{ top: 15, right: 25, bottom: 20, left: 60 }}
 				padding={0.4}
 				valueScale={{ type: "linear" }}
 				colors="#3da35d"
-				animate={true}
 				enableLabel={false}
 				axisTop={null}
 				axisRight={null}
@@ -35,9 +34,6 @@ const BarChart: React.FC<{ data: { date: string; count: number }[] }> = ({
 						const day = date.getDate();
 						return `${month} ${day}`;
 					},
-					legend: "Date",
-					legendPosition: "middle",
-					legendOffset: 32,
 				}}
 				tooltip={({ value }) => (
 					<div className="p-2 bg-neutral-50 shadow-md rounded-lg border border-primary-500">

@@ -70,7 +70,7 @@ export default function AdminDashboard() {
 	}, []);
 
 	return (
-		<div className="flex">
+		<div className="flex h-screen">
 			<Sidebar
 				items={[
 					"Dashboard",
@@ -85,16 +85,16 @@ export default function AdminDashboard() {
 				selected="Dashboard"
 			/>
 			<div
-				className={`flex flex-col w-full ${
+				className={`flex flex-col h-full w-full ${
 					collapse ? "ml-20" : "ml-52"
 				}`}
 			>
 				<Navbar label="Dashboard" />
 				<div className="p-5 h-full">
-					<div className="flex w-full flex-wrap md:flex-nowrap justify-center gap-16 h-fit text-gunmetal">
-						<div className="flex flex-col w-full h-full gap-2">
-							<div className="flex flex-col w-full h-full gap-2">
-								<div className="flex flex-col flex-wrap justify-center content-center h-full w-full bg-primary-100 hover:bg-primary-200 p-3 text-center rounded">
+					<div className="flex w-full flex-wrap md:flex-nowrap justify-center gap-16 h-fit max-h-96 text-gunmetal">
+						<div className="flex flex-col w-full h-fit  gap-2">
+							<div className="flex flex-col w-full h-fit  gap-2">
+								<div className="flex flex-col flex-wrap justify-center content-center h-fit w-full bg-primary-100 hover:bg-primary-200 p-3 text-center rounded">
 									<div className=" text-xl">
 										Users&nbsp;Count
 									</div>
@@ -102,22 +102,8 @@ export default function AdminDashboard() {
 										{stats?.users_count}
 									</div>
 								</div>
-								{/* <div className="flex flex-wrap sm:flex-nowrap h-full gap-2">
-									<div className="flex flex-col flex-wrap justify-center content-center w-full h-full bg-neutral-50 hover:bg-neutral-100 p-3 text-center rounded">
-										<div className=" text-xl">Admins</div>
-										<div className="mt-5 font-bold text-4xl">
-											{stats?.admins_count}
-										</div>
-									</div>
-									<div className="flex flex-col flex-wrap justify-center content-center w-full h-full bg-neutral-50 hover:bg-neutral-100 p-3 text-center rounded">
-										<div className=" text-xl">Drivers</div>
-										<div className="mt-5 font-bold text-4xl">
-											{stats?.drivers_count}
-										</div>
-									</div>
-								</div> */}
 							</div>
-							<div className="flex flex-col w-full h-72 gap-2 z-10 bg-neutral-100 rounded">
+							<div className="flex flex-col w-full h-60 gap-2 z-10 bg-neutral-100 rounded">
 								<PieChart
 									data={[
 										{
@@ -134,9 +120,9 @@ export default function AdminDashboard() {
 								/>
 							</div>
 						</div>
-						<div className="flex flex-col w-full h-full gap-2">
-							<div className="flex flex-col w-full h-full gap-2">
-								<div className="flex flex-col flex-wrap justify-center content-center h-full w-full bg-primary-100 hover:bg-primary-200 p-3 text-center rounded">
+						<div className="flex flex-col w-full h-fit gap-2">
+							<div className="flex flex-col w-full h-fit gap-2">
+								<div className="flex flex-col flex-wrap justify-center content-center h-fit w-full bg-primary-100 hover:bg-primary-200 p-3 text-center rounded">
 									<div className=" text-xl">
 										Bins&nbsp;Count
 									</div>
@@ -144,32 +130,8 @@ export default function AdminDashboard() {
 										{stats?.bins_count}
 									</div>
 								</div>
-								{/* <div className="flex flex-wrap lg:flex-nowrap h-full gap-2">
-									<div className="flex flex-col flex-wrap justify-center content-center w-full h-full bg-neutral-50 hover:bg-neutral-100 p-3 text-center rounded">
-										<div className=" text-xl">General</div>
-										<div className="mt-5 font-bold text-4xl">
-											{stats?.general_bins_count}
-										</div>
-									</div>
-									<div className="flex flex-col flex-wrap justify-center content-center w-full h-full bg-neutral-50 hover:bg-neutral-100 p-3 text-center rounded">
-										<div className=" text-xl">
-											Recyclables
-										</div>
-										<div className="mt-5 font-bold text-4xl">
-											{stats?.recyclables_bins_count}
-										</div>
-									</div>
-									<div className="flex flex-col flex-wrap justify-center content-center w-full h-full bg-neutral-50 hover:bg-neutral-100 p-3 text-center rounded">
-										<div className=" text-xl">
-											Hazardous
-										</div>
-										<div className="mt-5 font-bold text-4xl">
-											{stats?.hazardous_bins_count}
-										</div>
-									</div>
-								</div> */}
 							</div>
-							<div className="flex flex-col w-full h-72 gap-2 z-10 bg-neutral-100 rounded">
+							<div className="flex flex-col w-full h-60 gap-2 z-10 bg-neutral-100 rounded">
 								<PieChart
 									data={[
 										{
@@ -193,11 +155,12 @@ export default function AdminDashboard() {
 						</div>
 						<div className="flex flex-col w-full h-full gap-2">
 							<div className="flex flex-col flex-wrap justify-center content-center h-full w-full bg-primary-100 hover:bg-primary-200 p-3 text-center rounded">
-								<div className=" text-xl">
-									Trucks&nbsp;Count
-								</div>
-								<div className="mt-5 font-bold text-4xl">
+								<div className="h-full text-xl">
+									Trucks&nbsp;Count <br/>
+									<span className="mt-5 h-full font-bold text-4xl">
+
 									{stats?.trucks_count}
+									</span>
 								</div>
 							</div>
 						</div>
