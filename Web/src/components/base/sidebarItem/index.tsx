@@ -54,16 +54,16 @@ export default function SidebarItem(props: SidebarItemProps) {
 			className={
 				props.selected
 					? `flex content-center font-poppins
-						my-2 gap-3 ${props.collapse ? "w-fit justify-center" : "w-full"} p-2 rounded-xl font-medium shadow-md
+						my-2 gap-3 ${props.collapse ? "w-fit p-2" : "w-full py-2 pl-4 pr-10"} rounded-xl font-medium shadow-md
 						text-neutral-0 bg-primary-500 hover:cursor-pointer`
 					: `flex content-center font-poppins
-						my-2 gap-3 ${props.collapse ? "w-fit justify-center" : "w-full"} p-2 rounded-xl font-medium text-gunmetal
+						my-2 gap-3 ${props.collapse ? "w-fit p-2" : "w-full py-2 pl-4 pr-10"} rounded-xl font-medium text-gunmetal
 						hover:bg-primary-200 hover:cursor-pointer`
 			}
 			onClick={() => clickHandler()}
 		>
 			{Icon ? (
-				<div className=" flex content-center flex-wrap text-lg">
+				<div className={` flex content-center flex-wrap text-xl`}>
 					<Icon />{" "}
 				</div>
 			) : (

@@ -34,10 +34,9 @@ export default function Sidebar(props: SidebarProps) {
 	const collapse: boolean = useSelector(
 		(state: RootState) => state.sidebar.collapse
 	);
-	
 
 	return (
-		<div className="flex flex-col fixed shadow-md bg-neutral-50 h-screen w-fit p-4 z-50 select-none">
+		<div className="flex flex-col fixed shadow-md bg-neutral-50 h-screen p-4 z-50 select-none">
 			<div
 				className="flex justify-center w-fill mt-2 mb-8 text-xl rounded-md p-2
 							hover:bg-primary-400 hover:text-neutral-0 hover:cursor-pointer"
@@ -54,7 +53,9 @@ export default function Sidebar(props: SidebarProps) {
 			</div>
 			<div
 				className={`mt-8 ${
-					collapse ? "flex flex-col flex-wrap justify-center content-center" : ""
+					collapse
+						? "flex flex-col flex-wrap justify-center content-center"
+						: ""
 				}`}
 			>
 				{props.items?.map((item, index) => {
