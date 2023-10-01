@@ -175,7 +175,7 @@ function SuperAdminAccount() {
                                     handleButtonAvailability("last_name", e.target.value);
                                 } })),
                         react_1.default.createElement("div", { className: " w-full md:w-80" },
-                            react_1.default.createElement(editarea_1.default, { label: "username", disabled: disabledInputs.username, value: profileDetails.username, enabler: () => {
+                            react_1.default.createElement(editarea_1.default, { label: "Username", disabled: disabledInputs.username, value: profileDetails.username, enabler: () => {
                                     setDisabledInputs(Object.assign(Object.assign({}, disabledInputs), { username: false }));
                                 }, onChange: (e) => {
                                     setProfileDetails(Object.assign(Object.assign({}, profileDetails), { username: e.target.value }));
@@ -190,7 +190,7 @@ function SuperAdminAccount() {
                                     handleButtonAvailability("email", e.target.value);
                                 } })),
                         react_1.default.createElement("div", { className: " w-full md:w-80" },
-                            react_1.default.createElement(editarea_1.default, { label: "password", disabled: disabledInputs.password, placeholder: "********", value: profileDetails.password, enabler: () => {
+                            react_1.default.createElement(editarea_1.default, { label: "Password", disabled: disabledInputs.password, placeholder: "********", value: profileDetails.password, enabler: () => {
                                     setDisabledInputs(Object.assign(Object.assign({}, disabledInputs), { password: false }));
                                 }, onChange: (e) => {
                                     setProfileDetails(Object.assign(Object.assign({}, profileDetails), { password: e.target.value }));

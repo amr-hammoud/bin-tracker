@@ -220,7 +220,7 @@ export default function SuperAdminAccount() {
 							</div>
 							<div className=" w-full md:w-80">
 								<EditArea
-									label="username"
+									label="Username"
 									disabled={disabledInputs.username}
 									value={profileDetails.username}
 									enabler={() => {
@@ -268,7 +268,7 @@ export default function SuperAdminAccount() {
 							</div>
 							<div className=" w-full md:w-80">
 								<EditArea
-									label="password"
+									label="Password"
 									disabled={disabledInputs.password}
 									placeholder="********"
 									value={profileDetails.password}

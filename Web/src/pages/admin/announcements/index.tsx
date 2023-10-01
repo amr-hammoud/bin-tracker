@@ -10,7 +10,6 @@ import { format, parseISO } from "date-fns";
 import { IoSend } from "react-icons/io5";
 import { Toaster, toast } from "react-hot-toast";
 import io from "socket.io-client";
-import ChatRow from "../../../components/base/chatrow";
 interface GroupedAnnouncements {
 	[date: string]: Message[];
 }
