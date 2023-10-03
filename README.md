@@ -7,7 +7,7 @@
 
 - [Project Philosophy](#philosophy)
   - [User Types](#user-types)
-  - [Features of the App](#features-of-the-app)
+  - [User Stories](#user-stories)
 - [Prototyping](#prototyping)
 - [Teck Stack](#stacks)
   - [Frontend](#frontend)
@@ -38,7 +38,7 @@
 
 <br> 
 
-### Features of the App 
+### User Stories
 
 As a Super Admin:
 
