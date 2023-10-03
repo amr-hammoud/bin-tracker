@@ -5,34 +5,63 @@
 <img src="./readme/title2.svg"/>
 
 
-[Project Philosophy](#project-philosophy) • [User Stories](#user-stories) • [Prototyping](#prototyping) • [Mockups](#mockups) • [Admin Screens](#admin) • [IoT System](#iot) • [Teck Stack](#stacks) • [How to Run](#running)
+- [Project Description](#project-description)
+- [User Types](#user-types)
+- [Features of the App](#features-of-the-app)
+- [Teck Stack](#stacks)
+  - [Frontend](#frontend)
+  - [Backend](#backend)
+- [Prototyping](#prototyping)
+- [Demo](#Demo)
+  - [App](#app)
+  - [IoT System](#iot)
+<!-- - [Performance](#performance) -->
+- [How to Run](#run)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
 
 <br><br>
 <!-- project philosophy -->
-<img src="./readme/title3.svg" id="project-philosophy" />
+<a name="project-description"></a>
+<img src="./readme/title3.svg" />
 
 
-> An IoT-based Garbage Collection System that employs sensors within waste bins to monitor their fill levels. The data from these bins are analyzed using AI to generate actionable insights and recommendations.
+> An IoT-based Garbage Collection System that employs sensors within waste bins to monitor their fill levels. The data from these bins are then analyzed to generate actionable insights and recommendations.
 >
 > Bin Tracker aims to decrease the consumption of fuel by garbage trucks and help cities become more eco-friendly.
 
-##### User-Stories
+<br> 
 
-- As an admin, I want to view the bins on an interactive map.
-- As an admin, I want to view real-time and historical data on bins fill levels to generate reports and make decisions based on data.
-- As a user, I want to have a route suggestion on a map for me to follow and reduce unnecessary trips.
-- As a super admin, I want to manage user accounts so that they can access the website.
-- As an admin, I want to manage the bins, so that their data stays accurate.
-- As an admin, I want to manage the trucks so that I can track their details on my dashboard.
-- As an admin, I want to communicate with users using text messages so that we maintain live support.
+### User Types 
 
-<br><br>
+1. Super Admin
+2. Group Admin (A group is a party registered on bin tracker's database and benifets from its services, e.g. Beirut Municipality)
+
+<br> 
+
+### Features of the App 
+
+As a Super Admin:
+
+- View a dashboard about all groups
+- Manage groups access to services
+- Manage user accounts so that they can access the website.
+
+As a Group Admin:
+- View the bins on an interactive map.
+- View real-time and historical data on bins fill levels to generate reports and make decisions based on data.
+- Manage the bins, so that their data stays accurate.
+- Manage the trucks owned by the group.
+- Communicate with users using text messages.
+
+<br>
+<br>
 
 <!-- Prototyping -->
 <img src="./readme/title4.svg" id="prototyping" />
 
 
-> we designed Bin Tracker using wireframes and mockups, iterating on the design until we reached the ideal layout for easy navigation and a seamless user experience.
+> We designed Bin Tracker using wireframes and mockups, iterating on the design until we reached the ideal layout for easy navigation and a seamless user experience.
 
 ### Wireframes
 
@@ -47,31 +76,48 @@
 | ---| ---| ---|
 | ![Map](readme/mockups/web/map.png)| ![Map](./readme/mockups/web/dashboard.png)| ![Map](./readme/mockups/web/bin_crud.png)|
 
+<br><br>
 
 <!-- Tech stack -->
+<a name="stacks"></a>
 <img src="./readme/title5.svg"/>
+> The Website utilizes React using TypeScript for the frontend, Node.js and Express for the backend, MongoDB for database, AWS server for cloud infrastructure, and Arduino for sensor data collection.
 
+<br>
 
-Bin Tracker is built using the following technologies
+Bin Tracker is built using the following technologies:
 
-1) MERN Stack using TypeScript for the web application
-	- ["React Library"](https://react.dev/) for the web application frontend development. It is a robust JavaScript library for building reusable UI components.
-	- ["React Redux Library"](https://react-redux.js.org/) for state management.
-	- ["Express.js Framework"](https://expressjs.com/) on [Node.js](https://nodejs.org/en) runtime environment for the backend server.
-	- ["MongoDB"](https://www.mongodb.com/) for the database. It is an open source NoSQL database management system.
-	- The app uses the font ["Poppins"](https://fonts.google.com/specimen/Poppins) as its main font, and the design of the app adheres to the material design guidelines.
+## Frontend
+- React: for the frontend development. It is a robust JavaScript library for building reusable UI components.
+- React Redux: Manages app data and state effectively.
+- Axios: Enables network requests to the backend.
+- Nivo: Building interactive charts.
+- React Leaflet: Create interactive maps.
+- socket.io-client: enables real-time bidirectional event-based communication (used for messaging).
 
+<br>
+
+## Backend
+- Node.js with Express: Powers the backend server for API requests and logic.
+- MongoDB: A NoSQL database management system, handles all data.
+- Socket.io: enables real-time bidirectional event-based communication (used for messaging).
+- Arduino: Utilized for sensor data collection in the bins.
+- Jsonwebtoken: Manages JSON Web Tokens (JWT) for authentication.
+- Mongoose: Object Data Modeling (ODM) library for MongoDB.
+
+Bin Tracker utilizes these technologies to provide a seamless and comprehensive waste management and collection process.
 
 <br>
 <br>
 
 <!-- Implementation -->
+<a name="Demo" ></a>
 <img src="./readme/title6.svg"/>
 
 
 > Using the wireframes and mockups as a guide, we implemented the Bin Tracker with the following features and many more: 
 
-### Admin
+### App
 
 | Dashboard screen  | Create Bin screen |
 | ---| ---|
@@ -101,19 +147,21 @@ The Arduino board is designed to send data periodically to the server which bind
 <br><br>
 
 
-<!-- How to run -->
-<img src="./readme/title8.svg"/>
+<!-- Performance -->
+<!-- <a name="performance" ></a>
+<img src="./readme/title7.svg"/>
+
+
 <br>
-<br>
+<br> -->
 
 
-
+<br><br>
 <!-- How to run -->
-<img src="./readme/title8.svg"/>
+<a name="run" ></a>
+<img src="./readme/title8.svg" />
 
 > To set up Bin Tracker locally, follow these steps:
-
-### Running
 #### Prerequisites
 - Node.js & npm
 	1) Follow the instructions on this link to setup Node.js: https://www.geeksforgeeks.org/installation-of-node-js-on-windows/
