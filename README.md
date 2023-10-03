@@ -5,7 +5,7 @@
 <img src="./readme/title2.svg"/>
 
 
-- [Project Description](#project-description)
+- [Project Philosophy](#philosophy)
 - [User Types](#user-types)
 - [Features of the App](#features-of-the-app)
 - [Teck Stack](#stacks)
@@ -22,7 +22,7 @@
 
 <br><br>
 <!-- project philosophy -->
-<a name="project-description"></a>
+<a name="philosophy"></a>
 <img src="./readme/title3.svg" />
 
 
