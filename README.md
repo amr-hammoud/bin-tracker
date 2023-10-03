@@ -1,16 +1,16 @@
 <img src="./readme/title1.svg"/>
-![a](./readme/title1.svg)
+
 <br><br>
 
 <img src="./readme/title2.svg"/>
-![a](./readme/title2.svg)
+
 
 [Project Philosophy](#project-philosophy) • [User Stories](#user-stories) • [Prototyping](#prototyping) • [Mockups](#mockups) • [Admin Screens](#admin) • [IoT System](#iot) • [Teck Stack](#stacks) • [How to Run](#running)
 
 <br><br>
 <!-- project philosophy -->
 <img src="./readme/title3.svg" id="project-philosophy" />
-![a](./readme/title3.svg)
+
 
 > An IoT-based Garbage Collection System that employs sensors within waste bins to monitor their fill levels. The data from these bins are analyzed using AI to generate actionable insights and recommendations.
 >
@@ -30,7 +30,7 @@
 
 <!-- Prototyping -->
 <img src="./readme/title4.svg" id="prototyping" />
-![a](./readme/title4.svg)
+
 
 > we designed Bin Tracker using wireframes and mockups, iterating on the design until we reached the ideal layout for easy navigation and a seamless user experience.
 
@@ -50,7 +50,7 @@
 
 <!-- Tech stack -->
 <img src="./readme/title5.svg"/>
-![a](./readme/title5.svg)
+
 
 Bin Tracker is built using the following technologies
 
@@ -67,7 +67,7 @@ Bin Tracker is built using the following technologies
 
 <!-- Implementation -->
 <img src="./readme/title6.svg"/>
-![a](./readme/title5.svg)
+
 
 > Using the wireframes and mockups as a guide, we implemented the Bin Tracker with the following features and many more: 
 
