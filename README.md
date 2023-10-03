@@ -6,8 +6,8 @@
 
 
 - [Project Philosophy](#philosophy)
-- [User Types](#user-types)
-- [Features of the App](#features-of-the-app)
+  - [User Types](#user-types)
+  - [Features of the App](#features-of-the-app)
 - [Teck Stack](#stacks)
   - [Frontend](#frontend)
   - [Backend](#backend)
@@ -15,7 +15,6 @@
 - [Demo](#Demo)
   - [App](#app)
   - [IoT System](#iot)
-<!-- - [Performance](#performance) -->
 - [How to Run](#run)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
