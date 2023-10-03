@@ -76,6 +76,10 @@ As a Group Admin:
 | ---| ---| ---|
 | ![Map](readme/mockups/web/map.png)| ![Map](./readme/mockups/web/dashboard.png)| ![Map](./readme/mockups/web/bin_crud.png)|
 
+
+| Announcements screen  | Login screen |  Landing screen |
+| ---| ---| ---|
+| ![Map](readme/mockups/web/announcements.png)| ![Map](./readme/mockups/web/login.png)| ![Map](./readme/mockups/web/landing.png)|
 <br><br>
 
 <!-- Tech stack -->
@@ -119,17 +123,33 @@ Bin Tracker utilizes these technologies to provide a seamless and comprehensive 
 
 ### App
 
-| Dashboard screen  | Create Bin screen |
+| Dashboard Screen  | Create Bin Screen |
 | ---| ---|
 | ![Landing](./readme/implementation/dashboard.gif) | ![fsdaf](./readme/implementation/create_bin.gif) |
 
-| Bins to Map screen |
+| Bins to Map Screen |
 | ---|
  | ![fsdaf](./readme/implementation/map.gif) |
 
-| Announcements screen  |
+
+| Filter Bins Screen  | Update Pickup Time Screen |
+| ---| ---|
+| ![Landing](./readme/implementation/filter_bins.gif) | ![fsdaf](./readme/implementation/update_pickup.gif) |
+
+
+| Announcements Screen  |
 | ---|
 | ![fsdaf](./readme/implementation/message.gif)|
+
+
+| Change Map Screen  | Edit Profile Screen |
+| ---| ---|
+| ![Landing](./readme/implementation/change_map.gif) | ![fsdaf](./readme/implementation/edit_profile.gif) |
+
+
+| Landing Screen  |
+| ---|
+| ![fsdaf](./readme/implementation/landing.gif)|
 
 <br><br>
 ### IoT
