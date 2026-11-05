@@ -236,3 +236,7 @@ The Arduino board is designed to send data periodically to the server which bind
 	```
 
 6) Now the web app should be running
+
+## License
+
+[MIT](LICENSE)
