@@ -218,7 +218,7 @@ The Arduino board is designed to send data periodically to the server which bind
 	- Rename the file named ".env.example" to ".env"
 	- Replace the "ADD_YOUR_KEY_HERE" with you JWT key
 	```sh
-	JWT_SECRET="ADD_YOUR_KEY_HERE"
+	JWT_SECRET="replace-with-a-long-random-string"
 	```
 
 4) Launch the server
@@ -236,3 +236,7 @@ The Arduino board is designed to send data periodically to the server which bind
 	```
 
 6) Now the web app should be running
+
+## License
+
+[MIT](LICENSE)

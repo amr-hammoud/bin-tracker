@@ -39,7 +39,7 @@ const selectedIcon = new L.Icon({
 
 const mapTileLayers = [
 	"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-	"https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=e5e9ad4420d04a2d8efe2bcfe069c5d4",
+	`https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=${process.env.REACT_APP_THUNDERFOREST_API_KEY}`,
 	"https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.png",
 	"https://stamen-tiles-{s}.a.ssl.fastly.net/terrain-lines/{z}/{x}/{y}.png",
 ];
